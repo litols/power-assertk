@@ -19,11 +19,19 @@ class ArrayTest {
 
     @Test
     fun isEmpty_fails_when_not_empty() {
+        val actual = arrayOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(arrayOf(1, 2, 3)).isEmpty()
+                assertThat(actual).isEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(arrayOf(1, 2, 3)).isEmpty()"))
+        val message = error.message!!
+
+        // Arrays show memory address, so verify structure
+        assertTrue(
+            message.contains("assertThat(actual).isEmpty()"),
+            "Should show assertion expression in Power Assert diagram:\nActual:\n$message",
+        )
     }
 
     // isNotEmpty tests
@@ -34,11 +42,19 @@ class ArrayTest {
 
     @Test
     fun isNotEmpty_fails_when_empty() {
+        val actual = emptyArray<Int>()
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(emptyArray<Int>()).isNotEmpty()
+                assertThat(actual).isNotEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(emptyArray<Int>()).isNotEmpty()"))
+        val message = error.message!!
+
+        // Arrays show memory address, so verify structure
+        assertTrue(
+            message.contains("assertThat(actual).isNotEmpty()"),
+            "Should show assertion expression in Power Assert diagram:\nActual:\n$message",
+        )
     }
 
     // isNullOrEmpty tests
@@ -57,11 +73,18 @@ class ArrayTest {
     @Test
     fun isNullOrEmpty_fails_when_not_empty() {
         val array: Array<Int>? = arrayOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(array).isNullOrEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(array).isNullOrEmpty()"))
+        val message = error.message!!
+
+        // Arrays show memory address, so verify structure
+        assertTrue(
+            message.contains("assertThat(array).isNullOrEmpty()"),
+            "Should show assertion expression in Power Assert diagram:\nActual:\n$message",
+        )
     }
 
     // hasSize tests
@@ -72,11 +95,19 @@ class ArrayTest {
 
     @Test
     fun hasSize_fails_when_size_differs() {
+        val actual = arrayOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(arrayOf(1, 2, 3)).hasSize(5)
+                assertThat(actual).hasSize(5)
             }
-        assertTrue(error.message!!.contains("assertThat(arrayOf(1, 2, 3)).hasSize(5)"))
+        val message = error.message!!
+
+        // Arrays show memory address, so verify structure
+        assertTrue(
+            message.contains("assertThat(actual).hasSize(5)"),
+            "Should show assertion expression in Power Assert diagram:\nActual:\n$message",
+        )
     }
 
     // hasSameSizeAs tests
@@ -87,11 +118,20 @@ class ArrayTest {
 
     @Test
     fun hasSameSizeAs_fails_when_sizes_differ() {
+        val actual = arrayOf(1, 2, 3)
+        val other = arrayOf("a", "b")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(arrayOf(1, 2, 3)).hasSameSizeAs(arrayOf("a", "b"))
+                assertThat(actual).hasSameSizeAs(other)
             }
-        assertTrue(error.message!!.contains("hasSameSizeAs"))
+        val message = error.message!!
+
+        // Arrays show memory address, so verify structure
+        assertTrue(
+            message.contains("assertThat(actual).hasSameSizeAs(other)"),
+            "Should show assertion expression in Power Assert diagram:\nActual:\n$message",
+        )
     }
 
     // Custom message support test
@@ -189,11 +229,19 @@ class ArrayTest {
 
     @Test
     fun contains_fails_when_element_not_found() {
+        val actual = arrayOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(arrayOf(1, 2, 3)).contains(4)
+                assertThat(actual).contains(4)
             }
-        assertTrue(error.message!!.contains("contains"))
+        val message = error.message!!
+
+        // Arrays show memory address, so verify structure
+        assertTrue(
+            message.contains("assertThat(actual).contains(4)"),
+            "Should show assertion expression in Power Assert diagram:\nActual:\n$message",
+        )
     }
 
     @Test
@@ -209,11 +257,19 @@ class ArrayTest {
 
     @Test
     fun containsAll_fails_when_any_missing() {
+        val actual = arrayOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(arrayOf(1, 2, 3)).containsAll(1, 4)
+                assertThat(actual).containsAll(1, 4)
             }
-        assertTrue(error.message!!.contains("containsAll"))
+        val message = error.message!!
+
+        // Arrays show memory address, so verify structure
+        assertTrue(
+            message.contains("assertThat(actual).containsAll(1, 4)"),
+            "Should show assertion expression in Power Assert diagram:\nActual:\n$message",
+        )
     }
 
     // containsExactly tests
@@ -224,11 +280,19 @@ class ArrayTest {
 
     @Test
     fun containsExactly_fails_when_order_differs() {
+        val actual = arrayOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(arrayOf(1, 2, 3)).containsExactly(1, 3, 2)
+                assertThat(actual).containsExactly(1, 3, 2)
             }
-        assertTrue(error.message!!.contains("containsExactly"))
+        val message = error.message!!
+
+        // Arrays show memory address, so verify structure
+        assertTrue(
+            message.contains("assertThat(actual).containsExactly(1, 3, 2)"),
+            "Should show assertion expression in Power Assert diagram:\nActual:\n$message",
+        )
     }
 
     // containsExactlyInAnyOrder tests

@@ -16,26 +16,71 @@ class NumberTest {
 
     @Test
     fun isZero_fails_for_positive_values() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(5).isZero()
-        }
-        assertTrue(error.message!!.contains("assertThat(5).isZero()"))
+        val actual = 5
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isZero()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isZero()
+            |          |
+            |          5
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isZero_fails_for_negative_values() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(-5).isZero()
-        }
-        assertTrue(error.message!!.contains("assertThat(-5).isZero()"))
+        val actual = -5
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isZero()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isZero()
+            |          |
+            |          -5
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isZero_fails_for_double_non_zero() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(1.5).isZero()
-        }
-        assertTrue(error.message!!.contains("assertThat(1.5).isZero()"))
+        val actual = 1.5
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isZero()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isZero()
+            |          |
+            |          1.5
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isNotZero tests
@@ -57,34 +102,94 @@ class NumberTest {
 
     @Test
     fun isNotZero_fails_for_zero_int() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(0).isNotZero()
-        }
-        assertTrue(error.message!!.contains("assertThat(0).isNotZero()"))
+        val actual = 0
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isNotZero()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNotZero()
+            |          |
+            |          0
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isNotZero_fails_for_zero_double() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(0.0).isNotZero()
-        }
-        assertTrue(error.message!!.contains("assertThat(0.0).isNotZero()"))
+        val actual = 0.0
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isNotZero()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNotZero()
+            |          |
+            |          0.0
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isNotZero_fails_for_zero_long() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(0L).isNotZero()
-        }
-        assertTrue(error.message!!.contains("assertThat(0L).isNotZero()"))
+        val actual = 0L
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isNotZero()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNotZero()
+            |          |
+            |          0
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isNotZero_fails_for_zero_float() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(0.0f).isNotZero()
-        }
-        assertTrue(error.message!!.contains("assertThat(0.0f).isNotZero()"))
+        val actual = 0.0f
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isNotZero()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNotZero()
+            |          |
+            |          0.0
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isPositive tests
@@ -115,26 +220,71 @@ class NumberTest {
 
     @Test
     fun isPositive_fails_for_negative_values() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(-5).isPositive()
-        }
-        assertTrue(error.message!!.contains("assertThat(-5).isPositive()"))
+        val actual = -5
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isPositive()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isPositive()
+            |          |
+            |          -5
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isPositive_fails_for_zero() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(0).isPositive()
-        }
-        assertTrue(error.message!!.contains("assertThat(0).isPositive()"))
+        val actual = 0
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isPositive()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isPositive()
+            |          |
+            |          0
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isPositive_fails_for_zero_double() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(0.0).isPositive()
-        }
-        assertTrue(error.message!!.contains("assertThat(0.0).isPositive()"))
+        val actual = 0.0
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isPositive()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isPositive()
+            |          |
+            |          0.0
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isNegative tests
@@ -165,25 +315,146 @@ class NumberTest {
 
     @Test
     fun isNegative_fails_for_positive_values() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(5).isNegative()
-        }
-        assertTrue(error.message!!.contains("assertThat(5).isNegative()"))
+        val actual = 5
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isNegative()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNegative()
+            |          |
+            |          5
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isNegative_fails_for_zero() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(0).isNegative()
-        }
-        assertTrue(error.message!!.contains("assertThat(0).isNegative()"))
+        val actual = 0
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isNegative()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNegative()
+            |          |
+            |          0
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isNegative_fails_for_zero_double() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(0.0).isNegative()
-        }
-        assertTrue(error.message!!.contains("assertThat(0.0).isNegative()"))
+        val actual = 0.0
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(actual).isNegative()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNegative()
+            |          |
+            |          0.0
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
+    }
+
+    // Power Assert diagram verification tests with property chains
+    @Test
+    fun isZero_shows_power_assert_with_property_chain() {
+        data class Counter(val value: Int)
+        val counter = Counter(5)
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(counter.value).isZero()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(counter.value).isZero()
+            |          |       |
+            |          |       5
+            |          Counter(value=5)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
+    }
+
+    @Test
+    fun isPositive_shows_power_assert_with_property_chain() {
+        data class Temperature(val celsius: Double)
+        val temp = Temperature(-10.0)
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(temp.celsius).isPositive()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(temp.celsius).isPositive()
+            |          |    |
+            |          |    -10.0
+            |          Temperature(celsius=-10.0)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
+    }
+
+    @Test
+    fun isNegative_shows_power_assert_with_property_chain() {
+        data class Score(val points: Int)
+        val score = Score(100)
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(score.points).isNegative()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(score.points).isNegative()
+            |          |     |
+            |          |     100
+            |          Score(points=100)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 }
