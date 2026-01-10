@@ -94,6 +94,40 @@ powerAssert {
         "powerassertk.isNotZero",
         "powerassertk.isPositive",
         "powerassertk.isNegative",
+        // Wave 2.1: CharSequence assertions
+        "powerassertk.isEmpty",
+        "powerassertk.isNotEmpty",
+        "powerassertk.isNullOrEmpty",
+        "powerassertk.hasLength",
+        "powerassertk.hasSameLengthAs",
+        "powerassertk.hasLineCount",
+        "powerassertk.contains",
+        "powerassertk.doesNotContain",
+        "powerassertk.startsWith",
+        "powerassertk.endsWith",
+        "powerassertk.matches",
+        "powerassertk.containsMatch",
+        // Wave 2.2: String assertions
+        "powerassertk.isEqualTo",
+        "powerassertk.isNotEqualTo",
+        // Wave 2.3: Collection assertions
+        "powerassertk.isEmpty",
+        "powerassertk.isNotEmpty",
+        "powerassertk.isNullOrEmpty",
+        "powerassertk.hasSize",
+        "powerassertk.hasSameSizeAs",
+        // Wave 2.4: Map assertions
+        // Temporarily disabled due to Power Assert transformation issues:
+        // "powerassertk.contains",
+        // "powerassertk.doesNotContain",
+        "powerassertk.containsAll",
+        "powerassertk.containsAtLeast",
+        "powerassertk.containsOnly",
+        "powerassertk.containsNone",
+        "powerassertk.doesNotContainKey",
+        // Wave 2.5: Array assertions (reuses Collection method names)
+        // isEmpty, isNotEmpty, isNullOrEmpty, hasSize, hasSameSizeAs already listed above
+        // Note: length(), size(), and key() are transformation methods without message parameters
         // Note: toStringFun and hashCodeFun are transformation methods without message parameters
         // They should not be in the Power Assert functions list
         // "powerassertk.toStringFun",

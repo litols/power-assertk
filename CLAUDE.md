@@ -152,6 +152,116 @@ assertThat(person.name).startsWith("B")
 // expected to start with:<"B"> but was:<"Alice">
 ```
 
+## Testing Best Practices
+
+### Power Assert Diagram Verification
+
+Tests should verify the complete Power Assert diagram format, including the position of lines and intermediate values. This ensures that the Power Assert plugin is working correctly and displaying helpful debug information.
+
+**Recommended Test Pattern:**
+
+```kotlin
+@Test
+fun assertion_shows_power_assert_diagram() {
+    data class Person(val name: String, val age: Int)
+    val person = Person("Alice", 30)
+
+    val error = assertFailsWith<AssertionError> {
+        assertThat(person.name).isEqualTo("Bob")
+    }
+    val message = error.message!!
+
+    // Verify the complete Power Assert diagram format
+    val expectedFormat = """
+        assertThat(person.name).isEqualTo("Bob")
+        |          |      |
+        |          |      Alice
+        |          Person(name=Alice, age=30)
+        """.trimIndent()
+
+    assertTrue(
+        message.contains(expectedFormat),
+        "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+    )
+}
+```
+
+**What to verify:**
+1. The assertion expression (e.g., `assertThat(person.name).isEqualTo("Bob")`)
+2. The vertical lines (`|`) showing the evaluation tree
+3. Intermediate values (e.g., `Alice`, `Person(name=Alice, age=30)`)
+4. Proper alignment of lines and values
+
+**Examples from CharSequenceTest.kt:**
+
+```kotlin
+// Property chain verification
+val expectedFormat = """
+    assertThat(msg.text).contains("xyz")
+    |          |   |
+    |          |   hello world
+    |          Message(text=hello world)
+    """.trimIndent()
+
+// Variable expansion verification
+val expectedFormat = """
+    assertThat(text).startsWith(prefix)
+    |          |                |
+    |          |                world
+    |          hello world
+    """.trimIndent()
+
+// Nested property verification
+val expectedFormat = """
+    assertThat(user.name).hasLength(10)
+    |          |    |
+    |          |    Alice
+    |          User(name=Alice)
+    """.trimIndent()
+```
+
+**Note:** The exact spacing and line positions depend on the expression structure. Always run the test first to see the actual output, then update the expected format accordingly.
+
+### Test Structure
+
+Each assertion method should have at least three types of tests:
+
+1. **Success case**: Verify the assertion passes when the condition is met
+2. **Power Assert diagram verification**: Verify the complete diagram format on failure
+3. **Custom message support**: Verify custom messages work correctly
+
+```kotlin
+// 1. Success case
+@Test
+fun isEmpty_succeeds_when_empty() {
+    assertThat("").isEmpty()
+}
+
+// 2. Power Assert diagram verification
+@Test
+fun isEmpty_shows_power_assert_diagram() {
+    val text = "hello"
+    val error = assertFailsWith<AssertionError> {
+        assertThat(text).isEmpty()
+    }
+    val expectedFormat = """
+        assertThat(text).isEmpty()
+        |          |
+        |          hello
+        """.trimIndent()
+    assertTrue(error.message!!.contains(expectedFormat))
+}
+
+// 3. Custom message support
+@Test
+fun isEmpty_supports_custom_message() {
+    val error = assertFailsWith<AssertionError> {
+        assertThat("hello").isEmpty { "Custom: should be empty" }
+    }
+    assertTrue(error.message!!.contains("Custom: should be empty"))
+}
+```
+
 ## Current State
 
 This is an early-stage project with initial Gradle setup. The `lib` module contains placeholder code. Development should follow the phases outlined in `docs/CONCEPT.md`.
