@@ -178,4 +178,153 @@ class ArrayTest {
             "Should show data with array contents in toString:\nActual:\n$message",
         )
     }
+
+    // Wave 3.4: Additional Array methods
+
+    // contains/doesNotContain tests
+    @Test
+    fun contains_succeeds_when_element_found() {
+        assertThat(arrayOf(1, 2, 3)).contains(2)
+    }
+
+    @Test
+    fun contains_fails_when_element_not_found() {
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(arrayOf(1, 2, 3)).contains(4)
+            }
+        assertTrue(error.message!!.contains("contains"))
+    }
+
+    @Test
+    fun doesNotContain_succeeds_when_element_not_found() {
+        assertThat(arrayOf(1, 2, 3)).doesNotContain(4)
+    }
+
+    // containsAll tests
+    @Test
+    fun containsAll_succeeds_when_all_found() {
+        assertThat(arrayOf(1, 2, 3, 4)).containsAll(1, 3)
+    }
+
+    @Test
+    fun containsAll_fails_when_any_missing() {
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(arrayOf(1, 2, 3)).containsAll(1, 4)
+            }
+        assertTrue(error.message!!.contains("containsAll"))
+    }
+
+    // containsExactly tests
+    @Test
+    fun containsExactly_succeeds_when_exact_match() {
+        assertThat(arrayOf(1, 2, 3)).containsExactly(1, 2, 3)
+    }
+
+    @Test
+    fun containsExactly_fails_when_order_differs() {
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(arrayOf(1, 2, 3)).containsExactly(1, 3, 2)
+            }
+        assertTrue(error.message!!.contains("containsExactly"))
+    }
+
+    // containsExactlyInAnyOrder tests
+    @Test
+    fun containsExactlyInAnyOrder_succeeds() {
+        assertThat(arrayOf(3, 1, 2)).containsExactlyInAnyOrder(1, 2, 3)
+    }
+
+    // containsNone tests
+    @Test
+    fun containsNone_succeeds_when_none_found() {
+        assertThat(arrayOf(1, 2, 3)).containsNone(4, 5)
+    }
+
+    // each tests
+    @Test
+    fun each_succeeds_when_all_satisfy() {
+        assertThat(arrayOf(2, 4, 6)).each {
+            if (it.actual % 2 != 0) throw AssertionError("not even")
+        }
+    }
+
+    // any tests
+    @Test
+    fun any_succeeds_when_at_least_one_satisfies() {
+        assertThat(arrayOf(1, 2, 3)).any { it.isEqualTo(2) }
+    }
+
+    // none tests
+    @Test
+    fun none_succeeds_when_none_satisfy() {
+        assertThat(arrayOf(1, 2, 3)).none { it.isEqualTo(4) }
+    }
+
+    // atLeast tests
+    @Test
+    fun atLeast_succeeds() {
+        assertThat(arrayOf(2, 3, 4, 5)).atLeast(2) { it.isGreaterThan(3) }
+    }
+
+    // atMost tests
+    @Test
+    fun atMost_succeeds() {
+        assertThat(arrayOf(2, 3, 4, 5)).atMost(2) { it.isGreaterThan(3) }
+    }
+
+    // exactly tests
+    @Test
+    fun exactly_succeeds() {
+        assertThat(arrayOf(2, 3, 4, 5)).exactly(2) { it.isGreaterThan(3) }
+    }
+
+    // first tests
+    @Test
+    fun first_returns_first_element() {
+        assertThat(arrayOf(1, 2, 3)).first().isEqualTo(1)
+    }
+
+    // single tests
+    @Test
+    fun single_returns_single_element() {
+        assertThat(arrayOf(42)).single().isEqualTo(42)
+    }
+
+    // index tests
+    @Test
+    fun index_returns_element_at_index() {
+        assertThat(arrayOf(1, 2, 3)).index(1).isEqualTo(2)
+    }
+
+    // extracting tests
+    @Test
+    fun extracting_single_property() {
+        data class Person(val name: String, val age: Int)
+        val people = arrayOf(Person("Alice", 30), Person("Bob", 25))
+        val names: Iterable<String> = assertThat(people).extracting { p -> p.name }.actual
+        assertThat(names).containsExactlyInAnyOrder("Alice", "Bob")
+    }
+
+    @Test
+    fun extracting_two_properties() {
+        data class Person(val name: String, val age: Int)
+        val people = arrayOf(Person("Alice", 30))
+        val result = assertThat(people).extracting({ p -> p.name }, { p -> p.age })
+        val list = result.actual
+        assertTrue(list.size == 1)
+        assertTrue(list[0] == ("Alice" to 30))
+    }
+
+    @Test
+    fun extracting_three_properties() {
+        data class Person(val name: String, val age: Int, val city: String)
+        val people = arrayOf(Person("Alice", 30, "NYC"))
+        val result = assertThat(people).extracting({ p -> p.name }, { p -> p.age }, { p -> p.city })
+        val list = result.actual
+        assertTrue(list.size == 1)
+        assertTrue(list[0] == Triple("Alice", 30, "NYC"))
+    }
 }

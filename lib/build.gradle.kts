@@ -37,6 +37,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
+                implementation(kotlin("reflect"))
             }
         }
 
@@ -155,6 +156,77 @@ powerAssert {
         // Note: hasClass and doesNotHaveClass are not Power Assert compatible yet
         // "powerassertk.hasClass",
         // "powerassertk.doesNotHaveClass",
+        // Wave 3.2: List assertions
+        // Note: index() is a transformation method without message parameter
+        "powerassertk.containsExactly",
+        "powerassertk.containsSubList",
+        "powerassertk.startsWith",
+        "powerassertk.endsWith",
+        // Wave 3.3: Sequence assertions
+        // Note: contains/doesNotContain temporarily disabled due to Power Assert issues
+        // "powerassertk.contains",  // Sequence version
+        // "powerassertk.doesNotContain",  // Sequence version
+        // Note: containsAll, containsAtLeast, containsOnly, containsExactly already listed above
+        // "powerassertk.containsExactlyInAnyOrder",  // already listed for Iterable
+        // "powerassertk.containsNone",  // already listed for Iterable
+        // Note: isEmpty/isNotEmpty already listed above
+        // Note: each, any, none, atLeast, atMost, exactly cannot use Power Assert (already documented above)
+        // Note: first(), single(), extracting() are transformation methods without message parameters
+        // Wave 3.4: Array assertions (extension to existing Wave 2.5 methods)
+        // Note: contains/doesNotContain temporarily disabled due to Power Assert issues
+        // "powerassertk.contains",  // Array version
+        // "powerassertk.doesNotContain",  // Array version
+        // Note: containsAll, containsAtLeast, containsOnly, containsExactly, containsExactlyInAnyOrder, containsNone already listed above
+        // Note: isEmpty/isNotEmpty already listed above
+        // Note: each, any, none, atLeast, atMost, exactly cannot use Power Assert (already documented above)
+        // Note: first(), single(), index(), extracting() are transformation methods without message parameters
+        // Wave 4.1: Throwable assertions
+        // Note: message(), cause(), rootCause() are transformation methods without message parameters
+        "powerassertk.hasMessage",
+        "powerassertk.messageContains",
+        "powerassertk.hasCause",
+        "powerassertk.hasNoCause",
+        "powerassertk.hasRootCause",
+        // Wave 4.2: Result assertions
+        // Note: isSuccess(), isFailure() are transformation methods without message parameters
+        // Wave 4.3: Predicate assertions
+        // Note: matchesPredicate() takes a function parameter, which may confuse Power Assert
+        // "powerassertk.matchesPredicate",
+        // Wave 5.1: File assertions
+        // Note: name(), path(), parent(), extension(), text(), bytes() are transformation methods without message parameters
+        "powerassertk.exists",
+        "powerassertk.isDirectory",
+        "powerassertk.isFile",
+        "powerassertk.isHidden",
+        "powerassertk.isNotHidden",
+        "powerassertk.hasName",
+        "powerassertk.hasPath",
+        "powerassertk.hasParent",
+        "powerassertk.hasExtension",
+        "powerassertk.hasDirectChild",
+        "powerassertk.hasText",
+        // Wave 5.2: Path assertions
+        // Note: bytes(), lines() are transformation methods without message parameters
+        // "powerassertk.exists",  // Already added for File
+        // "powerassertk.isDirectory",  // Already added for File
+        "powerassertk.isRegularFile",
+        "powerassertk.isSymbolicLink",
+        // "powerassertk.isHidden",  // Already added for File
+        "powerassertk.isReadable",
+        "powerassertk.isWritable",
+        "powerassertk.isExecutable",
+        "powerassertk.isSameFileAs",
+        // Wave 5.3: Optional assertions
+        // Note: isPresent() is a transformation method without message parameter
+        // "powerassertk.isEmpty",  // Already added for Collection
+        "powerassertk.hasValue",
+        // Wave 5.4: InputStream assertions
+        "powerassertk.hasSameContentAs",
+        "powerassertk.hasNotSameContentAs",
+        // Wave 5.5: AnyJvm & ThrowableJvm assertions
+        // Note: jClass(), stackTrace() are transformation methods without message parameters
+        "powerassertk.isDataClassEqualTo",
+        "powerassertk.isEqualToIgnoringGivenProperties",
     )
     includedSourceSets = listOf("commonTest", "jvmTest", "jsTest")
 }
