@@ -127,6 +127,26 @@ powerAssert {
         "powerassertk.doesNotContainKey",
         // Wave 2.5: Array assertions (reuses Collection method names)
         // isEmpty, isNotEmpty, isNullOrEmpty, hasSize, hasSameSizeAs already listed above
+        // Wave 3.1: Iterable assertions
+        // Note: contains/doesNotContain temporarily disabled due to Power Assert issues (same as Map)
+        // "powerassertk.contains",
+        // "powerassertk.doesNotContain",
+        "powerassertk.containsAll",
+        "powerassertk.containsAtLeast",
+        "powerassertk.containsOnly",
+        "powerassertk.containsExactlyInAnyOrder",
+        "powerassertk.containsNone",
+        // isEmpty/isNotEmpty already listed above
+        // Note: each, any, none, atLeast, atMost, exactly cannot use Power Assert
+        // because they take both a function parameter and a message parameter,
+        // causing the plugin to confuse which lambda is which
+        // "powerassertk.each",
+        // "powerassertk.any",
+        // "powerassertk.none",
+        // "powerassertk.atLeast",
+        // "powerassertk.atMost",
+        // "powerassertk.exactly",
+        // Note: first(), single(), extracting() are transformation methods without message parameters
         // Note: length(), size(), and key() are transformation methods without message parameters
         // Note: toStringFun and hashCodeFun are transformation methods without message parameters
         // They should not be in the Power Assert functions list
