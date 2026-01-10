@@ -18,20 +18,52 @@ class StringTest {
 
     @Test
     fun isEqualTo_fails_when_strings_differ() {
+        val actual = "hello"
+        val expected = "world"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello").isEqualTo("world")
+                assertThat(actual).isEqualTo(expected)
             }
-        assertTrue(error.message!!.contains("assertThat(\"hello\").isEqualTo(\"world\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isEqualTo(expected)
+            |          |                 |
+            |          |                 world
+            |          hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isEqualTo_fails_when_case_differs_without_ignoreCase() {
+        val actual = "Hello"
+        val expected = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("Hello").isEqualTo("hello")
+                assertThat(actual).isEqualTo(expected)
             }
-        assertTrue(error.message!!.contains("assertThat(\"Hello\").isEqualTo(\"hello\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isEqualTo(expected)
+            |          |                 |
+            |          |                 hello
+            |          Hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isNotEqualTo tests
@@ -47,20 +79,50 @@ class StringTest {
 
     @Test
     fun isNotEqualTo_fails_when_strings_equal() {
+        val actual = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello").isNotEqualTo("hello")
+                assertThat(actual).isNotEqualTo("hello")
             }
-        assertTrue(error.message!!.contains("assertThat(\"hello\").isNotEqualTo(\"hello\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNotEqualTo("hello")
+            |          |
+            |          hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isNotEqualTo_fails_with_ignoreCase() {
+        val actual = "Hello"
+        val expected = "HELLO"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("Hello").isNotEqualTo("HELLO", ignoreCase = true)
+                assertThat(actual).isNotEqualTo(expected, ignoreCase = true)
             }
-        assertTrue(error.message!!.contains("assertThat(\"Hello\").isNotEqualTo(\"HELLO\", ignoreCase = true)"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNotEqualTo(expected, ignoreCase = true)
+            |          |                    |
+            |          |                    HELLO
+            |          Hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // Nullable tests
@@ -73,11 +135,26 @@ class StringTest {
     @Test
     fun isEqualTo_fails_when_one_is_null() {
         val str: String? = null
+        val expected = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(str).isEqualTo("hello")
+                assertThat(str).isEqualTo(expected)
             }
-        assertTrue(error.message!!.contains("assertThat(str).isEqualTo(\"hello\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(str).isEqualTo(expected)
+            |          |              |
+            |          |              hello
+            |          null
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test

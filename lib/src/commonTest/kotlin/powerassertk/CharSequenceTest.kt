@@ -19,11 +19,25 @@ class CharSequenceTest {
 
     @Test
     fun isEmpty_fails_when_not_empty() {
+        val actual = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello").isEmpty()
+                assertThat(actual).isEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(\"hello\").isEmpty()"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isEmpty()
+            |          |
+            |          hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isNotEmpty tests
@@ -34,11 +48,25 @@ class CharSequenceTest {
 
     @Test
     fun isNotEmpty_fails_when_empty() {
+        val actual = ""
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("").isNotEmpty()
+                assertThat(actual).isNotEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(\"\").isNotEmpty()"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNotEmpty()
+            |          |
+            |
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isNullOrEmpty tests
@@ -57,11 +85,24 @@ class CharSequenceTest {
     @Test
     fun isNullOrEmpty_fails_when_not_empty() {
         val str: String? = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(str).isNullOrEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(str).isNullOrEmpty()"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(str).isNullOrEmpty()
+            |          |
+            |          hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // hasLength tests
@@ -72,11 +113,25 @@ class CharSequenceTest {
 
     @Test
     fun hasLength_fails_when_length_differs() {
+        val actual = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello").hasLength(3)
+                assertThat(actual).hasLength(3)
             }
-        assertTrue(error.message!!.contains("assertThat(\"hello\").hasLength(3)"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).hasLength(3)
+            |          |
+            |          hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // hasSameLengthAs tests
@@ -87,11 +142,27 @@ class CharSequenceTest {
 
     @Test
     fun hasSameLengthAs_fails_when_lengths_differ() {
+        val actual = "hello"
+        val other = "hi"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello").hasSameLengthAs("hi")
+                assertThat(actual).hasSameLengthAs(other)
             }
-        assertTrue(error.message!!.contains("assertThat(\"hello\").hasSameLengthAs(\"hi\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).hasSameLengthAs(other)
+            |          |                       |
+            |          |                       hi
+            |          hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // hasLineCount tests
@@ -107,11 +178,22 @@ class CharSequenceTest {
 
     @Test
     fun hasLineCount_fails_when_count_differs() {
+        val actual = "line1\nline2"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("line1\nline2").hasLineCount(3)
+                assertThat(actual).hasLineCount(3)
             }
-        assertTrue(error.message!!.contains("hasLineCount(3)"))
+        val message = error.message!!
+
+        assertTrue(
+            message.contains("assertThat(actual).hasLineCount(3)"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("line1"),
+            "Should show actual value"
+        )
     }
 
     // contains single tests
@@ -127,11 +209,25 @@ class CharSequenceTest {
 
     @Test
     fun contains_fails_when_substring_not_found() {
+        val actual = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello").contains("xyz")
+                assertThat(actual).contains("xyz")
             }
-        assertTrue(error.message!!.contains("contains(\"xyz\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).contains("xyz")
+            |          |
+            |          hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // contains vararg tests
@@ -142,11 +238,25 @@ class CharSequenceTest {
 
     @Test
     fun contains_vararg_fails_when_any_missing() {
+        val actual = "hello world"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello world").contains("hello", "xyz")
+                assertThat(actual).contains("hello", "xyz")
             }
-        assertTrue(error.message!!.contains("contains(\"hello\", \"xyz\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).contains("hello", "xyz")
+            |          |
+            |          hello world
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // contains Iterable tests
@@ -157,11 +267,27 @@ class CharSequenceTest {
 
     @Test
     fun contains_iterable_fails_when_any_missing() {
+        val actual = "hello world"
+        val values = listOf("hello", "xyz")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello world").contains(listOf("hello", "xyz"))
+                assertThat(actual).contains(values)
             }
-        assertTrue(error.message!!.contains("contains(listOf(\"hello\", \"xyz\"))"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).contains(values)
+            |          |                |
+            |          |                [hello, xyz]
+            |          hello world
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // doesNotContain single tests
@@ -172,11 +298,25 @@ class CharSequenceTest {
 
     @Test
     fun doesNotContain_fails_when_substring_found() {
+        val actual = "hello world"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello world").doesNotContain("world")
+                assertThat(actual).doesNotContain("world")
             }
-        assertTrue(error.message!!.contains("doesNotContain(\"world\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).doesNotContain("world")
+            |          |
+            |          hello world
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // doesNotContain vararg tests
@@ -187,11 +327,25 @@ class CharSequenceTest {
 
     @Test
     fun doesNotContain_vararg_fails_when_any_found() {
+        val actual = "hello world"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello world").doesNotContain("xyz", "world")
+                assertThat(actual).doesNotContain("xyz", "world")
             }
-        assertTrue(error.message!!.contains("doesNotContain(\"xyz\", \"world\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).doesNotContain("xyz", "world")
+            |          |
+            |          hello world
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // doesNotContain Iterable tests
@@ -202,11 +356,27 @@ class CharSequenceTest {
 
     @Test
     fun doesNotContain_iterable_fails_when_any_found() {
+        val actual = "hello world"
+        val values = listOf("xyz", "world")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello world").doesNotContain(listOf("xyz", "world"))
+                assertThat(actual).doesNotContain(values)
             }
-        assertTrue(error.message!!.contains("doesNotContain(listOf(\"xyz\", \"world\"))"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).doesNotContain(values)
+            |          |                      |
+            |          |                      [xyz, world]
+            |          hello world
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // startsWith tests
@@ -222,11 +392,25 @@ class CharSequenceTest {
 
     @Test
     fun startsWith_fails_when_prefix_not_match() {
+        val actual = "hello world"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello world").startsWith("world")
+                assertThat(actual).startsWith("world")
             }
-        assertTrue(error.message!!.contains("startsWith(\"world\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).startsWith("world")
+            |          |
+            |          hello world
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // endsWith tests
@@ -242,11 +426,25 @@ class CharSequenceTest {
 
     @Test
     fun endsWith_fails_when_suffix_not_match() {
+        val actual = "hello world"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello world").endsWith("hello")
+                assertThat(actual).endsWith("hello")
             }
-        assertTrue(error.message!!.contains("endsWith(\"hello\")"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).endsWith("hello")
+            |          |
+            |          hello world
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // matches tests
@@ -257,11 +455,23 @@ class CharSequenceTest {
 
     @Test
     fun matches_fails_when_regex_not_match() {
+        val actual = "hello"
+        val pattern = Regex("\\d+")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello").matches(Regex("\\d+"))
+                assertThat(actual).matches(pattern)
             }
-        assertTrue(error.message!!.contains("matches(Regex(\"\\\\d+\"))"))
+        val message = error.message!!
+
+        assertTrue(
+            message.contains("assertThat(actual).matches(pattern)"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("hello"),
+            "Should show actual value"
+        )
     }
 
     // containsMatch tests
@@ -272,11 +482,23 @@ class CharSequenceTest {
 
     @Test
     fun containsMatch_fails_when_regex_not_found() {
+        val actual = "hello"
+        val pattern = Regex("\\d+")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello").containsMatch(Regex("\\d+"))
+                assertThat(actual).containsMatch(pattern)
             }
-        assertTrue(error.message!!.contains("containsMatch(Regex(\"\\\\d+\"))"))
+        val message = error.message!!
+
+        assertTrue(
+            message.contains("assertThat(actual).containsMatch(pattern)"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("hello"),
+            "Should show actual value"
+        )
     }
 
     // Custom message support test
