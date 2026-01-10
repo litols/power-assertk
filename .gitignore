@@ -127,3 +127,11 @@ gradle-app.setting
 hs_err_pid*
 replay_pid*
 
+# Code quality reports
+**/build/reports/detekt/
+**/build/reports/ktlint/
+
+# Build logic
+build-logic/.gradle/
+build-logic/conventions/build/
+

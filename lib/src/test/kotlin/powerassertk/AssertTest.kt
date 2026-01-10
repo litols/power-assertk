@@ -4,10 +4,12 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-data class Person(val name: String, val age: Int)
+data class Person(
+    val name: String,
+    val age: Int,
+)
 
 class AssertTest {
-
     @Test
     fun isEqualTo_succeeds_when_values_are_equal() {
         assertThat(42).isEqualTo(42)
@@ -17,53 +19,68 @@ class AssertTest {
 
     @Test
     fun isEqualTo_fails_with_correct_error_message() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(42).isEqualTo(100)
-        }
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(42).isEqualTo(100)
+            }
         val message = error.message!!
 
         // Power Assert のフォーマット全体を確認
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(42).isEqualTo(100)
             |
-        """.trimIndent()
+            """.trimIndent()
 
-        assertTrue(message.contains(expectedFormat), "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message")
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isEqualTo_shows_power_assert_intermediate_values() {
         val person = Person("Alice", 30)
-        val error = assertFailsWith<AssertionError> {
-            assertThat(person.name).isEqualTo("Bob")
-        }
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(person.name).isEqualTo("Bob")
+            }
         val message = error.message!!
 
         // Power Assert の複数行フォーマット全体を確認
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(person.name).isEqualTo("Bob")
             |          |      |
             |          |      Alice
             |          Person(name=Alice, age=30)
-        """.trimIndent()
+            """.trimIndent()
 
-        assertTrue(message.contains(expectedFormat), "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message")
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isEqualTo_fails_with_custom_message() {
-        val error = assertFailsWith<AssertionError> {
-            assertThat(5).isEqualTo(10) { "Custom error: values don't match" }
-        }
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(5).isEqualTo(10) { "Custom error: values don't match" }
+            }
         val message = error.message!!
 
         // カスタムメッセージのフォーマット全体を確認
-        val expectedFormat = """
+        val expectedFormat =
+            """
             Custom error: values don't match
             assertThat(5).isEqualTo(10) { "Custom error: values don't match" }
             |
-        """.trimIndent()
+            """.trimIndent()
 
-        assertTrue(message.contains(expectedFormat), "Should show proper custom message format:\nExpected:\n$expectedFormat\nActual:\n$message")
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper custom message format:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 }

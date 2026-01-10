@@ -6,6 +6,11 @@
  * This project uses @Incubating APIs which are subject to change.
  */
 
+// Include build-logic for convention plugins
+pluginManagement {
+    includeBuild("build-logic")
+}
+
 plugins {
     // Apply the foojay-resolver plugin to allow automatic download of JDKs
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"

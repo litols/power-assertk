@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.power.assert)
+    id("conventions.linting")
     `java-library`
 }
 
@@ -26,8 +27,9 @@ java {
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
 powerAssert {
-    functions = listOf(
-        "powerassertk.isEqualTo"
-    )
+    functions =
+        listOf(
+            "powerassertk.isEqualTo",
+        )
     includedSourceSets = listOf("test")
 }
