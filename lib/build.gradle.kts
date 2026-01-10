@@ -188,7 +188,8 @@ powerAssert {
         "powerassertk.hasNoCause",
         "powerassertk.hasRootCause",
         // Wave 4.2: Result assertions
-        // Note: isSuccess(), isFailure() are transformation methods without message parameters
+        "powerassertk.isSuccess",
+        "powerassertk.isFailure",
         // Wave 4.3: Predicate assertions
         // Note: matchesPredicate() takes a function parameter, which may confuse Power Assert
         // "powerassertk.matchesPredicate",

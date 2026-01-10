@@ -32,34 +32,65 @@ class AnyJvmTest {
 
     @Test
     fun isDataClassEqualTo_fails_when_not_equal() {
-        val person1 = Person("Alice", 30, "NYC")
-        val person2 = Person("Bob", 25, "LA")
+        data class Team(val leader: Person)
+        val team = Team(Person("Alice", 30, "NYC"))
+        val expected = Person("Bob", 25, "LA")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(person1).isDataClassEqualTo(person2)
+                assertThat(team.leader).isDataClassEqualTo(expected)
             }
+        val message = error.message!!
+
         assertTrue(
-            error.message!!.contains("isDataClassEqualTo") ||
-                error.message!!.contains("expected:<") ||
-                error.message!!.contains("Person"),
+            message.contains("assertThat(team.leader).isDataClassEqualTo(expected)"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("Team"),
+            "Should show Team"
+        )
+        assertTrue(
+            message.contains("Person(name=Alice, age=30, city=NYC)"),
+            "Should show actual person"
+        )
+        assertTrue(
+            message.contains("Person(name=Bob, age=25, city=LA)"),
+            "Should show expected person"
         )
     }
 
     @Test
     fun isDataClassEqualTo_fails_when_different_class() {
         data class OtherPerson(val name: String, val age: Int, val city: String)
+        data class Container(val value: Any)
 
         val person = Person("Alice", 30, "NYC")
         val otherPerson = OtherPerson("Alice", 30, "NYC")
+        val container = Container(person)
+
         val error =
             assertFailsWith<AssertionError> {
                 @Suppress("UNCHECKED_CAST")
-                assertThat(person as Any).isDataClassEqualTo(otherPerson)
+                assertThat(container.value).isDataClassEqualTo(otherPerson)
             }
+        val message = error.message!!
+
         assertTrue(
-            error.message!!.contains("expected class") ||
-                error.message!!.contains("isDataClassEqualTo") ||
-                error.message!!.contains("isEqualToIgnoringGivenProperties"),
+            message.contains("assertThat(container.value).isDataClassEqualTo(otherPerson)"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("Container"),
+            "Should show Container"
+        )
+        assertTrue(
+            message.contains("Person(name=Alice, age=30, city=NYC)"),
+            "Should show Person"
+        )
+        assertTrue(
+            message.contains("OtherPerson(name=Alice, age=30, city=NYC)"),
+            "Should show OtherPerson"
         )
     }
 
@@ -95,18 +126,34 @@ class AnyJvmTest {
     @Test
     fun isEqualToIgnoringGivenProperties_fails_when_different_class() {
         data class OtherPerson(val name: String, val age: Int, val city: String)
+        data class Container(val value: Any)
 
         val person = Person("Alice", 30, "NYC")
         val otherPerson = OtherPerson("Alice", 30, "NYC")
+        val container = Container(person)
+
         val error =
             assertFailsWith<AssertionError> {
                 @Suppress("UNCHECKED_CAST")
-                assertThat(person as Any).isEqualToIgnoringGivenProperties(otherPerson)
+                assertThat(container.value).isEqualToIgnoringGivenProperties(otherPerson)
             }
+        val message = error.message!!
+
         assertTrue(
-            error.message!!.contains("expected class") ||
-                error.message!!.contains("isDataClassEqualTo") ||
-                error.message!!.contains("isEqualToIgnoringGivenProperties"),
+            message.contains("assertThat(container.value).isEqualToIgnoringGivenProperties(otherPerson)"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("Container"),
+            "Should show Container"
+        )
+        assertTrue(
+            message.contains("Person(name=Alice, age=30, city=NYC)"),
+            "Should show Person"
+        )
+        assertTrue(
+            message.contains("OtherPerson(name=Alice, age=30, city=NYC)"),
+            "Should show OtherPerson"
         )
     }
 }

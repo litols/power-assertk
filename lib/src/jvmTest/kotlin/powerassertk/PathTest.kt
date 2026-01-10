@@ -33,12 +33,28 @@ class PathTest {
 
     @Test
     fun exists_fails_when_path_does_not_exist() {
-        val path = Path.of("/nonexistent/path/file.txt")
+        data class PathContainer(val path: Path)
+        val container = PathContainer(Path.of("/nonexistent/path/file.txt"))
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(path).exists()
+                assertThat(container.path).exists()
             }
-        assertTrue(error.message!!.contains("exists") || error.message!!.contains("expected to exist"))
+        val message = error.message!!
+
+        // Path toString() is platform-dependent, so we verify key parts
+        assertTrue(
+            message.contains("assertThat(container.path).exists()"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("PathContainer"),
+            "Should show PathContainer"
+        )
+        assertTrue(
+            message.contains("nonexistent"),
+            "Should show the path"
+        )
     }
 
     @Test
@@ -60,12 +76,24 @@ class PathTest {
 
     @Test
     fun isDirectory_fails_when_is_file() {
+        data class PathContainer(val path: Path)
         val file = createTempFilePath()
+        val container = PathContainer(file)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(file).isDirectory()
+                assertThat(container.path).isDirectory()
             }
-        assertTrue(error.message!!.contains("isDirectory") || error.message!!.contains("expected to be a directory"))
+        val message = error.message!!
+
+        assertTrue(
+            message.contains("assertThat(container.path).isDirectory()"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("PathContainer"),
+            "Should show PathContainer"
+        )
     }
 
     @Test
@@ -87,12 +115,24 @@ class PathTest {
 
     @Test
     fun isRegularFile_fails_when_is_directory() {
+        data class PathContainer(val path: Path)
         val dir = createTempDirectoryPath()
+        val container = PathContainer(dir)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(dir).isRegularFile()
+                assertThat(container.path).isRegularFile()
             }
-        assertTrue(error.message!!.contains("isRegularFile") || error.message!!.contains("expected to be a regular file"))
+        val message = error.message!!
+
+        assertTrue(
+            message.contains("assertThat(container.path).isRegularFile()"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("PathContainer"),
+            "Should show PathContainer"
+        )
     }
 
     @Test
@@ -121,12 +161,24 @@ class PathTest {
 
     @Test
     fun isSymbolicLink_fails_when_is_not_symlink() {
+        data class PathContainer(val path: Path)
         val file = createTempFilePath()
+        val container = PathContainer(file)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(file).isSymbolicLink()
+                assertThat(container.path).isSymbolicLink()
             }
-        assertTrue(error.message!!.contains("isSymbolicLink") || error.message!!.contains("expected to be a symbolic link"))
+        val message = error.message!!
+
+        assertTrue(
+            message.contains("assertThat(container.path).isSymbolicLink()"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("PathContainer"),
+            "Should show PathContainer"
+        )
     }
 
     // isHidden tests
@@ -144,13 +196,25 @@ class PathTest {
 
     @Test
     fun isHidden_fails_when_is_not_hidden() {
+        data class PathContainer(val path: Path)
         val file = createTempFilePath()
+        val container = PathContainer(file)
+
         if (!file.toFile().isHidden) {
             val error =
                 assertFailsWith<AssertionError> {
-                    assertThat(file).isHidden()
+                    assertThat(container.path).isHidden()
                 }
-            assertTrue(error.message!!.contains("isHidden") || error.message!!.contains("expected to be hidden"))
+            val message = error.message!!
+
+            assertTrue(
+                message.contains("assertThat(container.path).isHidden()"),
+                "Should show assertion expression"
+            )
+            assertTrue(
+                message.contains("PathContainer"),
+                "Should show PathContainer"
+            )
         }
     }
 
@@ -163,14 +227,26 @@ class PathTest {
 
     @Test
     fun isReadable_fails_when_is_not_readable() {
+        data class PathContainer(val path: Path)
         val file = createTempFilePath()
+        val container = PathContainer(file)
+
         file.toFile().setReadable(false)
         if (!file.toFile().canRead()) {
             val error =
                 assertFailsWith<AssertionError> {
-                    assertThat(file).isReadable()
+                    assertThat(container.path).isReadable()
                 }
-            assertTrue(error.message!!.contains("isReadable") || error.message!!.contains("expected to be readable"))
+            val message = error.message!!
+
+            assertTrue(
+                message.contains("assertThat(container.path).isReadable()"),
+                "Should show assertion expression"
+            )
+            assertTrue(
+                message.contains("PathContainer"),
+                "Should show PathContainer"
+            )
         }
         file.toFile().setReadable(true) // Restore permissions
     }
@@ -184,14 +260,26 @@ class PathTest {
 
     @Test
     fun isWritable_fails_when_is_not_writable() {
+        data class PathContainer(val path: Path)
         val file = createTempFilePath()
+        val container = PathContainer(file)
+
         file.toFile().setWritable(false)
         if (!file.toFile().canWrite()) {
             val error =
                 assertFailsWith<AssertionError> {
-                    assertThat(file).isWritable()
+                    assertThat(container.path).isWritable()
                 }
-            assertTrue(error.message!!.contains("isWritable") || error.message!!.contains("expected to be writable"))
+            val message = error.message!!
+
+            assertTrue(
+                message.contains("assertThat(container.path).isWritable()"),
+                "Should show assertion expression"
+            )
+            assertTrue(
+                message.contains("PathContainer"),
+                "Should show PathContainer"
+            )
         }
         file.toFile().setWritable(true) // Restore permissions
     }
@@ -208,14 +296,26 @@ class PathTest {
 
     @Test
     fun isExecutable_fails_when_is_not_executable() {
+        data class PathContainer(val path: Path)
         val file = createTempFilePath()
+        val container = PathContainer(file)
+
         file.toFile().setExecutable(false)
         if (!file.toFile().canExecute()) {
             val error =
                 assertFailsWith<AssertionError> {
-                    assertThat(file).isExecutable()
+                    assertThat(container.path).isExecutable()
                 }
-            assertTrue(error.message!!.contains("isExecutable") || error.message!!.contains("expected to be executable"))
+            val message = error.message!!
+
+            assertTrue(
+                message.contains("assertThat(container.path).isExecutable()"),
+                "Should show assertion expression"
+            )
+            assertTrue(
+                message.contains("PathContainer"),
+                "Should show PathContainer"
+            )
         }
     }
 
@@ -228,13 +328,25 @@ class PathTest {
 
     @Test
     fun isSameFileAs_fails_when_different_file() {
+        data class PathContainer(val path: Path)
         val file1 = createTempFilePath()
         val file2 = createTempFilePath()
+        val container = PathContainer(file1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(file1).isSameFileAs(file2)
+                assertThat(container.path).isSameFileAs(file2)
             }
-        assertTrue(error.message!!.contains("isSameFileAs") || error.message!!.contains("expected to be same file"))
+        val message = error.message!!
+
+        assertTrue(
+            message.contains("assertThat(container.path).isSameFileAs"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("PathContainer"),
+            "Should show PathContainer"
+        )
     }
 
     @Test

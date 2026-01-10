@@ -15,17 +15,55 @@ class ResultTest {
     @Test
     fun isSuccess_fails_when_result_is_failure() {
         val result: Result<Int> = Result.failure(RuntimeException("error"))
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(result).isSuccess()
             }
-        assertTrue(error.message!!.contains("expected success but was failure"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(result).isSuccess()
+            |          |
+            |          Failure(java.lang.RuntimeException: error)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun isSuccess_allows_chaining() {
         val result: Result<String> = Result.success("test")
         assertThat(result).isSuccess().hasLength(4)
+    }
+
+    @Test
+    fun isSuccess_shows_power_assert_with_property_chain() {
+        data class Response(val result: Result<Int>)
+        val response = Response(Result.failure(RuntimeException("error")))
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(response.result).isSuccess()
+            }
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(response.result).isSuccess()
+            |          |        |
+            |          |        Failure(java.lang.RuntimeException: error)
+            |          Response(result=Failure(java.lang.RuntimeException: error))
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isFailure tests
@@ -39,11 +77,24 @@ class ResultTest {
     @Test
     fun isFailure_fails_when_result_is_success() {
         val result: Result<Int> = Result.success(42)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(result).isFailure()
             }
-        assertTrue(error.message!!.contains("expected failure but was success"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(result).isFailure()
+            |          |
+            |          Success(42)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test

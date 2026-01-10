@@ -33,12 +33,26 @@ class OptionalTest {
 
     @Test
     fun isEmpty_fails_when_optional_has_value() {
-        val optional = Optional.of("test")
+        data class OptionalContainer(val optional: Optional<String>)
+        val container = OptionalContainer(Optional.of("test"))
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(optional).isEmpty()
+                assertThat(container.optional).isEmpty()
             }
-        assertTrue(error.message!!.contains("isEmpty") || error.message!!.contains("expected to be empty"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(container.optional).isEmpty()
+            |          |         |
+            |          |         Optional[test]
+            |          OptionalContainer(optional=Optional[test])
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     @Test
@@ -60,22 +74,50 @@ class OptionalTest {
 
     @Test
     fun hasValue_fails_when_value_does_not_match() {
-        val optional = Optional.of("test")
+        data class OptionalContainer(val optional: Optional<String>)
+        val container = OptionalContainer(Optional.of("test"))
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(optional).hasValue("different")
+                assertThat(container.optional).hasValue("different")
             }
-        assertTrue(error.message!!.contains("hasValue") || error.message!!.contains("expected:<\"different\">"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(container.optional).hasValue("different")
+            |          |         |
+            |          |         Optional[test]
+            |          OptionalContainer(optional=Optional[test])
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     @Test
     fun hasValue_fails_when_optional_is_empty() {
-        val optional = Optional.empty<String>()
+        data class OptionalContainer(val optional: Optional<String>)
+        val container = OptionalContainer(Optional.empty())
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(optional).hasValue("test")
+                assertThat(container.optional).hasValue("test")
             }
-        assertTrue(error.message!!.contains("hasValue") || error.message!!.contains("expected to have value"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(container.optional).hasValue("test")
+            |          |         |
+            |          |         Optional.empty
+            |          OptionalContainer(optional=Optional.empty)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     @Test

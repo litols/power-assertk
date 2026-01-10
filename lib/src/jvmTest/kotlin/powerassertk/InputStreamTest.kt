@@ -18,15 +18,25 @@ class InputStreamTest {
 
     @Test
     fun hasSameContentAs_fails_when_content_differs() {
+        data class StreamContainer(val stream: InputStream)
         val stream1: InputStream = ByteArrayInputStream("Hello".toByteArray())
         val stream2: InputStream = ByteArrayInputStream("World".toByteArray())
+        val container = StreamContainer(stream1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(stream1).hasSameContentAs(stream2)
+                assertThat(container.stream).hasSameContentAs(stream2)
             }
+        val message = error.message!!
+
+        // InputStream toString() shows object addresses, so we verify structure
         assertTrue(
-            error.message!!.contains("hasSameContentAs") ||
-                error.message!!.contains("expected streams to have same content"),
+            message.contains("assertThat(container.stream).hasSameContentAs"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("StreamContainer"),
+            "Should show StreamContainer"
         )
     }
 
@@ -58,16 +68,26 @@ class InputStreamTest {
 
     @Test
     fun hasNotSameContentAs_fails_when_content_is_same() {
+        data class StreamContainer(val stream: InputStream)
         val content = "Hello World"
         val stream1: InputStream = ByteArrayInputStream(content.toByteArray())
         val stream2: InputStream = ByteArrayInputStream(content.toByteArray())
+        val container = StreamContainer(stream1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(stream1).hasNotSameContentAs(stream2)
+                assertThat(container.stream).hasNotSameContentAs(stream2)
             }
+        val message = error.message!!
+
+        // InputStream toString() shows object addresses, so we verify structure
         assertTrue(
-            error.message!!.contains("hasNotSameContentAs") ||
-                error.message!!.contains("expected streams to have different content"),
+            message.contains("assertThat(container.stream).hasNotSameContentAs"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("StreamContainer"),
+            "Should show StreamContainer"
         )
     }
 

@@ -34,11 +34,25 @@ class ThrowableTest {
     @Test
     fun hasMessage_fails_when_message_differs() {
         val exception = RuntimeException("actual")
+        val expected = "expected"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(exception).hasMessage("expected")
+                assertThat(exception).hasMessage(expected)
             }
-        assertTrue(error.message!!.contains("hasMessage"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(exception).hasMessage(expected)
+            |          |                     |
+            |          |                     expected
+            |          java.lang.RuntimeException: actual
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // messageContains tests
@@ -51,21 +65,49 @@ class ThrowableTest {
     @Test
     fun messageContains_fails_when_text_not_found() {
         val exception = RuntimeException("this is a test message")
+        val text = "missing"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(exception).messageContains("missing")
+                assertThat(exception).messageContains(text)
             }
-        assertTrue(error.message!!.contains("messageContains"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(exception).messageContains(text)
+            |          |                          |
+            |          |                          missing
+            |          java.lang.RuntimeException: this is a test message
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     @Test
     fun messageContains_fails_when_message_is_null() {
         val exception = RuntimeException()
+        val text = "test"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(exception).messageContains("test")
+                assertThat(exception).messageContains(text)
             }
-        assertTrue(error.message!!.contains("messageContains"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(exception).messageContains(text)
+            |          |                          |
+            |          |                          test
+            |          java.lang.RuntimeException
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // cause tests
@@ -93,33 +135,75 @@ class ThrowableTest {
     @Test
     fun hasCause_fails_when_no_cause() {
         val exception = RuntimeException("no cause")
+        val expected = IllegalArgumentException("expected")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(exception).hasCause(IllegalArgumentException("expected"))
+                assertThat(exception).hasCause(expected)
             }
-        assertTrue(error.message!!.contains("hasCause"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(exception).hasCause(expected)
+            |          |                   |
+            |          |                   java.lang.IllegalArgumentException: expected
+            |          java.lang.RuntimeException: no cause
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     @Test
     fun hasCause_fails_when_type_differs() {
         val cause = IllegalArgumentException("message")
         val exception = RuntimeException("wrapper", cause)
+        val expected = IllegalStateException("message")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(exception).hasCause(IllegalStateException("message"))
+                assertThat(exception).hasCause(expected)
             }
-        assertTrue(error.message!!.contains("hasCause"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(exception).hasCause(expected)
+            |          |                   |
+            |          |                   java.lang.IllegalStateException: message
+            |          java.lang.RuntimeException: wrapper
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     @Test
     fun hasCause_fails_when_message_differs() {
         val cause = IllegalArgumentException("actual")
         val exception = RuntimeException("wrapper", cause)
+        val expected = IllegalArgumentException("expected")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(exception).hasCause(IllegalArgumentException("expected"))
+                assertThat(exception).hasCause(expected)
             }
-        assertTrue(error.message!!.contains("hasCause"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(exception).hasCause(expected)
+            |          |                   |
+            |          |                   java.lang.IllegalArgumentException: expected
+            |          java.lang.RuntimeException: wrapper
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // hasNoCause tests
@@ -133,11 +217,23 @@ class ThrowableTest {
     fun hasNoCause_fails_when_cause_exists() {
         val cause = IllegalArgumentException("cause")
         val exception = RuntimeException("wrapper", cause)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(exception).hasNoCause()
             }
-        assertTrue(error.message!!.contains("hasNoCause"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(exception).hasNoCause()
+            |          |
+            |          java.lang.RuntimeException: wrapper
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // rootCause tests
@@ -171,33 +267,129 @@ class ThrowableTest {
     @Test
     fun hasRootCause_fails_when_no_cause() {
         val exception = RuntimeException("no cause")
+        val expected = IllegalArgumentException("expected")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(exception).hasRootCause(IllegalArgumentException("expected"))
+                assertThat(exception).hasRootCause(expected)
             }
-        assertTrue(error.message!!.contains("hasRootCause"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(exception).hasRootCause(expected)
+            |          |                       |
+            |          |                       java.lang.IllegalArgumentException: expected
+            |          java.lang.RuntimeException: no cause
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     @Test
     fun hasRootCause_fails_when_type_differs() {
         val root = IllegalArgumentException("message")
         val exception = RuntimeException("wrapper", root)
+        val expected = IllegalStateException("message")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(exception).hasRootCause(IllegalStateException("message"))
+                assertThat(exception).hasRootCause(expected)
             }
-        assertTrue(error.message!!.contains("hasRootCause"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(exception).hasRootCause(expected)
+            |          |                       |
+            |          |                       java.lang.IllegalStateException: message
+            |          java.lang.RuntimeException: wrapper
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     @Test
     fun hasRootCause_fails_when_message_differs() {
         val root = IllegalArgumentException("actual")
         val exception = RuntimeException("wrapper", root)
+        val expected = IllegalArgumentException("expected")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(exception).hasRootCause(IllegalArgumentException("expected"))
+                assertThat(exception).hasRootCause(expected)
             }
-        assertTrue(error.message!!.contains("hasRootCause"))
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(exception).hasRootCause(expected)
+            |          |                       |
+            |          |                       java.lang.IllegalArgumentException: expected
+            |          java.lang.RuntimeException: wrapper
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
+    }
+
+    // Property chain tests
+    @Test
+    fun hasMessage_shows_power_assert_with_property_chain() {
+        data class ErrorInfo(val exception: Throwable)
+        val info = ErrorInfo(RuntimeException("actual"))
+        val expected = "expected"
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(info.exception).hasMessage(expected)
+            }
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(info.exception).hasMessage(expected)
+            |          |    |                     |
+            |          |    |                     expected
+            |          |    java.lang.RuntimeException: actual
+            |          ErrorInfo(exception=java.lang.RuntimeException: actual)
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
+    }
+
+    @Test
+    fun hasCause_shows_power_assert_with_property_chain() {
+        data class ErrorInfo(val exception: Throwable)
+        val cause = IllegalArgumentException("cause")
+        val info = ErrorInfo(RuntimeException("wrapper", cause))
+        val expected = IllegalStateException("expected")
+
+        val error =
+            assertFailsWith<AssertionError> {
+                assertThat(info.exception).hasCause(expected)
+            }
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(info.exception).hasCause(expected)
+            |          |    |                   |
+            |          |    |                   java.lang.IllegalStateException: expected
+            |          |    java.lang.RuntimeException: wrapper
+            |          ErrorInfo(exception=java.lang.RuntimeException: wrapper)
+        """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // Chaining tests

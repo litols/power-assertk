@@ -14,12 +14,25 @@ class ComparableTest {
 
     @Test
     fun isGreaterThan_fails_with_power_assert_format() {
-        val error =
-            assertFailsWith<AssertionError> {
-                assertThat(5).isGreaterThan(10)
-            }
+        val actual = 5
+        val expected = 10
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(actual).isGreaterThan(expected)
+        }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(5).isGreaterThan(10)"))
+
+        val expectedFormat = """
+            assertThat(actual).isGreaterThan(expected)
+            |          |                     |
+            |          |                     10
+            |          5
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // isLessThan tests
@@ -31,12 +44,25 @@ class ComparableTest {
 
     @Test
     fun isLessThan_fails_with_power_assert_format() {
-        val error =
-            assertFailsWith<AssertionError> {
-                assertThat(10).isLessThan(5)
-            }
+        val actual = 10
+        val expected = 5
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(actual).isLessThan(expected)
+        }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(10).isLessThan(5)"))
+
+        val expectedFormat = """
+            assertThat(actual).isLessThan(expected)
+            |          |                  |
+            |          |                  5
+            |          10
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // isGreaterThanOrEqualTo tests
@@ -48,12 +74,25 @@ class ComparableTest {
 
     @Test
     fun isGreaterThanOrEqualTo_fails_with_power_assert_format() {
-        val error =
-            assertFailsWith<AssertionError> {
-                assertThat(5).isGreaterThanOrEqualTo(10)
-            }
+        val actual = 5
+        val expected = 10
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(actual).isGreaterThanOrEqualTo(expected)
+        }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(5).isGreaterThanOrEqualTo(10)"))
+
+        val expectedFormat = """
+            assertThat(actual).isGreaterThanOrEqualTo(expected)
+            |          |                              |
+            |          |                              10
+            |          5
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // isLessThanOrEqualTo tests
@@ -65,12 +104,25 @@ class ComparableTest {
 
     @Test
     fun isLessThanOrEqualTo_fails_with_power_assert_format() {
-        val error =
-            assertFailsWith<AssertionError> {
-                assertThat(10).isLessThanOrEqualTo(5)
-            }
+        val actual = 10
+        val expected = 5
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(actual).isLessThanOrEqualTo(expected)
+        }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(10).isLessThanOrEqualTo(5)"))
+
+        val expectedFormat = """
+            assertThat(actual).isLessThanOrEqualTo(expected)
+            |          |                           |
+            |          |                           5
+            |          10
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // isBetween tests
@@ -83,12 +135,27 @@ class ComparableTest {
 
     @Test
     fun isBetween_fails_with_power_assert_format() {
-        val error =
-            assertFailsWith<AssertionError> {
-                assertThat(15).isBetween(1, 10)
-            }
+        val actual = 15
+        val start = 1
+        val end = 10
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(actual).isBetween(start, end)
+        }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(15).isBetween(1, 10)"))
+
+        val expectedFormat = """
+            assertThat(actual).isBetween(start, end)
+            |          |                 |      |
+            |          |                 |      10
+            |          |                 1
+            |          15
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // isStrictlyBetween tests
@@ -109,12 +176,27 @@ class ComparableTest {
 
     @Test
     fun isStrictlyBetween_fails_with_power_assert_format() {
-        val error =
-            assertFailsWith<AssertionError> {
-                assertThat(15).isStrictlyBetween(1, 10)
-            }
+        val actual = 15
+        val start = 1
+        val end = 10
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(actual).isStrictlyBetween(start, end)
+        }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(15).isStrictlyBetween(1, 10)"))
+
+        val expectedFormat = """
+            assertThat(actual).isStrictlyBetween(start, end)
+            |          |                         |      |
+            |          |                         |      10
+            |          |                         1
+            |          15
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // isCloseTo Double tests
@@ -126,12 +208,27 @@ class ComparableTest {
 
     @Test
     fun isCloseTo_double_fails_with_power_assert_format() {
-        val error =
-            assertFailsWith<AssertionError> {
-                assertThat(10.0).isCloseTo(15.0, 1.0)
-            }
+        val actual = 10.0
+        val expected = 15.0
+        val delta = 1.0
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(actual).isCloseTo(expected, delta)
+        }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(10.0).isCloseTo(15.0, 1.0)"))
+
+        val expectedFormat = """
+            assertThat(actual).isCloseTo(expected, delta)
+            |          |                 |         |
+            |          |                 |         1.0
+            |          |                 15.0
+            |          10.0
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // isCloseTo Float tests
@@ -143,12 +240,27 @@ class ComparableTest {
 
     @Test
     fun isCloseTo_float_fails_with_power_assert_format() {
-        val error =
-            assertFailsWith<AssertionError> {
-                assertThat(10.0f).isCloseTo(15.0f, 1.0f)
-            }
+        val actual = 10.0f
+        val expected = 15.0f
+        val delta = 1.0f
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(actual).isCloseTo(expected, delta)
+        }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(10.0f).isCloseTo(15.0f, 1.0f)"))
+
+        val expectedFormat = """
+            assertThat(actual).isCloseTo(expected, delta)
+            |          |                 |         |
+            |          |                 |         1.0
+            |          |                 15.0
+            |          10.0
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     // isEqualByComparingTo tests
@@ -160,12 +272,25 @@ class ComparableTest {
 
     @Test
     fun isEqualByComparingTo_fails_with_power_assert_format() {
-        val error =
-            assertFailsWith<AssertionError> {
-                assertThat(10).isEqualByComparingTo(20)
-            }
+        val actual = 10
+        val expected = 20
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(actual).isEqualByComparingTo(expected)
+        }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(10).isEqualByComparingTo(20)"))
+
+        val expectedFormat = """
+            assertThat(actual).isEqualByComparingTo(expected)
+            |          |                            |
+            |          |                            20
+            |          10
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 
     @Test
@@ -176,5 +301,83 @@ class ComparableTest {
             }
         val message = error.message!!
         assertTrue(message.contains("Custom: values differ"))
+    }
+
+    // Property chain tests
+    @Test
+    fun isGreaterThan_shows_power_assert_with_property_chain() {
+        data class Score(val points: Int)
+        val score = Score(5)
+        val threshold = 10
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(score.points).isGreaterThan(threshold)
+        }
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(score.points).isGreaterThan(threshold)
+            |          |     |                     |
+            |          |     |                     10
+            |          |     5
+            |          Score(points=5)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
+    }
+
+    @Test
+    fun isLessThan_shows_power_assert_with_property_chain() {
+        data class Version(val major: Int)
+        val version = Version(10)
+        val minVersion = 5
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(version.major).isLessThan(minVersion)
+        }
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(version.major).isLessThan(minVersion)
+            |          |       |                 |
+            |          |       |                 5
+            |          |       10
+            |          Version(major=10)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
+    }
+
+    @Test
+    fun isBetween_shows_power_assert_with_property_chain() {
+        data class Priority(val level: Int)
+        val priority = Priority(15)
+        val min = 1
+        val max = 10
+
+        val error = assertFailsWith<AssertionError> {
+            assertThat(priority.level).isBetween(min, max)
+        }
+        val message = error.message!!
+
+        val expectedFormat = """
+            assertThat(priority.level).isBetween(min, max)
+            |          |        |                |    |
+            |          |        |                |    10
+            |          |        |                1
+            |          |        15
+            |          Priority(level=15)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+        )
     }
 }

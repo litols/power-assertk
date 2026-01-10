@@ -2,24 +2,20 @@ package powerassertk
 
 /**
  * Asserts the Result is a success and returns an Assert on the value.
- *
- * Note: This is a transformation method without a message parameter.
  */
-fun <T> Assert<Result<T>>.isSuccess(): Assert<T> {
+fun <T> Assert<Result<T>>.isSuccess(message: (() -> String)? = null): Assert<T> {
     if (actual.isFailure) {
-        throw AssertionError("expected success but was failure:<${actual.exceptionOrNull()}>")
+        throw AssertionError(message?.invoke() ?: "expected success but was failure:<${actual.exceptionOrNull()}>")
     }
     return Assert(actual.getOrThrow())
 }
 
 /**
  * Asserts the Result is a failure and returns an Assert on the exception.
- *
- * Note: This is a transformation method without a message parameter.
  */
-fun <T> Assert<Result<T>>.isFailure(): Assert<Throwable> {
+fun <T> Assert<Result<T>>.isFailure(message: (() -> String)? = null): Assert<Throwable> {
     if (actual.isSuccess) {
-        throw AssertionError("expected failure but was success:<${actual.getOrNull()}>")
+        throw AssertionError(message?.invoke() ?: "expected failure but was success:<${actual.getOrNull()}>")
     }
     return Assert(actual.exceptionOrNull()!!)
 }

@@ -33,12 +33,28 @@ class FileTest {
 
     @Test
     fun exists_fails_when_file_does_not_exist() {
-        val file = File("/nonexistent/path/file.txt")
+        data class FileContainer(val file: File)
+        val container = FileContainer(File("/nonexistent/path/file.txt"))
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(file).exists()
+                assertThat(container.file).exists()
             }
-        assertTrue(error.message!!.contains("exists"))
+        val message = error.message!!
+
+        // File toString() is platform-dependent, so we verify key parts
+        assertTrue(
+            message.contains("assertThat(container.file).exists()"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("FileContainer"),
+            "Should show FileContainer"
+        )
+        assertTrue(
+            message.contains("nonexistent"),
+            "Should show the file path"
+        )
     }
 
     @Test
@@ -60,12 +76,29 @@ class FileTest {
 
     @Test
     fun isDirectory_fails_when_is_file() {
+        data class FileContainer(val file: File)
         val file = createTempFile()
+        val container = FileContainer(file)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(file).isDirectory()
+                assertThat(container.file).isDirectory()
             }
-        assertTrue(error.message!!.contains("isDirectory"))
+        val message = error.message!!
+
+        // File toString() is platform-dependent, so we verify key parts
+        assertTrue(
+            message.contains("assertThat(container.file).isDirectory()"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("FileContainer"),
+            "Should show FileContainer"
+        )
+        assertTrue(
+            message.contains(file.name),
+            "Should show the file name"
+        )
     }
 
     @Test
@@ -87,12 +120,29 @@ class FileTest {
 
     @Test
     fun isFile_fails_when_is_directory() {
+        data class FileContainer(val file: File)
         val dir = createTempDirectory()
+        val container = FileContainer(dir)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(dir).isFile()
+                assertThat(container.file).isFile()
             }
-        assertTrue(error.message!!.contains("isFile"))
+        val message = error.message!!
+
+        // File toString() is platform-dependent, so we verify key parts
+        assertTrue(
+            message.contains("assertThat(container.file).isFile()"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("FileContainer"),
+            "Should show FileContainer"
+        )
+        assertTrue(
+            message.contains(dir.name),
+            "Should show the directory name"
+        )
     }
 
     @Test
@@ -120,13 +170,30 @@ class FileTest {
 
     @Test
     fun isHidden_fails_when_is_not_hidden() {
+        data class FileContainer(val file: File)
         val file = createTempFile()
+        val container = FileContainer(file)
+
         if (!file.isHidden) {
             val error =
                 assertFailsWith<AssertionError> {
-                    assertThat(file).isHidden()
+                    assertThat(container.file).isHidden()
                 }
-            assertTrue(error.message!!.contains("isHidden"))
+            val message = error.message!!
+
+            // File toString() is platform-dependent, so we verify key parts
+            assertTrue(
+                message.contains("assertThat(container.file).isHidden()"),
+                "Should show assertion expression"
+            )
+            assertTrue(
+                message.contains("FileContainer"),
+                "Should show FileContainer"
+            )
+            assertTrue(
+                message.contains(file.name),
+                "Should show the file name"
+            )
         }
     }
 
@@ -141,16 +208,33 @@ class FileTest {
 
     @Test
     fun isNotHidden_fails_when_is_hidden() {
+        data class FileContainer(val file: File)
         val dir = createTempDirectory()
         val hiddenFile = File(dir, ".hidden")
         hiddenFile.createNewFile()
         hiddenFile.deleteOnExit()
+        val container = FileContainer(hiddenFile)
+
         if (hiddenFile.isHidden) {
             val error =
                 assertFailsWith<AssertionError> {
-                    assertThat(hiddenFile).isNotHidden()
+                    assertThat(container.file).isNotHidden()
                 }
-            assertTrue(error.message!!.contains("isNotHidden"))
+            val message = error.message!!
+
+            // File toString() is platform-dependent, so we verify key parts
+            assertTrue(
+                message.contains("assertThat(container.file).isNotHidden()"),
+                "Should show assertion expression"
+            )
+            assertTrue(
+                message.contains("FileContainer"),
+                "Should show FileContainer"
+            )
+            assertTrue(
+                message.contains(".hidden"),
+                "Should show the hidden file name"
+            )
         }
     }
 
@@ -163,12 +247,29 @@ class FileTest {
 
     @Test
     fun hasName_fails_when_name_does_not_match() {
+        data class FileContainer(val file: File)
         val file = createTempFile()
+        val container = FileContainer(file)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(file).hasName("different.txt")
+                assertThat(container.file).hasName("different.txt")
             }
-        assertTrue(error.message!!.contains("hasName"))
+        val message = error.message!!
+
+        // File toString() is platform-dependent, so we verify key parts
+        assertTrue(
+            message.contains("assertThat(container.file).hasName(\"different.txt\")"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("FileContainer"),
+            "Should show FileContainer"
+        )
+        assertTrue(
+            message.contains(file.name),
+            "Should show the actual file name"
+        )
     }
 
     @Test
@@ -198,12 +299,29 @@ class FileTest {
 
     @Test
     fun hasPath_fails_when_path_does_not_match() {
+        data class FileContainer(val file: File)
         val file = createTempFile()
+        val container = FileContainer(file)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(file).hasPath("/different/path.txt")
+                assertThat(container.file).hasPath("/different/path.txt")
             }
-        assertTrue(error.message!!.contains("hasPath"))
+        val message = error.message!!
+
+        // File toString() is platform-dependent, so we verify key parts
+        assertTrue(
+            message.contains("assertThat(container.file).hasPath(\"/different/path.txt\")"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("FileContainer"),
+            "Should show FileContainer"
+        )
+        assertTrue(
+            message.contains(file.name),
+            "Should show the file name"
+        )
     }
 
     @Test
@@ -236,12 +354,29 @@ class FileTest {
 
     @Test
     fun hasParent_fails_when_parent_does_not_match() {
+        data class FileContainer(val file: File)
         val file = createTempFile()
+        val container = FileContainer(file)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(file).hasParent("/different/parent")
+                assertThat(container.file).hasParent("/different/parent")
             }
-        assertTrue(error.message!!.contains("hasParent"))
+        val message = error.message!!
+
+        // File toString() is platform-dependent, so we verify key parts
+        assertTrue(
+            message.contains("assertThat(container.file).hasParent(\"/different/parent\")"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("FileContainer"),
+            "Should show FileContainer"
+        )
+        assertTrue(
+            message.contains(file.name),
+            "Should show the file name"
+        )
     }
 
     @Test
@@ -271,12 +406,29 @@ class FileTest {
 
     @Test
     fun hasExtension_fails_when_extension_does_not_match() {
+        data class FileContainer(val file: File)
         val file = createTempFile(suffix = ".txt")
+        val container = FileContainer(file)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(file).hasExtension("md")
+                assertThat(container.file).hasExtension("md")
             }
-        assertTrue(error.message!!.contains("hasExtension"))
+        val message = error.message!!
+
+        // File toString() is platform-dependent, so we verify key parts
+        assertTrue(
+            message.contains("assertThat(container.file).hasExtension(\"md\")"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("FileContainer"),
+            "Should show FileContainer"
+        )
+        assertTrue(
+            message.contains(file.name),
+            "Should show the file name"
+        )
     }
 
     @Test
@@ -309,13 +461,30 @@ class FileTest {
 
     @Test
     fun hasDirectChild_fails_when_child_does_not_exist() {
+        data class FileContainer(val file: File)
         val dir = createTempDirectory()
         val nonExistentChild = File(dir, "nonexistent.txt")
+        val container = FileContainer(dir)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(dir).hasDirectChild(nonExistentChild)
+                assertThat(container.file).hasDirectChild(nonExistentChild)
             }
-        assertTrue(error.message!!.contains("hasDirectChild"))
+        val message = error.message!!
+
+        // File toString() is platform-dependent, so we verify key parts
+        assertTrue(
+            message.contains("assertThat(container.file).hasDirectChild(nonExistentChild)"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("FileContainer"),
+            "Should show FileContainer"
+        )
+        assertTrue(
+            message.contains(dir.name),
+            "Should show the directory name"
+        )
     }
 
     @Test
@@ -390,12 +559,29 @@ class FileTest {
 
     @Test
     fun hasText_fails_when_text_does_not_match() {
+        data class FileContainer(val file: File)
         val file = createTempFile(content = "Hello World")
+        val container = FileContainer(file)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(file).hasText("Different")
+                assertThat(container.file).hasText("Different")
             }
-        assertTrue(error.message!!.contains("hasText"))
+        val message = error.message!!
+
+        // File toString() is platform-dependent, so we verify key parts
+        assertTrue(
+            message.contains("assertThat(container.file).hasText(\"Different\")"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("FileContainer"),
+            "Should show FileContainer"
+        )
+        assertTrue(
+            message.contains(file.name),
+            "Should show the file name"
+        )
     }
 
     @Test
