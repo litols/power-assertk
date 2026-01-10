@@ -19,22 +19,27 @@ class AssertTest {
 
     @Test
     fun isEqualTo_fails_with_correct_error_message() {
+        val actual = 42
+        val expected = 100
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(42).isEqualTo(100)
+                assertThat(actual).isEqualTo(expected)
             }
         val message = error.message!!
 
-        // Power Assert のフォーマット全体を確認
+        // Power Assert のフォーマット全体を確認（変数展開）
         val expectedFormat =
             """
-            assertThat(42).isEqualTo(100)
-            |
+            assertThat(actual).isEqualTo(expected)
+            |          |                 |
+            |          |                 100
+            |          42
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 

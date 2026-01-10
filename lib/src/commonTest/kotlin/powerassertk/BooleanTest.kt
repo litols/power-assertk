@@ -12,22 +12,25 @@ class BooleanTest {
 
     @Test
     fun isTrue_fails_with_power_assert_format() {
+        val actual = false
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(false).isTrue()
+                assertThat(actual).isTrue()
             }
         val message = error.message!!
 
-        // Power Assert形式の確認
+        // Power Assert形式で変数展開を確認
         val expectedFormat =
             """
-            assertThat(false).isTrue()
-            |
+            assertThat(actual).isTrue()
+            |          |
+            |          false
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -86,22 +89,25 @@ class BooleanTest {
 
     @Test
     fun isFalse_fails_with_power_assert_format() {
+        val actual = true
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(true).isFalse()
+                assertThat(actual).isFalse()
             }
         val message = error.message!!
 
-        // Power Assert形式の確認
+        // Power Assert形式で変数展開を確認
         val expectedFormat =
             """
-            assertThat(true).isFalse()
-            |
+            assertThat(actual).isFalse()
+            |          |
+            |          true
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 

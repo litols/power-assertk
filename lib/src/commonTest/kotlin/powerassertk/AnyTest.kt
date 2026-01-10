@@ -16,21 +16,24 @@ class AnyTest {
 
     @Test
     fun isNotEqualTo_fails_when_values_are_equal() {
+        val actual = 42
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(42).isNotEqualTo(42)
+                assertThat(actual).isNotEqualTo(42)
             }
         val message = error.message!!
 
         val expectedFormat =
             """
-            assertThat(42).isNotEqualTo(42)
-            |
+            assertThat(actual).isNotEqualTo(42)
+            |          |
+            |          42
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -64,21 +67,24 @@ class AnyTest {
 
     @Test
     fun isNull_fails_when_value_is_not_null() {
+        val actual = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello").isNull()
+                assertThat(actual).isNull()
             }
         val message = error.message!!
 
         val expectedFormat =
             """
-            assertThat("hello").isNull()
-            |
+            assertThat(actual).isNull()
+            |          |
+            |          hello
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -112,21 +118,24 @@ class AnyTest {
 
     @Test
     fun isNotNull_fails_when_value_is_null() {
+        val actual: String? = null
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat<String?>(null).isNotNull()
+                assertThat(actual).isNotNull()
             }
         val message = error.message!!
 
         val expectedFormat =
             """
-            assertThat<String?>(null).isNotNull()
-            |
+            assertThat(actual).isNotNull()
+            |          |
+            |          null
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -162,12 +171,25 @@ class AnyTest {
     fun isSameInstanceAs_fails_when_instances_are_different() {
         val obj1 = Person("Alice", 30)
         val obj2 = Person("Alice", 30)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(obj1).isSameInstanceAs(obj2)
             }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(obj1).isSameInstanceAs(obj2)"))
+
+        val expectedFormat =
+            """
+            assertThat(obj1).isSameInstanceAs(obj2)
+            |          |                      |
+            |          |                      Person(name=Alice, age=30)
+            |          Person(name=Alice, age=30)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
@@ -194,12 +216,25 @@ class AnyTest {
     @Test
     fun isNotSameInstanceAs_fails_when_instances_are_same() {
         val obj = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(obj).isNotSameInstanceAs(obj)
             }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(obj).isNotSameInstanceAs(obj)"))
+
+        val expectedFormat =
+            """
+            assertThat(obj).isNotSameInstanceAs(obj)
+            |          |                        |
+            |          |                        hello
+            |          hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
@@ -225,11 +260,25 @@ class AnyTest {
     fun isSameAs_fails_when_instances_are_different() {
         val obj1 = Person("Alice", 30)
         val obj2 = Person("Alice", 30)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(obj1).isSameAs(obj2)
             }
-        assertTrue(error.message!!.contains("assertThat(obj1).isSameAs(obj2)"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(obj1).isSameAs(obj2)
+            |          |              |
+            |          |              Person(name=Alice, age=30)
+            |          Person(name=Alice, age=30)
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
@@ -254,11 +303,25 @@ class AnyTest {
     @Test
     fun isNotSameAs_fails_when_instances_are_same() {
         val obj = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(obj).isNotSameAs(obj)
             }
-        assertTrue(error.message!!.contains("assertThat(obj).isNotSameAs(obj)"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(obj).isNotSameAs(obj)
+            |          |                |
+            |          |                hello
+            |          hello
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
@@ -280,21 +343,24 @@ class AnyTest {
 
     @Test
     fun isIn_fails_when_value_is_not_in_list() {
+        val actual = 5
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(5).isIn(1, 2, 3)
+                assertThat(actual).isIn(1, 2, 3)
             }
         val message = error.message!!
 
         val expectedFormat =
             """
-            assertThat(5).isIn(1, 2, 3)
-            |
+            assertThat(actual).isIn(1, 2, 3)
+            |          |
+            |          5
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -328,21 +394,24 @@ class AnyTest {
 
     @Test
     fun isNotIn_fails_when_value_is_in_list() {
+        val actual = 2
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(2).isNotIn(1, 2, 3)
+                assertThat(actual).isNotIn(1, 2, 3)
             }
         val message = error.message!!
 
         val expectedFormat =
             """
-            assertThat(2).isNotIn(1, 2, 3)
-            |
+            assertThat(actual).isNotIn(1, 2, 3)
+            |          |
+            |          2
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -376,21 +445,24 @@ class AnyTest {
 
     @Test
     fun hasToString_fails_when_toString_does_not_match() {
+        val actual = 42
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(42).hasToString("100")
+                assertThat(actual).hasToString("100")
             }
         val message = error.message!!
 
         val expectedFormat =
             """
-            assertThat(42).hasToString("100")
-            |
+            assertThat(actual).hasToString("100")
+            |          |
+            |          42
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -430,12 +502,22 @@ class AnyTest {
     @Test
     fun toStringFun_shows_power_assert_in_chain() {
         val person = Person("Alice", 30)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(person).toStringFun().isEqualTo("wrong")
             }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(person).toStringFun().isEqualTo(\"wrong\")"))
+
+        // toStringFun()は中間値としてAssertオブジェクトを返すため、そのtoStringも表示される
+        assertTrue(
+            message.contains("assertThat(person).toStringFun().isEqualTo(\"wrong\")"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("Person(name=Alice, age=30)"),
+            "Should show person object value"
+        )
     }
 
     // hasHashCode tests
@@ -447,21 +529,24 @@ class AnyTest {
 
     @Test
     fun hasHashCode_fails_when_hashCode_does_not_match() {
+        val actual = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat("hello").hasHashCode(12345)
+                assertThat(actual).hasHashCode(12345)
             }
         val message = error.message!!
 
         val expectedFormat =
             """
-            assertThat("hello").hasHashCode(12345)
-            |
+            assertThat(actual).hasHashCode(12345)
+            |          |
+            |          hello
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -503,12 +588,22 @@ class AnyTest {
     @Test
     fun hashCodeFun_shows_power_assert_in_chain() {
         val value = "test"
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(value).hashCodeFun().isEqualTo(12345)
             }
         val message = error.message!!
-        assertTrue(message.contains("assertThat(value).hashCodeFun().isEqualTo(12345)"))
+
+        // hashCodeFun()は中間値としてAssertオブジェクトを返すため、そのtoStringも表示される
+        assertTrue(
+            message.contains("assertThat(value).hashCodeFun().isEqualTo(12345)"),
+            "Should show assertion expression"
+        )
+        assertTrue(
+            message.contains("test"),
+            "Should show value"
+        )
     }
 
     // isInstanceOf tests
@@ -520,21 +615,24 @@ class AnyTest {
 
     @Test
     fun isInstanceOf_fails_when_type_does_not_match() {
+        val actual: Any = 42
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat<Any>(42).isInstanceOf<String>()
+                assertThat(actual).isInstanceOf<String>()
             }
         val message = error.message!!
 
         val expectedFormat =
             """
-            assertThat<Any>(42).isInstanceOf<String>()
-            |
+            assertThat(actual).isInstanceOf<String>()
+            |          |
+            |          42
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -567,21 +665,24 @@ class AnyTest {
 
     @Test
     fun isNotInstanceOf_fails_when_type_matches() {
+        val actual: Any = "hello"
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat<Any>("hello").isNotInstanceOf<String>()
+                assertThat(actual).isNotInstanceOf<String>()
             }
         val message = error.message!!
 
         val expectedFormat =
             """
-            assertThat<Any>("hello").isNotInstanceOf<String>()
-            |
+            assertThat(actual).isNotInstanceOf<String>()
+            |          |
+            |          hello
             """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert format:\nExpected:\n$expectedFormat\nActual:\n$message",
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
