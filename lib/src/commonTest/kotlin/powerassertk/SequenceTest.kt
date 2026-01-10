@@ -16,12 +16,30 @@ class SequenceTest {
 
     @Test
     fun containsAll_fails_when_any_missing() {
-        val seq: Sequence<Int> = sequenceOf(1, 2, 3)
+        val actual: Sequence<Int> = sequenceOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(seq).containsAll(1, 4)
+                assertThat(actual).containsAll(1, 4)
             }
-        assertTrue(error.message!!.contains("containsAll"))
+        val message = error.message!!
+
+        // Note: Sequences are lazy and display their internal class name, not contents
+        val expectedFormat =
+            """
+            assertThat(actual).containsAll(1, 4)
+            |          |
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
+        // Also verify the actual contains Sequence reference
+        assertTrue(
+            message.contains("Sequence") || message.contains("kotlin.collections"),
+            "Should show Sequence type in diagram:\n$message",
+        )
     }
 
     // containsAtLeast tests
@@ -40,12 +58,29 @@ class SequenceTest {
 
     @Test
     fun containsOnly_fails_when_extra_elements() {
-        val seq: Sequence<Int> = sequenceOf(1, 2, 3)
+        val actual: Sequence<Int> = sequenceOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(seq).containsOnly(1, 2)
+                assertThat(actual).containsOnly(1, 2)
             }
-        assertTrue(error.message!!.contains("containsOnly"))
+        val message = error.message!!
+
+        // Note: Sequences are lazy and display their internal class name, not contents
+        val expectedFormat =
+            """
+            assertThat(actual).containsOnly(1, 2)
+            |          |
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
+        assertTrue(
+            message.contains("Sequence") || message.contains("kotlin.collections"),
+            "Should show Sequence type in diagram:\n$message",
+        )
     }
 
     // containsExactly tests
@@ -57,12 +92,29 @@ class SequenceTest {
 
     @Test
     fun containsExactly_fails_when_order_differs() {
-        val seq: Sequence<Int> = sequenceOf(1, 2, 3)
+        val actual: Sequence<Int> = sequenceOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(seq).containsExactly(1, 3, 2)
+                assertThat(actual).containsExactly(1, 3, 2)
             }
-        assertTrue(error.message!!.contains("containsExactly"))
+        val message = error.message!!
+
+        // Note: Sequences are lazy and display their internal class name, not contents
+        val expectedFormat =
+            """
+            assertThat(actual).containsExactly(1, 3, 2)
+            |          |
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
+        assertTrue(
+            message.contains("Sequence") || message.contains("kotlin.collections"),
+            "Should show Sequence type in diagram:\n$message",
+        )
     }
 
     // containsExactlyInAnyOrder tests
@@ -81,12 +133,29 @@ class SequenceTest {
 
     @Test
     fun containsNone_fails_when_any_found() {
-        val seq: Sequence<Int> = sequenceOf(1, 2, 3)
+        val actual: Sequence<Int> = sequenceOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(seq).containsNone(2, 4)
+                assertThat(actual).containsNone(2, 4)
             }
-        assertTrue(error.message!!.contains("containsNone"))
+        val message = error.message!!
+
+        // Note: Sequences are lazy and display their internal class name, not contents
+        val expectedFormat =
+            """
+            assertThat(actual).containsNone(2, 4)
+            |          |
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
+        assertTrue(
+            message.contains("Sequence") || message.contains("kotlin.collections"),
+            "Should show Sequence type in diagram:\n$message",
+        )
     }
 
     // isEmpty tests
@@ -98,12 +167,29 @@ class SequenceTest {
 
     @Test
     fun isEmpty_fails_when_not_empty() {
-        val seq: Sequence<Int> = sequenceOf(1)
+        val actual: Sequence<Int> = sequenceOf(1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(seq).isEmpty()
+                assertThat(actual).isEmpty()
             }
-        assertTrue(error.message!!.contains("isEmpty"))
+        val message = error.message!!
+
+        // Note: Sequences are lazy and display their internal class name, not contents
+        val expectedFormat =
+            """
+            assertThat(actual).isEmpty()
+            |          |
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
+        assertTrue(
+            message.contains("Sequence") || message.contains("kotlin.collections"),
+            "Should show Sequence type in diagram:\n$message",
+        )
     }
 
     // isNotEmpty tests
@@ -125,12 +211,16 @@ class SequenceTest {
     @Test
     fun each_fails_when_any_does_not_satisfy() {
         val seq: Sequence<Int> = sequenceOf(2, 3, 4)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(seq).each {
                     if (it.actual % 2 != 0) throw AssertionError("not even")
                 }
             }
+
+        // Note: each() has message parameter in the middle, not at the end,
+        // so Power Assert transformation doesn't apply
         assertTrue(error.message!!.contains("element at index"))
     }
 
@@ -144,10 +234,14 @@ class SequenceTest {
     @Test
     fun any_fails_when_none_satisfy() {
         val seq: Sequence<Int> = sequenceOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(seq).any { it.isEqualTo(4) }
             }
+
+        // Note: any() has message parameter in the middle, not at the end,
+        // so Power Assert transformation doesn't apply
         assertTrue(error.message!!.contains("expected at least one element"))
     }
 
@@ -168,10 +262,14 @@ class SequenceTest {
     @Test
     fun atLeast_fails() {
         val seq: Sequence<Int> = sequenceOf(2, 3, 4)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(seq).atLeast(2) { it.isGreaterThan(3) }
             }
+
+        // Note: atLeast() has message parameter in the middle, not at the end,
+        // so Power Assert transformation doesn't apply
         assertTrue(error.message!!.contains("expected at least 2"))
     }
 
@@ -192,10 +290,14 @@ class SequenceTest {
     @Test
     fun exactly_fails() {
         val seq: Sequence<Int> = sequenceOf(2, 3, 4)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(seq).exactly(2) { it.isGreaterThan(3) }
             }
+
+        // Note: exactly() has message parameter in the middle, not at the end,
+        // so Power Assert transformation doesn't apply
         assertTrue(error.message!!.contains("expected exactly 2"))
     }
 
@@ -209,10 +311,14 @@ class SequenceTest {
     @Test
     fun first_fails_when_empty() {
         val seq: Sequence<Int> = emptySequence()
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(seq).first()
             }
+
+        // Note: first() is a transformation method without a message parameter,
+        // so Power Assert transformation doesn't apply
         assertTrue(error.message!!.contains("expected to have at least one element"))
     }
 
@@ -226,10 +332,14 @@ class SequenceTest {
     @Test
     fun single_fails_when_multiple_elements() {
         val seq: Sequence<Int> = sequenceOf(1, 2)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(seq).single()
             }
+
+        // Note: single() is a transformation method without a message parameter,
+        // so Power Assert transformation doesn't apply
         assertTrue(error.message!!.contains("expected to have exactly one element"))
     }
 

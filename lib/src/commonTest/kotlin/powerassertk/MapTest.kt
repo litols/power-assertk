@@ -19,11 +19,25 @@ class MapTest {
 
     @Test
     fun isEmpty_fails_when_not_empty() {
+        val actual = mapOf("a" to 1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1)).isEmpty()
+                assertThat(actual).isEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(mapOf(\"a\" to 1)).isEmpty()"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isEmpty()
+            |          |
+            |          {a=1}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isNotEmpty tests
@@ -34,11 +48,25 @@ class MapTest {
 
     @Test
     fun isNotEmpty_fails_when_empty() {
+        val actual = emptyMap<String, Int>()
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(emptyMap<String, Int>()).isNotEmpty()
+                assertThat(actual).isNotEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(emptyMap<String, Int>()).isNotEmpty()"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNotEmpty()
+            |          |
+            |          {}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isNullOrEmpty tests
@@ -57,11 +85,24 @@ class MapTest {
     @Test
     fun isNullOrEmpty_fails_when_not_empty() {
         val map: Map<String, Int>? = mapOf("a" to 1)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(map).isNullOrEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(map).isNullOrEmpty()"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(map).isNullOrEmpty()
+            |          |
+            |          {a=1}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // hasSize tests
@@ -72,11 +113,25 @@ class MapTest {
 
     @Test
     fun hasSize_fails_when_size_differs() {
+        val actual = mapOf("a" to 1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1)).hasSize(2)
+                assertThat(actual).hasSize(2)
             }
-        assertTrue(error.message!!.contains("assertThat(mapOf(\"a\" to 1)).hasSize(2)"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).hasSize(2)
+            |          |
+            |          {a=1}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // hasSameSizeAs tests
@@ -87,11 +142,27 @@ class MapTest {
 
     @Test
     fun hasSameSizeAs_fails_when_sizes_differ() {
+        val actual = mapOf("a" to 1)
+        val other = mapOf("x" to 10, "y" to 20)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1)).hasSameSizeAs(mapOf("x" to 10, "y" to 20))
+                assertThat(actual).hasSameSizeAs(other)
             }
-        assertTrue(error.message!!.contains("hasSameSizeAs"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).hasSameSizeAs(other)
+            |          |                     |
+            |          |                     {x=10, y=20}
+            |          {a=1}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // contains(key, value) tests
@@ -102,11 +173,25 @@ class MapTest {
 
     @Test
     fun contains_key_value_fails_when_not_found() {
+        val actual = mapOf("a" to 1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1)).contains("b", 2)
+                assertThat(actual).contains("b", 2)
             }
-        assertTrue(error.message!!.contains("contains(\"b\", 2)"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).contains("b", 2)
+            |          |
+            |          {a=1}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // Note: contains(element: Pair) tests removed due to Power Assert compatibility issues
@@ -120,11 +205,25 @@ class MapTest {
 
     @Test
     fun containsAll_fails_when_any_missing() {
+        val actual = mapOf("a" to 1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1)).containsAll("a" to 1, "b" to 2)
+                assertThat(actual).containsAll("a" to 1, "b" to 2)
             }
-        assertTrue(error.message!!.contains("containsAll"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).containsAll("a" to 1, "b" to 2)
+            |          |
+            |          {a=1}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // containsAtLeast tests
@@ -135,11 +234,25 @@ class MapTest {
 
     @Test
     fun containsAtLeast_fails_when_any_missing() {
+        val actual = mapOf("a" to 1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1)).containsAtLeast("a" to 1, "b" to 2)
+                assertThat(actual).containsAtLeast("a" to 1, "b" to 2)
             }
-        assertTrue(error.message!!.contains("containsAtLeast"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).containsAtLeast("a" to 1, "b" to 2)
+            |          |
+            |          {a=1}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // containsOnly tests
@@ -150,11 +263,25 @@ class MapTest {
 
     @Test
     fun containsOnly_fails_when_extra_elements() {
+        val actual = mapOf("a" to 1, "b" to 2, "c" to 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1, "b" to 2)).containsOnly(*arrayOf("a" to 1))
+                assertThat(actual).containsOnly("a" to 1, "b" to 2)
             }
-        assertTrue(error.message!!.contains("containsOnly"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).containsOnly("a" to 1, "b" to 2)
+            |          |
+            |          {a=1, b=2, c=3}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // containsNone tests
@@ -165,11 +292,25 @@ class MapTest {
 
     @Test
     fun containsNone_fails_when_any_found() {
+        val actual = mapOf("a" to 1, "b" to 2)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1, "b" to 2)).containsNone("b" to 2, "c" to 3)
+                assertThat(actual).containsNone("b" to 2, "c" to 3)
             }
-        assertTrue(error.message!!.contains("containsNone"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).containsNone("b" to 2, "c" to 3)
+            |          |
+            |          {a=1, b=2}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // doesNotContain(key, value) tests
@@ -180,11 +321,25 @@ class MapTest {
 
     @Test
     fun doesNotContain_key_value_fails_when_found() {
+        val actual = mapOf("a" to 1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1)).doesNotContain("a", 1)
+                assertThat(actual).doesNotContain("a", 1)
             }
-        assertTrue(error.message!!.contains("doesNotContain"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).doesNotContain("a", 1)
+            |          |
+            |          {a=1}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // Note: doesNotContain(element: Pair) tests removed due to Power Assert compatibility issues
@@ -198,11 +353,25 @@ class MapTest {
 
     @Test
     fun doesNotContainKey_fails_when_key_found() {
+        val actual = mapOf("a" to 1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1)).doesNotContainKey("a")
+                assertThat(actual).doesNotContainKey("a")
             }
-        assertTrue(error.message!!.contains("doesNotContainKey"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).doesNotContainKey("a")
+            |          |
+            |          {a=1}
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // key tests
@@ -213,10 +382,15 @@ class MapTest {
 
     @Test
     fun key_fails_when_key_not_found() {
+        val actual = mapOf("a" to 1)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(mapOf("a" to 1)).key("b")
+                assertThat(actual).key("b")
             }
+
+        // Note: key() is a transformation method without a message parameter,
+        // so it doesn't support Power Assert diagram transformation
         assertTrue(error.message!!.contains("expected to contain key:<b>"))
     }
 

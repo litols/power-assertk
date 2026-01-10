@@ -18,11 +18,24 @@ class IterableTest {
     @Test
     fun containsAll_fails_when_any_missing() {
         val list: Iterable<Int> = listOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(list).containsAll(1, 4)
             }
-        assertTrue(error.message!!.contains("containsAll"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(list).containsAll(1, 4)
+            |          |
+            |          [1, 2, 3]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // containsAtLeast tests
@@ -42,11 +55,24 @@ class IterableTest {
     @Test
     fun containsOnly_fails_when_extra_elements() {
         val list: Iterable<Int> = listOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(list).containsOnly(1, 2)
             }
-        assertTrue(error.message!!.contains("containsOnly"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(list).containsOnly(1, 2)
+            |          |
+            |          [1, 2, 3]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // containsExactlyInAnyOrder tests
@@ -66,11 +92,24 @@ class IterableTest {
     @Test
     fun containsNone_fails_when_any_found() {
         val list: Iterable<Int> = listOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(list).containsNone(2, 4)
             }
-        assertTrue(error.message!!.contains("containsNone"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(list).containsNone(2, 4)
+            |          |
+            |          [1, 2, 3]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isEmpty tests
@@ -83,11 +122,24 @@ class IterableTest {
     @Test
     fun isEmpty_fails_when_not_empty() {
         val list: Iterable<Int> = listOf(1)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(list).isEmpty()
             }
-        assertTrue(error.message!!.contains("isEmpty"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(list).isEmpty()
+            |          |
+            |          [1]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isNotEmpty tests
@@ -115,6 +167,8 @@ class IterableTest {
                     if (it.actual % 2 != 0) throw AssertionError("not even")
                 }
             }
+        // Note: each() is not Power Assert compatible (takes function + message parameters)
+        // so we just verify the basic error message
         assertTrue(error.message!!.contains("element at index"))
     }
 
@@ -132,6 +186,8 @@ class IterableTest {
             assertFailsWith<AssertionError> {
                 assertThat(list).any { it.isEqualTo(4) }
             }
+        // Note: any() is not Power Assert compatible (takes function + message parameters)
+        // so we just verify the basic error message
         assertTrue(error.message!!.contains("expected at least one element"))
     }
 
@@ -156,6 +212,8 @@ class IterableTest {
             assertFailsWith<AssertionError> {
                 assertThat(list).atLeast(2) { it.isGreaterThan(3) }
             }
+        // Note: atLeast() is not Power Assert compatible (takes function + message parameters)
+        // so we just verify the basic error message
         assertTrue(error.message!!.contains("expected at least 2"))
     }
 
@@ -180,6 +238,8 @@ class IterableTest {
             assertFailsWith<AssertionError> {
                 assertThat(list).exactly(2) { it.isGreaterThan(3) }
             }
+        // Note: exactly() is not Power Assert compatible (takes function + message parameters)
+        // so we just verify the basic error message
         assertTrue(error.message!!.contains("expected exactly 2"))
     }
 
@@ -197,6 +257,8 @@ class IterableTest {
             assertFailsWith<AssertionError> {
                 assertThat(list).first()
             }
+        // Note: first() is a transformation method without message parameter
+        // so it's not Power Assert compatible - verify basic error message
         assertTrue(error.message!!.contains("expected to have at least one element"))
     }
 
@@ -214,6 +276,8 @@ class IterableTest {
             assertFailsWith<AssertionError> {
                 assertThat(list).single()
             }
+        // Note: single() is a transformation method without message parameter
+        // so it's not Power Assert compatible - verify basic error message
         assertTrue(error.message!!.contains("expected to have exactly one element"))
     }
 

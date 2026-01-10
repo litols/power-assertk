@@ -14,11 +14,15 @@ class ListTest {
 
     @Test
     fun index_fails_when_index_out_of_bounds() {
-        val list = listOf(1, 2, 3)
+        val actual = listOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(list).index(5)
+                assertThat(actual).index(5)
             }
+
+        // Note: index() is a transformation method without a message parameter,
+        // so it doesn't support Power Assert diagram transformation
         assertTrue(error.message!!.contains("expected to have element at index"))
     }
 
@@ -38,22 +42,48 @@ class ListTest {
 
     @Test
     fun containsExactly_fails_when_order_differs() {
-        val list = listOf(1, 2, 3)
+        val actual = listOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(list).containsExactly(1, 3, 2)
+                assertThat(actual).containsExactly(1, 3, 2)
             }
-        assertTrue(error.message!!.contains("containsExactly"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).containsExactly(1, 3, 2)
+            |          |
+            |          [1, 2, 3]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun containsExactly_fails_when_size_differs() {
-        val list = listOf(1, 2, 3)
+        val actual = listOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(list).containsExactly(1, 2)
+                assertThat(actual).containsExactly(1, 2)
             }
-        assertTrue(error.message!!.contains("containsExactly"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).containsExactly(1, 2)
+            |          |
+            |          [1, 2, 3]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
@@ -93,12 +123,27 @@ class ListTest {
 
     @Test
     fun containsSubList_fails_when_sublist_not_found() {
-        val list = listOf(1, 2, 3, 4, 5)
+        val actual = listOf(1, 2, 3, 4, 5)
+        val sublist = listOf(2, 4)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(list).containsSubList(listOf(2, 4))
+                assertThat(actual).containsSubList(sublist)
             }
-        assertTrue(error.message!!.contains("containsSubList"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).containsSubList(sublist)
+            |          |                       |
+            |          |                       [2, 4]
+            |          [1, 2, 3, 4, 5]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // startsWith tests
@@ -116,22 +161,48 @@ class ListTest {
 
     @Test
     fun startsWith_fails_when_not_starting_with_elements() {
-        val list = listOf(1, 2, 3, 4)
+        val actual = listOf(1, 2, 3, 4)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(list).startsWith(2, 3)
+                assertThat(actual).startsWith(2, 3)
             }
-        assertTrue(error.message!!.contains("startsWith"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).startsWith(2, 3)
+            |          |
+            |          [1, 2, 3, 4]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun startsWith_fails_when_too_short() {
-        val list = listOf(1, 2)
+        val actual = listOf(1, 2)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(list).startsWith(1, 2, 3)
+                assertThat(actual).startsWith(1, 2, 3)
             }
-        assertTrue(error.message!!.contains("startsWith"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).startsWith(1, 2, 3)
+            |          |
+            |          [1, 2]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // endsWith tests
@@ -149,21 +220,47 @@ class ListTest {
 
     @Test
     fun endsWith_fails_when_not_ending_with_elements() {
-        val list = listOf(1, 2, 3, 4)
+        val actual = listOf(1, 2, 3, 4)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(list).endsWith(2, 3)
+                assertThat(actual).endsWith(2, 3)
             }
-        assertTrue(error.message!!.contains("endsWith"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).endsWith(2, 3)
+            |          |
+            |          [1, 2, 3, 4]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     @Test
     fun endsWith_fails_when_too_short() {
-        val list = listOf(3, 4)
+        val actual = listOf(3, 4)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(list).endsWith(1, 2, 3, 4)
+                assertThat(actual).endsWith(1, 2, 3, 4)
             }
-        assertTrue(error.message!!.contains("endsWith"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).endsWith(1, 2, 3, 4)
+            |          |
+            |          [3, 4]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 }

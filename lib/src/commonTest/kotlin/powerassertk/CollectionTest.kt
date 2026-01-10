@@ -19,11 +19,25 @@ class CollectionTest {
 
     @Test
     fun isEmpty_fails_when_not_empty() {
+        val actual = listOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(listOf(1, 2, 3)).isEmpty()
+                assertThat(actual).isEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(listOf(1, 2, 3)).isEmpty()"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isEmpty()
+            |          |
+            |          [1, 2, 3]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isNotEmpty tests
@@ -34,11 +48,25 @@ class CollectionTest {
 
     @Test
     fun isNotEmpty_fails_when_empty() {
+        val actual = emptyList<Int>()
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(emptyList<Int>()).isNotEmpty()
+                assertThat(actual).isNotEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(emptyList<Int>()).isNotEmpty()"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).isNotEmpty()
+            |          |
+            |          []
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // isNullOrEmpty tests
@@ -57,11 +85,24 @@ class CollectionTest {
     @Test
     fun isNullOrEmpty_fails_when_not_empty() {
         val list: List<Int>? = listOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
                 assertThat(list).isNullOrEmpty()
             }
-        assertTrue(error.message!!.contains("assertThat(list).isNullOrEmpty()"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(list).isNullOrEmpty()
+            |          |
+            |          [1, 2, 3]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // hasSize tests
@@ -72,11 +113,25 @@ class CollectionTest {
 
     @Test
     fun hasSize_fails_when_size_differs() {
+        val actual = listOf(1, 2, 3)
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(listOf(1, 2, 3)).hasSize(5)
+                assertThat(actual).hasSize(5)
             }
-        assertTrue(error.message!!.contains("assertThat(listOf(1, 2, 3)).hasSize(5)"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).hasSize(5)
+            |          |
+            |          [1, 2, 3]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // hasSameSizeAs tests
@@ -87,11 +142,27 @@ class CollectionTest {
 
     @Test
     fun hasSameSizeAs_fails_when_sizes_differ() {
+        val actual = listOf(1, 2, 3)
+        val other = listOf("a", "b")
+
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(listOf(1, 2, 3)).hasSameSizeAs(listOf("a", "b"))
+                assertThat(actual).hasSameSizeAs(other)
             }
-        assertTrue(error.message!!.contains("assertThat(listOf(1, 2, 3)).hasSameSizeAs(listOf(\"a\", \"b\"))"))
+        val message = error.message!!
+
+        val expectedFormat =
+            """
+            assertThat(actual).hasSameSizeAs(other)
+            |          |                     |
+            |          |                     [a, b]
+            |          [1, 2, 3]
+            """.trimIndent()
+
+        assertTrue(
+            message.contains(expectedFormat),
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
+        )
     }
 
     // Custom message support test
