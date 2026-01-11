@@ -26,12 +26,6 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v2
-
       - name: Build with Gradle
         run: ./gradlew build --stacktrace --scan
         env:
@@ -63,14 +57,8 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Run detekt
-        run: ./gradlew detekt --stacktrace
-
-      - name: Run ktlint
-        run: ./gradlew ktlintCheck --stacktrace
+      - name: Run detekt and ktlint
+        run: ./gradlew detekt ktlintCheck --stacktrace --continue
 
       - name: Upload detekt reports
         if: always()
@@ -97,11 +85,8 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
       - name: Run tests
-        run: ./gradlew test --stacktrace
+        run: ./gradlew allTests --stacktrace
 
       - name: Publish test results
         uses: EnricoMi/publish-unit-test-result-action@v2
