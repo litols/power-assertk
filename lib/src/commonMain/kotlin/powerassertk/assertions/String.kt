@@ -1,5 +1,7 @@
 package powerassertk
 
+import kotlin.jvm.JvmName
+
 /**
  * Asserts the String is equal to the expected String, optionally ignoring case.
  */

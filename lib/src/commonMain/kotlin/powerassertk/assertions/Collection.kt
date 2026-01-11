@@ -1,5 +1,7 @@
 package powerassertk
 
+import kotlin.jvm.JvmName
+
 /**
  * Returns an Assert on the size for chaining.
  *

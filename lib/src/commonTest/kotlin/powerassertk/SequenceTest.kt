@@ -37,7 +37,7 @@ class SequenceTest {
         )
         // Also verify the actual contains Sequence reference
         assertTrue(
-            message.contains("Sequence") || message.contains("kotlin.collections"),
+            message.contains(sequenceTypeCheck()) || message.contains("kotlin.collections"),
             "Should show Sequence type in diagram:\n$message",
         )
     }
@@ -78,7 +78,7 @@ class SequenceTest {
             "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
         assertTrue(
-            message.contains("Sequence") || message.contains("kotlin.collections"),
+            message.contains(sequenceTypeCheck()) || message.contains("kotlin.collections"),
             "Should show Sequence type in diagram:\n$message",
         )
     }
@@ -112,7 +112,7 @@ class SequenceTest {
             "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
         assertTrue(
-            message.contains("Sequence") || message.contains("kotlin.collections"),
+            message.contains(sequenceTypeCheck()) || message.contains("kotlin.collections"),
             "Should show Sequence type in diagram:\n$message",
         )
     }
@@ -153,7 +153,7 @@ class SequenceTest {
             "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
         assertTrue(
-            message.contains("Sequence") || message.contains("kotlin.collections"),
+            message.contains(sequenceTypeCheck()) || message.contains("kotlin.collections"),
             "Should show Sequence type in diagram:\n$message",
         )
     }
@@ -187,7 +187,7 @@ class SequenceTest {
             "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
         assertTrue(
-            message.contains("Sequence") || message.contains("kotlin.collections"),
+            message.contains(sequenceTypeCheck()) || message.contains("kotlin.collections"),
             "Should show Sequence type in diagram:\n$message",
         )
     }

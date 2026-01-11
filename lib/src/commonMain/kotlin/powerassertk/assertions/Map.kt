@@ -1,5 +1,7 @@
 package powerassertk
 
+import kotlin.jvm.JvmName
+
 // Helper function to check if map contains key-value pair (not transformed by Power Assert)
 private fun <K, V> Map<K, V>.containsEntry(
     key: K,

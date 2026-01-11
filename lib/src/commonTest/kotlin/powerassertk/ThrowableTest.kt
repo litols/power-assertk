@@ -46,7 +46,7 @@ class ThrowableTest {
             assertThat(exception).hasMessage(expected)
             |          |                     |
             |          |                     expected
-            |          java.lang.RuntimeException: actual
+            |          ${throwableString(exception)}
         """.trimIndent()
 
         assertTrue(
@@ -77,7 +77,7 @@ class ThrowableTest {
             assertThat(exception).messageContains(text)
             |          |                          |
             |          |                          missing
-            |          java.lang.RuntimeException: this is a test message
+            |          ${throwableString(exception)}
         """.trimIndent()
 
         assertTrue(
@@ -101,7 +101,7 @@ class ThrowableTest {
             assertThat(exception).messageContains(text)
             |          |                          |
             |          |                          test
-            |          java.lang.RuntimeException
+            |          ${throwableString(exception)}
         """.trimIndent()
 
         assertTrue(
@@ -146,8 +146,8 @@ class ThrowableTest {
         val expectedFormat = """
             assertThat(exception).hasCause(expected)
             |          |                   |
-            |          |                   java.lang.IllegalArgumentException: expected
-            |          java.lang.RuntimeException: no cause
+            |          |                   ${throwableString(expected)}
+            |          ${throwableString(exception)}
         """.trimIndent()
 
         assertTrue(
@@ -171,8 +171,8 @@ class ThrowableTest {
         val expectedFormat = """
             assertThat(exception).hasCause(expected)
             |          |                   |
-            |          |                   java.lang.IllegalStateException: message
-            |          java.lang.RuntimeException: wrapper
+            |          |                   ${throwableString(expected)}
+            |          ${throwableString(exception)}
         """.trimIndent()
 
         assertTrue(
@@ -196,8 +196,8 @@ class ThrowableTest {
         val expectedFormat = """
             assertThat(exception).hasCause(expected)
             |          |                   |
-            |          |                   java.lang.IllegalArgumentException: expected
-            |          java.lang.RuntimeException: wrapper
+            |          |                   ${throwableString(expected)}
+            |          ${throwableString(exception)}
         """.trimIndent()
 
         assertTrue(
@@ -227,7 +227,7 @@ class ThrowableTest {
         val expectedFormat = """
             assertThat(exception).hasNoCause()
             |          |
-            |          java.lang.RuntimeException: wrapper
+            |          ${throwableString(exception)}
         """.trimIndent()
 
         assertTrue(
@@ -278,8 +278,8 @@ class ThrowableTest {
         val expectedFormat = """
             assertThat(exception).hasRootCause(expected)
             |          |                       |
-            |          |                       java.lang.IllegalArgumentException: expected
-            |          java.lang.RuntimeException: no cause
+            |          |                       ${throwableString(expected)}
+            |          ${throwableString(exception)}
         """.trimIndent()
 
         assertTrue(
@@ -303,8 +303,8 @@ class ThrowableTest {
         val expectedFormat = """
             assertThat(exception).hasRootCause(expected)
             |          |                       |
-            |          |                       java.lang.IllegalStateException: message
-            |          java.lang.RuntimeException: wrapper
+            |          |                       ${throwableString(expected)}
+            |          ${throwableString(exception)}
         """.trimIndent()
 
         assertTrue(
@@ -328,8 +328,8 @@ class ThrowableTest {
         val expectedFormat = """
             assertThat(exception).hasRootCause(expected)
             |          |                       |
-            |          |                       java.lang.IllegalArgumentException: expected
-            |          java.lang.RuntimeException: wrapper
+            |          |                       ${throwableString(expected)}
+            |          ${throwableString(exception)}
         """.trimIndent()
 
         assertTrue(
@@ -355,8 +355,8 @@ class ThrowableTest {
             assertThat(info.exception).hasMessage(expected)
             |          |    |                     |
             |          |    |                     expected
-            |          |    java.lang.RuntimeException: actual
-            |          ErrorInfo(exception=java.lang.RuntimeException: actual)
+            |          |    ${throwableString(info.exception)}
+            |          ErrorInfo(exception=${throwableString(info.exception)})
         """.trimIndent()
 
         assertTrue(
@@ -381,9 +381,9 @@ class ThrowableTest {
         val expectedFormat = """
             assertThat(info.exception).hasCause(expected)
             |          |    |                   |
-            |          |    |                   java.lang.IllegalStateException: expected
-            |          |    java.lang.RuntimeException: wrapper
-            |          ErrorInfo(exception=java.lang.RuntimeException: wrapper)
+            |          |    |                   ${throwableString(expected)}
+            |          |    ${throwableString(info.exception)}
+            |          ErrorInfo(exception=${throwableString(info.exception)})
         """.trimIndent()
 
         assertTrue(

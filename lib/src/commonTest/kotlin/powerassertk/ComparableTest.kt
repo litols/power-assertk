@@ -220,9 +220,9 @@ class ComparableTest {
         val expectedFormat = """
             assertThat(actual).isCloseTo(expected, delta)
             |          |                 |         |
-            |          |                 |         1.0
-            |          |                 15.0
-            |          10.0
+            |          |                 |         ${numberString(delta)}
+            |          |                 ${numberString(expected)}
+            |          ${numberString(actual)}
             """.trimIndent()
 
         assertTrue(
@@ -252,9 +252,9 @@ class ComparableTest {
         val expectedFormat = """
             assertThat(actual).isCloseTo(expected, delta)
             |          |                 |         |
-            |          |                 |         1.0
-            |          |                 15.0
-            |          10.0
+            |          |                 |         ${numberString(delta)}
+            |          |                 ${numberString(expected)}
+            |          ${numberString(actual)}
             """.trimIndent()
 
         assertTrue(

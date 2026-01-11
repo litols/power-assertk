@@ -26,7 +26,7 @@ class ResultTest {
             """
             assertThat(result).isSuccess()
             |          |
-            |          Failure(java.lang.RuntimeException: error)
+            |          ${resultString(result)}
             """.trimIndent()
 
         assertTrue(
@@ -56,8 +56,8 @@ class ResultTest {
             """
             assertThat(response.result).isSuccess()
             |          |        |
-            |          |        Failure(java.lang.RuntimeException: error)
-            |          Response(result=Failure(java.lang.RuntimeException: error))
+            |          |        ${resultString(response.result)}
+            |          Response(result=${resultString(response.result)})
             """.trimIndent()
 
         assertTrue(

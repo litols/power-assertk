@@ -137,7 +137,7 @@ class NumberTest {
             """
             assertThat(actual).isNotZero()
             |          |
-            |          0.0
+            |          ${numberString(actual)}
             """.trimIndent()
 
         assertTrue(
@@ -183,7 +183,7 @@ class NumberTest {
             """
             assertThat(actual).isNotZero()
             |          |
-            |          0.0
+            |          ${numberString(actual)}
             """.trimIndent()
 
         assertTrue(
@@ -278,7 +278,7 @@ class NumberTest {
             """
             assertThat(actual).isPositive()
             |          |
-            |          0.0
+            |          ${numberString(actual)}
             """.trimIndent()
 
         assertTrue(
@@ -373,7 +373,7 @@ class NumberTest {
             """
             assertThat(actual).isNegative()
             |          |
-            |          0.0
+            |          ${numberString(actual)}
             """.trimIndent()
 
         assertTrue(
@@ -423,8 +423,8 @@ class NumberTest {
             """
             assertThat(temp.celsius).isPositive()
             |          |    |
-            |          |    -10.0
-            |          Temperature(celsius=-10.0)
+            |          |    ${numberString(temp.celsius)}
+            |          Temperature(celsius=${numberString(temp.celsius)})
             """.trimIndent()
 
         assertTrue(

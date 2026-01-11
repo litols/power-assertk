@@ -169,7 +169,7 @@ class ArrayTest {
             "Should show assertion expression in Power Assert diagram:\nActual:\n$message",
         )
         assertTrue(
-            message.contains("Container(items=[1, 2, 3])"),
+            message.contains("Container(items=${arrayContentsString("[1, 2, 3]")})"),
             "Should show container with array contents in toString:\nActual:\n$message",
         )
     }
@@ -214,7 +214,7 @@ class ArrayTest {
             "Should show assertion expression in Power Assert diagram:\nActual:\n$message",
         )
         assertTrue(
-            message.contains("Data(values=[a, b, c])"),
+            message.contains("Data(values=${arrayContentsString("[a, b, c]")})"),
             "Should show data with array contents in toString:\nActual:\n$message",
         )
     }
