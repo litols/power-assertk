@@ -265,7 +265,6 @@ dependencies {
 
 // ktlint configuration
 configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-    version.set("1.4.1")
     verbose.set(true)
     android.set(false)
     outputToConsole.set(true)
