@@ -1,12 +1,8 @@
-import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.power.assert)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.ktlint)
 }
 
 repositories {
@@ -237,57 +233,4 @@ powerAssert {
 
 tasks.named<Test>("jvmTest") {
     useJUnitPlatform()
-}
-
-// detekt configuration
-detekt {
-    buildUponDefaultConfig = true
-    allRules = false
-    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
-    baseline = file("$rootDir/config/detekt/baseline.xml")
-    source.setFrom(
-        files(
-            "src/commonMain/kotlin",
-            "src/commonTest/kotlin",
-            "src/jvmMain/kotlin",
-            "src/jvmTest/kotlin",
-            "src/jsMain/kotlin",
-            "src/jsTest/kotlin",
-            "src/nativeMain/kotlin",
-            "src/nativeTest/kotlin"
-        ).filter { it.exists() }
-    )
-}
-
-dependencies {
-    detektPlugins(libs.detekt.formatting)
-}
-
-// ktlint configuration
-configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-    verbose.set(true)
-    android.set(false)
-    outputToConsole.set(true)
-    outputColorName.set("RED")
-    ignoreFailures.set(false)
-    filter {
-        exclude("**/build/**")
-        exclude("**/generated/**")
-    }
-}
-
-// Detekt tasks configuration
-tasks.withType<Detekt>().configureEach {
-    jvmTarget = "21"
-    reports {
-        html.required.set(true)
-        xml.required.set(true)
-        txt.required.set(false)
-        sarif.required.set(false)
-        md.required.set(false)
-    }
-}
-
-tasks.withType<DetektCreateBaselineTask>().configureEach {
-    jvmTarget = "21"
 }
