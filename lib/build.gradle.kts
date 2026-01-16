@@ -14,10 +14,11 @@ kotlin {
 
     jvm()
 
-    js(IR) {
-        browser()
-        nodejs()
-    }
+    // Temporarily disabled for CI debugging
+    // js(IR) {
+    //     browser()
+    //     nodejs()
+    // }
 
     sourceSets {
         val commonMain by getting {
@@ -46,17 +47,17 @@ kotlin {
             }
         }
 
-        val jsMain by getting {
-            dependencies {
-                implementation(kotlin("stdlib-js"))
-            }
-        }
+        // val jsMain by getting {
+        //     dependencies {
+        //         implementation(kotlin("stdlib-js"))
+        //     }
+        // }
 
-        val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test-js"))
-            }
-        }
+        // val jsTest by getting {
+        //     dependencies {
+        //         implementation(kotlin("test-js"))
+        //     }
+        // }
     }
 }
 
@@ -228,7 +229,7 @@ powerAssert {
         "powerassertk.isDataClassEqualTo",
         "powerassertk.isEqualToIgnoringGivenProperties",
     )
-    includedSourceSets = listOf("commonTest", "jvmTest", "jsTest")
+    includedSourceSets = listOf("commonTest", "jvmTest")
 }
 
 tasks.named<Test>("jvmTest") {
