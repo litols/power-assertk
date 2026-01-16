@@ -29,6 +29,15 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
+      - name: Debug info
+        run: |
+          echo "Java version:"
+          java -version
+          echo "Gradle wrapper properties:"
+          cat gradle/wrapper/gradle-wrapper.properties
+          echo "Checking gradlew:"
+          ls -la gradlew
+
       - name: Build with Gradle
         run: ./gradlew build --stacktrace --info
         env:
