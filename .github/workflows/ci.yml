@@ -30,7 +30,7 @@ jobs:
           cache: 'gradle'
 
       - name: Build with Gradle
-        run: ./gradlew build --stacktrace
+        run: ./gradlew build --stacktrace --info
         env:
           GRADLE_OPTS: -Dorg.gradle.daemon=false
 
