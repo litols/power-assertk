@@ -42,16 +42,17 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(exception).hasMessage(expected)
             |          |                     |
             |          |                     expected
             |          ${throwableString(exception)}
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -73,16 +74,17 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(exception).messageContains(text)
             |          |                          |
             |          |                          missing
             |          ${throwableString(exception)}
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -97,16 +99,17 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(exception).messageContains(text)
             |          |                          |
             |          |                          test
             |          ${throwableString(exception)}
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -143,16 +146,17 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(exception).hasCause(expected)
             |          |                   |
             |          |                   ${throwableString(expected)}
             |          ${throwableString(exception)}
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -168,16 +172,17 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(exception).hasCause(expected)
             |          |                   |
             |          |                   ${throwableString(expected)}
             |          ${throwableString(exception)}
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -193,16 +198,17 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(exception).hasCause(expected)
             |          |                   |
             |          |                   ${throwableString(expected)}
             |          ${throwableString(exception)}
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -224,15 +230,16 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(exception).hasNoCause()
             |          |
             |          ${throwableString(exception)}
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -275,16 +282,17 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(exception).hasRootCause(expected)
             |          |                       |
             |          |                       ${throwableString(expected)}
             |          ${throwableString(exception)}
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -300,16 +308,17 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(exception).hasRootCause(expected)
             |          |                       |
             |          |                       ${throwableString(expected)}
             |          ${throwableString(exception)}
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -325,23 +334,26 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(exception).hasRootCause(expected)
             |          |                       |
             |          |                       ${throwableString(expected)}
             |          ${throwableString(exception)}
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
     // Property chain tests
     @Test
     fun hasMessage_shows_power_assert_with_property_chain() {
-        data class ErrorInfo(val exception: Throwable)
+        data class ErrorInfo(
+            val exception: Throwable,
+        )
         val info = ErrorInfo(RuntimeException("actual"))
         val expected = "expected"
 
@@ -351,23 +363,26 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(info.exception).hasMessage(expected)
             |          |    |                     |
             |          |    |                     expected
             |          |    ${throwableString(info.exception)}
             |          ErrorInfo(exception=${throwableString(info.exception)})
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
     @Test
     fun hasCause_shows_power_assert_with_property_chain() {
-        data class ErrorInfo(val exception: Throwable)
+        data class ErrorInfo(
+            val exception: Throwable,
+        )
         val cause = IllegalArgumentException("cause")
         val info = ErrorInfo(RuntimeException("wrapper", cause))
         val expected = IllegalStateException("expected")
@@ -378,17 +393,18 @@ class ThrowableTest {
             }
         val message = error.message!!
 
-        val expectedFormat = """
+        val expectedFormat =
+            """
             assertThat(info.exception).hasCause(expected)
             |          |    |                   |
             |          |    |                   ${throwableString(expected)}
             |          |    ${throwableString(info.exception)}
             |          ErrorInfo(exception=${throwableString(info.exception)})
-        """.trimIndent()
+            """.trimIndent()
 
         assertTrue(
             message.contains(expectedFormat),
-            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+            "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message",
         )
     }
 
@@ -397,7 +413,11 @@ class ThrowableTest {
     fun can_chain_through_cause() {
         val cause = IllegalArgumentException("cause message")
         val exception = RuntimeException("wrapper", cause)
-        assertThat(exception).cause().isNotNull().message().isEqualTo("cause message")
+        assertThat(exception)
+            .cause()
+            .isNotNull()
+            .message()
+            .isEqualTo("cause message")
     }
 
     @Test

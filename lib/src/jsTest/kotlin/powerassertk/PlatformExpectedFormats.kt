@@ -16,15 +16,14 @@ actual fun numberString(value: Number): String {
     return value.toString()
 }
 
-actual fun resultString(result: Result<*>): String {
-    return when {
+actual fun resultString(result: Result<*>): String =
+    when {
         result.isSuccess -> "Success(${result.getOrNull()})"
         else -> {
             val exception = result.exceptionOrNull()!!
             "Failure(${throwableString(exception)})"
         }
     }
-}
 
 actual fun sequenceTypeCheck(): String {
     return "object" // JS shows [object Object] for Sequences/Arrays

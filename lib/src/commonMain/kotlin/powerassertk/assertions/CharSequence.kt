@@ -6,9 +6,7 @@ package powerassertk
  * Note: This is a transformation method without a message parameter and
  * should NOT be added to the Power Assert functions list.
  */
-fun <T : CharSequence> Assert<T>.length(): Assert<Int> {
-    return Assert(actual.length)
-}
+fun <T : CharSequence> Assert<T>.length(): Assert<Int> = Assert(actual.length)
 
 /**
  * Asserts the CharSequence is empty.
@@ -66,7 +64,8 @@ fun <T : CharSequence> Assert<T>.hasSameLengthAs(
 ) {
     if (actual.length != other.length) {
         throw AssertionError(
-            message?.invoke() ?: "expected to have same length as:<\"$other\"> (${other.length}) but was:<${actual.length}>",
+            message?.invoke()
+                ?: "expected to have same length as:<\"$other\"> (${other.length}) but was:<${actual.length}>",
         )
     }
 }
@@ -112,7 +111,8 @@ fun <T : CharSequence> Assert<T>.contains(
     val notFound = expected.filter { !actual.contains(it, ignoreCase) }
     if (notFound.isNotEmpty()) {
         throw AssertionError(
-            message?.invoke() ?: "expected to contain all:<${notFound.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+            message?.invoke()
+                ?: "expected to contain all:<${notFound.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
         )
     }
 }
@@ -128,7 +128,8 @@ fun <T : CharSequence> Assert<T>.contains(
     val notFound = expected.filter { !actual.contains(it, ignoreCase) }
     if (notFound.isNotEmpty()) {
         throw AssertionError(
-            message?.invoke() ?: "expected to contain all:<${notFound.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+            message?.invoke()
+                ?: "expected to contain all:<${notFound.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
         )
     }
 }
@@ -159,7 +160,8 @@ fun <T : CharSequence> Assert<T>.doesNotContain(
     val found = expected.filter { actual.contains(it, ignoreCase) }
     if (found.isNotEmpty()) {
         throw AssertionError(
-            message?.invoke() ?: "expected not to contain any of:<${found.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+            message?.invoke()
+                ?: "expected not to contain any of:<${found.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
         )
     }
 }
@@ -175,7 +177,8 @@ fun <T : CharSequence> Assert<T>.doesNotContain(
     val found = expected.filter { actual.contains(it, ignoreCase) }
     if (found.isNotEmpty()) {
         throw AssertionError(
-            message?.invoke() ?: "expected not to contain any of:<${found.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+            message?.invoke()
+                ?: "expected not to contain any of:<${found.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
         )
     }
 }

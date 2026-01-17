@@ -7,11 +7,8 @@ private fun <K, V> Map<K, V>.containsEntry(
     key: K,
     value: V,
 ): Boolean {
-    if (!containsKey(key)) return false
-    val actualValue = this[key]
     @Suppress("SENSELESS_COMPARISON")
-    if (actualValue == null) return false
-    return actualValue.equals(value)
+    return containsKey(key) && this[key] != null && this[key] == value
 }
 
 /**
@@ -20,9 +17,7 @@ private fun <K, V> Map<K, V>.containsEntry(
  * Note: This is a transformation method without a message parameter and
  * should NOT be added to the Power Assert functions list.
  */
-fun <K, V> Assert<Map<K, V>>.size(): Assert<Int> {
-    return Assert(actual.size)
-}
+fun <K, V> Assert<Map<K, V>>.size(): Assert<Int> = Assert(actual.size)
 
 /**
  * Asserts the Map is empty.
@@ -125,7 +120,10 @@ fun <K, V> Assert<Map<K, V>>.containsAll(
     val notFound = elements.filter { actual[it.first] != it.second }
     if (notFound.isNotEmpty()) {
         throw AssertionError(
-            message?.invoke() ?: "expected to contain all:<${notFound.joinToString { "${it.first}=${it.second}" }}> but was:<$actual>",
+            message?.invoke()
+                ?: "expected to contain all:<${notFound.joinToString {
+                    "${it.first}=${it.second}"
+                }}> but was:<$actual>",
         )
     }
 }
@@ -140,7 +138,10 @@ fun <K, V> Assert<Map<K, V>>.containsAtLeast(
     val notFound = elements.filter { actual[it.first] != it.second }
     if (notFound.isNotEmpty()) {
         throw AssertionError(
-            message?.invoke() ?: "expected to contain at least:<${notFound.joinToString { "${it.first}=${it.second}" }}> but was:<$actual>",
+            message?.invoke()
+                ?: "expected to contain at least:<${notFound.joinToString {
+                    "${it.first}=${it.second}"
+                }}> but was:<$actual>",
         )
     }
 }
@@ -170,7 +171,10 @@ fun <K, V> Assert<Map<K, V>>.containsNone(
     val found = elements.filter { actual[it.first] == it.second }
     if (found.isNotEmpty()) {
         throw AssertionError(
-            message?.invoke() ?: "expected to contain none of:<${found.joinToString { "${it.first}=${it.second}" }}> but was:<$actual>",
+            message?.invoke()
+                ?: "expected to contain none of:<${found.joinToString {
+                    "${it.first}=${it.second}"
+                }}> but was:<$actual>",
         )
     }
 }
@@ -225,8 +229,9 @@ fun <K, V> Assert<Map<K, V>>.doesNotContainKey(
  * should NOT be added to the Power Assert functions list.
  */
 fun <K, V> Assert<Map<K, V>>.key(key: K): Assert<V> {
-    val value = actual[key]
-        ?: throw AssertionError("expected to contain key:<$key> but was:<$actual>")
+    val value =
+        actual[key]
+            ?: throw AssertionError("expected to contain key:<$key> but was:<$actual>")
     @Suppress("UNCHECKED_CAST")
     return Assert(value as V)
 }

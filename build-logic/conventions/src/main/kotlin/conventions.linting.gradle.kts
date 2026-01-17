@@ -25,13 +25,9 @@ detekt {
             "src/jsMain/kotlin",
             "src/jsTest/kotlin",
             "src/nativeMain/kotlin",
-            "src/nativeTest/kotlin"
-        ).filter { it.exists() }
+            "src/nativeTest/kotlin",
+        ).filter { it.exists() },
     )
-}
-
-dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.7")
 }
 
 // ktlint configuration
@@ -63,11 +59,4 @@ tasks.withType<Detekt>().configureEach {
 
 tasks.withType<DetektCreateBaselineTask>().configureEach {
     jvmTarget = "21"
-}
-
-// Custom task for running all quality checks
-tasks.register("qualityCheck") {
-    group = "verification"
-    description = "Runs all quality checks (detekt, ktlint, tests)"
-    dependsOn("detekt", "ktlintCheck", "test")
 }

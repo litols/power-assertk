@@ -3,6 +3,7 @@ package powerassertk
 import kotlin.jvm.JvmName
 
 // Int extensions
+
 /**
  * Asserts the number is 0.
  */
@@ -10,7 +11,7 @@ import kotlin.jvm.JvmName
 fun Assert<Int>.isZero(message: (() -> String)? = null) {
     if (actual != 0) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be zero but was:<$actual>"
+            message?.invoke() ?: "expected to be zero but was:<$actual>",
         )
     }
 }
@@ -22,7 +23,7 @@ fun Assert<Int>.isZero(message: (() -> String)? = null) {
 fun Assert<Int>.isNotZero(message: (() -> String)? = null) {
     if (actual == 0) {
         throw AssertionError(
-            message?.invoke() ?: "expected not to be zero"
+            message?.invoke() ?: "expected not to be zero",
         )
     }
 }
@@ -34,7 +35,7 @@ fun Assert<Int>.isNotZero(message: (() -> String)? = null) {
 fun Assert<Int>.isPositive(message: (() -> String)? = null) {
     if (actual <= 0) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be positive but was:<$actual>"
+            message?.invoke() ?: "expected to be positive but was:<$actual>",
         )
     }
 }
@@ -46,12 +47,13 @@ fun Assert<Int>.isPositive(message: (() -> String)? = null) {
 fun Assert<Int>.isNegative(message: (() -> String)? = null) {
     if (actual >= 0) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be negative but was:<$actual>"
+            message?.invoke() ?: "expected to be negative but was:<$actual>",
         )
     }
 }
 
 // Long extensions
+
 /**
  * Asserts the number is 0.
  */
@@ -59,7 +61,7 @@ fun Assert<Int>.isNegative(message: (() -> String)? = null) {
 fun Assert<Long>.isZero(message: (() -> String)? = null) {
     if (actual != 0L) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be zero but was:<$actual>"
+            message?.invoke() ?: "expected to be zero but was:<$actual>",
         )
     }
 }
@@ -71,7 +73,7 @@ fun Assert<Long>.isZero(message: (() -> String)? = null) {
 fun Assert<Long>.isNotZero(message: (() -> String)? = null) {
     if (actual == 0L) {
         throw AssertionError(
-            message?.invoke() ?: "expected not to be zero"
+            message?.invoke() ?: "expected not to be zero",
         )
     }
 }
@@ -83,7 +85,7 @@ fun Assert<Long>.isNotZero(message: (() -> String)? = null) {
 fun Assert<Long>.isPositive(message: (() -> String)? = null) {
     if (actual <= 0L) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be positive but was:<$actual>"
+            message?.invoke() ?: "expected to be positive but was:<$actual>",
         )
     }
 }
@@ -95,12 +97,13 @@ fun Assert<Long>.isPositive(message: (() -> String)? = null) {
 fun Assert<Long>.isNegative(message: (() -> String)? = null) {
     if (actual >= 0L) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be negative but was:<$actual>"
+            message?.invoke() ?: "expected to be negative but was:<$actual>",
         )
     }
 }
 
 // Double extensions
+
 /**
  * Asserts the number is 0.
  */
@@ -108,7 +111,7 @@ fun Assert<Long>.isNegative(message: (() -> String)? = null) {
 fun Assert<Double>.isZero(message: (() -> String)? = null) {
     if (actual != 0.0) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be zero but was:<$actual>"
+            message?.invoke() ?: "expected to be zero but was:<$actual>",
         )
     }
 }
@@ -120,7 +123,7 @@ fun Assert<Double>.isZero(message: (() -> String)? = null) {
 fun Assert<Double>.isNotZero(message: (() -> String)? = null) {
     if (actual == 0.0) {
         throw AssertionError(
-            message?.invoke() ?: "expected not to be zero"
+            message?.invoke() ?: "expected not to be zero",
         )
     }
 }
@@ -132,7 +135,7 @@ fun Assert<Double>.isNotZero(message: (() -> String)? = null) {
 fun Assert<Double>.isPositive(message: (() -> String)? = null) {
     if (actual <= 0.0) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be positive but was:<$actual>"
+            message?.invoke() ?: "expected to be positive but was:<$actual>",
         )
     }
 }
@@ -144,12 +147,13 @@ fun Assert<Double>.isPositive(message: (() -> String)? = null) {
 fun Assert<Double>.isNegative(message: (() -> String)? = null) {
     if (actual >= 0.0) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be negative but was:<$actual>"
+            message?.invoke() ?: "expected to be negative but was:<$actual>",
         )
     }
 }
 
 // Float extensions
+
 /**
  * Asserts the number is 0.
  */
@@ -157,7 +161,7 @@ fun Assert<Double>.isNegative(message: (() -> String)? = null) {
 fun Assert<Float>.isZero(message: (() -> String)? = null) {
     if (actual != 0.0f) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be zero but was:<$actual>"
+            message?.invoke() ?: "expected to be zero but was:<$actual>",
         )
     }
 }
@@ -169,7 +173,7 @@ fun Assert<Float>.isZero(message: (() -> String)? = null) {
 fun Assert<Float>.isNotZero(message: (() -> String)? = null) {
     if (actual == 0.0f) {
         throw AssertionError(
-            message?.invoke() ?: "expected not to be zero"
+            message?.invoke() ?: "expected not to be zero",
         )
     }
 }
@@ -181,7 +185,7 @@ fun Assert<Float>.isNotZero(message: (() -> String)? = null) {
 fun Assert<Float>.isPositive(message: (() -> String)? = null) {
     if (actual <= 0.0f) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be positive but was:<$actual>"
+            message?.invoke() ?: "expected to be positive but was:<$actual>",
         )
     }
 }
@@ -193,7 +197,7 @@ fun Assert<Float>.isPositive(message: (() -> String)? = null) {
 fun Assert<Float>.isNegative(message: (() -> String)? = null) {
     if (actual >= 0.0f) {
         throw AssertionError(
-            message?.invoke() ?: "expected to be negative but was:<$actual>"
+            message?.invoke() ?: "expected to be negative but was:<$actual>",
         )
     }
 }

@@ -176,7 +176,9 @@ class StringTest {
     // Power Assert diagram verification tests
     @Test
     fun isEqualTo_shows_power_assert_with_property_chain() {
-        data class User(val name: String)
+        data class User(
+            val name: String,
+        )
         val user = User("Alice")
         val error =
             assertFailsWith<AssertionError> {
@@ -226,7 +228,9 @@ class StringTest {
 
     @Test
     fun isNotEqualTo_shows_power_assert_with_expression() {
-        data class Config(val value: String)
+        data class Config(
+            val value: String,
+        )
         val config = Config("test")
         val error =
             assertFailsWith<AssertionError> {

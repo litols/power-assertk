@@ -136,3 +136,4 @@ replay_pid*
 build-logic/.gradle/
 build-logic/conventions/build/
 
+.kotlin

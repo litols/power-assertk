@@ -346,7 +346,10 @@ class SequenceTest {
     // extracting tests
     @Test
     fun extracting_single_property() {
-        data class Person(val name: String, val age: Int)
+        data class Person(
+            val name: String,
+            val age: Int,
+        )
         val people: Sequence<Person> = sequenceOf(Person("Alice", 30), Person("Bob", 25))
         val names: Iterable<String> = assertThat(people).extracting { p -> p.name }.actual
         assertThat(names).containsExactlyInAnyOrder("Alice", "Bob")
@@ -354,7 +357,10 @@ class SequenceTest {
 
     @Test
     fun extracting_two_properties() {
-        data class Person(val name: String, val age: Int)
+        data class Person(
+            val name: String,
+            val age: Int,
+        )
         val people: Sequence<Person> = sequenceOf(Person("Alice", 30))
         val result = assertThat(people).extracting({ p -> p.name }, { p -> p.age })
         // Verify result has expected pair
@@ -365,7 +371,11 @@ class SequenceTest {
 
     @Test
     fun extracting_three_properties() {
-        data class Person(val name: String, val age: Int, val city: String)
+        data class Person(
+            val name: String,
+            val age: Int,
+            val city: String,
+        )
         val people: Sequence<Person> = sequenceOf(Person("Alice", 30, "NYC"))
         val result = assertThat(people).extracting({ p -> p.name }, { p -> p.age }, { p -> p.city })
         // Verify result has expected triple

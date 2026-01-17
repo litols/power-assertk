@@ -18,7 +18,9 @@ class InputStreamTest {
 
     @Test
     fun hasSameContentAs_fails_when_content_differs() {
-        data class StreamContainer(val stream: InputStream)
+        data class StreamContainer(
+            val stream: InputStream,
+        )
         val stream1: InputStream = ByteArrayInputStream("Hello".toByteArray())
         val stream2: InputStream = ByteArrayInputStream("World".toByteArray())
         val container = StreamContainer(stream1)
@@ -32,11 +34,11 @@ class InputStreamTest {
         // InputStream toString() shows object addresses, so we verify structure
         assertTrue(
             message.contains("assertThat(container.stream).hasSameContentAs"),
-            "Should show assertion expression"
+            "Should show assertion expression",
         )
         assertTrue(
             message.contains("StreamContainer"),
-            "Should show StreamContainer"
+            "Should show StreamContainer",
         )
     }
 
@@ -68,7 +70,9 @@ class InputStreamTest {
 
     @Test
     fun hasNotSameContentAs_fails_when_content_is_same() {
-        data class StreamContainer(val stream: InputStream)
+        data class StreamContainer(
+            val stream: InputStream,
+        )
         val content = "Hello World"
         val stream1: InputStream = ByteArrayInputStream(content.toByteArray())
         val stream2: InputStream = ByteArrayInputStream(content.toByteArray())
@@ -83,11 +87,11 @@ class InputStreamTest {
         // InputStream toString() shows object addresses, so we verify structure
         assertTrue(
             message.contains("assertThat(container.stream).hasNotSameContentAs"),
-            "Should show assertion expression"
+            "Should show assertion expression",
         )
         assertTrue(
             message.contains("StreamContainer"),
-            "Should show StreamContainer"
+            "Should show StreamContainer",
         )
     }
 

@@ -5,7 +5,11 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class AnyJvmTest {
-    data class Person(val name: String, val age: Int, val city: String)
+    data class Person(
+        val name: String,
+        val age: Int,
+        val city: String,
+    )
 
     // jClass tests
     @Test
@@ -32,7 +36,9 @@ class AnyJvmTest {
 
     @Test
     fun isDataClassEqualTo_fails_when_not_equal() {
-        data class Team(val leader: Person)
+        data class Team(
+            val leader: Person,
+        )
         val team = Team(Person("Alice", 30, "NYC"))
         val expected = Person("Bob", 25, "LA")
 
@@ -44,26 +50,33 @@ class AnyJvmTest {
 
         assertTrue(
             message.contains("assertThat(team.leader).isDataClassEqualTo(expected)"),
-            "Should show assertion expression"
+            "Should show assertion expression",
         )
         assertTrue(
             message.contains("Team"),
-            "Should show Team"
+            "Should show Team",
         )
         assertTrue(
             message.contains("Person(name=Alice, age=30, city=NYC)"),
-            "Should show actual person"
+            "Should show actual person",
         )
         assertTrue(
             message.contains("Person(name=Bob, age=25, city=LA)"),
-            "Should show expected person"
+            "Should show expected person",
         )
     }
 
     @Test
     fun isDataClassEqualTo_fails_when_different_class() {
-        data class OtherPerson(val name: String, val age: Int, val city: String)
-        data class Container(val value: Any)
+        data class OtherPerson(
+            val name: String,
+            val age: Int,
+            val city: String,
+        )
+
+        data class Container(
+            val value: Any,
+        )
 
         val person = Person("Alice", 30, "NYC")
         val otherPerson = OtherPerson("Alice", 30, "NYC")
@@ -78,19 +91,19 @@ class AnyJvmTest {
 
         assertTrue(
             message.contains("assertThat(container.value).isDataClassEqualTo(otherPerson)"),
-            "Should show assertion expression"
+            "Should show assertion expression",
         )
         assertTrue(
             message.contains("Container"),
-            "Should show Container"
+            "Should show Container",
         )
         assertTrue(
             message.contains("Person(name=Alice, age=30, city=NYC)"),
-            "Should show Person"
+            "Should show Person",
         )
         assertTrue(
             message.contains("OtherPerson(name=Alice, age=30, city=NYC)"),
-            "Should show OtherPerson"
+            "Should show OtherPerson",
         )
     }
 
@@ -125,8 +138,15 @@ class AnyJvmTest {
 
     @Test
     fun isEqualToIgnoringGivenProperties_fails_when_different_class() {
-        data class OtherPerson(val name: String, val age: Int, val city: String)
-        data class Container(val value: Any)
+        data class OtherPerson(
+            val name: String,
+            val age: Int,
+            val city: String,
+        )
+
+        data class Container(
+            val value: Any,
+        )
 
         val person = Person("Alice", 30, "NYC")
         val otherPerson = OtherPerson("Alice", 30, "NYC")
@@ -141,19 +161,19 @@ class AnyJvmTest {
 
         assertTrue(
             message.contains("assertThat(container.value).isEqualToIgnoringGivenProperties(otherPerson)"),
-            "Should show assertion expression"
+            "Should show assertion expression",
         )
         assertTrue(
             message.contains("Container"),
-            "Should show Container"
+            "Should show Container",
         )
         assertTrue(
             message.contains("Person(name=Alice, age=30, city=NYC)"),
-            "Should show Person"
+            "Should show Person",
         )
         assertTrue(
             message.contains("OtherPerson(name=Alice, age=30, city=NYC)"),
-            "Should show OtherPerson"
+            "Should show OtherPerson",
         )
     }
 }

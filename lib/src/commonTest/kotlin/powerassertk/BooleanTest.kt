@@ -36,7 +36,9 @@ class BooleanTest {
 
     @Test
     fun isTrue_shows_power_assert_with_expression() {
-        data class State(val isActive: Boolean)
+        data class State(
+            val isActive: Boolean,
+        )
         val state = State(false)
 
         val error =
@@ -113,7 +115,9 @@ class BooleanTest {
 
     @Test
     fun isFalse_shows_power_assert_with_expression() {
-        data class State(val isActive: Boolean)
+        data class State(
+            val isActive: Boolean,
+        )
         val state = State(true)
 
         val error =

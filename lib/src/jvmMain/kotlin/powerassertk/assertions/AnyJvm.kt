@@ -6,9 +6,7 @@ import kotlin.reflect.full.memberProperties
 /**
  * Returns an assertion on the object's Java class.
  */
-fun <T : Any> Assert<T>.jClass(): Assert<Class<out T>> {
-    return Assert(actual.javaClass)
-}
+fun <T : Any> Assert<T>.jClass(): Assert<Class<out T>> = Assert(actual.javaClass)
 
 /**
  * Asserts the data class is equal to the expected by comparing all properties.
@@ -71,7 +69,15 @@ fun <T : Any> Assert<T>.isEqualToIgnoringGivenProperties(
 
     if (differences.isNotEmpty()) {
         throw AssertionError(
-            message?.invoke() ?: "expected objects to be equal ignoring $propertiesToIgnore, but found differences:\n${differences.joinToString("\n")}",
+            message?.invoke()
+                ?: (
+                    "expected objects to be equal ignoring $propertiesToIgnore, " +
+                        "but found differences:\n${
+                            differences.joinToString(
+                                "\n",
+                            )
+                        }"
+                ),
         )
     }
 }

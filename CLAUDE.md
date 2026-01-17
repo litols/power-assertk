@@ -28,6 +28,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Run a single test class (JVM)
 ./gradlew jvmTest --tests "powerassertk.AssertTest"
 
+# Run detekt static analysis
+./gradlew detekt
+
+# Run ktlint code style check
+./gradlew ktlintCheck
+
+# Auto-format code with ktlint
+./gradlew ktlintFormat
+
 # Clean build
 ./gradlew clean build
 

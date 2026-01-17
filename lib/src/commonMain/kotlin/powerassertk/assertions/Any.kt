@@ -150,9 +150,7 @@ fun <T> Assert<T>.hasToString(
  * Note: This is a transformation method without a message parameter and
  * should NOT be added to the Power Assert functions list.
  */
-fun <T> Assert<T>.toStringFun(): Assert<String> {
-    return Assert(actual.toString())
-}
+fun <T> Assert<T>.toStringFun(): Assert<String> = Assert(actual.toString())
 
 /**
  * Asserts the value's hashCode() equals the expected hash code.
@@ -175,16 +173,12 @@ fun <T : Any> Assert<T>.hasHashCode(
  * Note: This is a transformation method without a message parameter and
  * should NOT be added to the Power Assert functions list.
  */
-fun <T : Any> Assert<T>.hashCodeFun(): Assert<Int> {
-    return Assert(actual.hashCode())
-}
+fun <T : Any> Assert<T>.hashCodeFun(): Assert<Int> = Assert(actual.hashCode())
 
 /**
  * Asserts the value is an instance of the expected type and returns an Assert<T> for chaining.
  */
-inline fun <reified T : Any> Assert<*>.isInstanceOf(
-    noinline message: (() -> String)? = null,
-): Assert<T> {
+inline fun <reified T : Any> Assert<*>.isInstanceOf(noinline message: (() -> String)? = null): Assert<T> {
     if (actual !is T) {
         throw AssertionError(
             message?.invoke() ?: "expected to be instance of:<${T::class}> but was instance of:<${actual!!::class}>",
@@ -196,9 +190,7 @@ inline fun <reified T : Any> Assert<*>.isInstanceOf(
 /**
  * Asserts the value is not an instance of the expected type.
  */
-inline fun <reified T : Any> Assert<*>.isNotInstanceOf(
-    noinline message: (() -> String)? = null,
-) {
+inline fun <reified T : Any> Assert<*>.isNotInstanceOf(noinline message: (() -> String)? = null) {
     if (actual is T) {
         throw AssertionError(
             message?.invoke() ?: "expected to not be instance of:<${T::class}> but was:<$actual>",

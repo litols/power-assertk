@@ -71,7 +71,7 @@ fun <E> Assert<Sequence<E>>.containsOnly(
     val expectedList = elements.toList()
     if (actualList.toSet() != expectedList.toSet() || actualList.size != expectedList.size) {
         throw AssertionError(
-            message?.invoke() ?: "expected to contain only:<${expectedList}> but was:<$actualList>",
+            message?.invoke() ?: "expected to contain only:<$expectedList> but was:<$actualList>",
         )
     }
 }
@@ -111,7 +111,7 @@ fun <E> Assert<Sequence<E>>.containsExactlyInAnyOrder(
     // Check sizes match
     if (actualList.size != expectedList.size) {
         throw AssertionError(
-            message?.invoke() ?: "expected to contain exactly in any order:<${expectedList}> but was:<$actualList>",
+            message?.invoke() ?: "expected to contain exactly in any order:<$expectedList> but was:<$actualList>",
         )
     }
 
@@ -120,7 +120,7 @@ fun <E> Assert<Sequence<E>>.containsExactlyInAnyOrder(
     for (element in expectedList) {
         if (!actualMutable.remove(element)) {
             throw AssertionError(
-                message?.invoke() ?: "expected to contain exactly in any order:<${expectedList}> but was:<$actualList>",
+                message?.invoke() ?: "expected to contain exactly in any order:<$expectedList> but was:<$actualList>",
             )
         }
     }
@@ -189,14 +189,15 @@ fun <E> Assert<Sequence<E>>.any(
     message: (() -> String)? = null,
     f: (Assert<E>) -> Unit,
 ) {
-    val passed = actual.any { element ->
-        try {
-            f(Assert(element))
-            true
-        } catch (e: AssertionError) {
-            false
+    val passed =
+        actual.any { element ->
+            try {
+                f(Assert(element))
+                true
+            } catch (e: AssertionError) {
+                false
+            }
         }
-    }
     if (!passed) {
         throw AssertionError(
             message?.invoke() ?: "expected at least one element to satisfy the assertion",
@@ -231,14 +232,15 @@ fun <E> Assert<Sequence<E>>.atLeast(
     message: (() -> String)? = null,
     f: (Assert<E>) -> Unit,
 ) {
-    val count = actual.count { element ->
-        try {
-            f(Assert(element))
-            true
-        } catch (e: AssertionError) {
-            false
+    val count =
+        actual.count { element ->
+            try {
+                f(Assert(element))
+                true
+            } catch (e: AssertionError) {
+                false
+            }
         }
-    }
     if (count < times) {
         throw AssertionError(
             message?.invoke() ?: "expected at least $times elements to satisfy the assertion but $count did",
@@ -254,14 +256,15 @@ fun <E> Assert<Sequence<E>>.atMost(
     message: (() -> String)? = null,
     f: (Assert<E>) -> Unit,
 ) {
-    val count = actual.count { element ->
-        try {
-            f(Assert(element))
-            true
-        } catch (e: AssertionError) {
-            false
+    val count =
+        actual.count { element ->
+            try {
+                f(Assert(element))
+                true
+            } catch (e: AssertionError) {
+                false
+            }
         }
-    }
     if (count > times) {
         throw AssertionError(
             message?.invoke() ?: "expected at most $times elements to satisfy the assertion but $count did",
@@ -277,14 +280,15 @@ fun <E> Assert<Sequence<E>>.exactly(
     message: (() -> String)? = null,
     f: (Assert<E>) -> Unit,
 ) {
-    val count = actual.count { element ->
-        try {
-            f(Assert(element))
-            true
-        } catch (e: AssertionError) {
-            false
+    val count =
+        actual.count { element ->
+            try {
+                f(Assert(element))
+                true
+            } catch (e: AssertionError) {
+                false
+            }
         }
-    }
     if (count != times) {
         throw AssertionError(
             message?.invoke() ?: "expected exactly $times elements to satisfy the assertion but $count did",
@@ -298,8 +302,9 @@ fun <E> Assert<Sequence<E>>.exactly(
  * Note: This is a transformation method without a message parameter.
  */
 fun <E> Assert<Sequence<E>>.first(): Assert<E> {
-    val element = actual.firstOrNull()
-        ?: throw AssertionError("expected to have at least one element but was empty")
+    val element =
+        actual.firstOrNull()
+            ?: throw AssertionError("expected to have at least one element but was empty")
     return Assert(element)
 }
 
@@ -321,9 +326,7 @@ fun <E> Assert<Sequence<E>>.single(): Assert<E> {
  *
  * Note: This is a transformation method without a message parameter.
  */
-fun <E, R> Assert<Sequence<E>>.extracting(f: (E) -> R): Assert<List<R>> {
-    return Assert(actual.map(f).toList())
-}
+fun <E, R> Assert<Sequence<E>>.extracting(f: (E) -> R): Assert<List<R>> = Assert(actual.map(f).toList())
 
 /**
  * Extracts values using two functions and returns an Assert on the resulting list of pairs.
@@ -333,9 +336,7 @@ fun <E, R> Assert<Sequence<E>>.extracting(f: (E) -> R): Assert<List<R>> {
 fun <E, R1, R2> Assert<Sequence<E>>.extracting(
     f1: (E) -> R1,
     f2: (E) -> R2,
-): Assert<List<Pair<R1, R2>>> {
-    return Assert(actual.map { f1(it) to f2(it) }.toList())
-}
+): Assert<List<Pair<R1, R2>>> = Assert(actual.map { f1(it) to f2(it) }.toList())
 
 /**
  * Extracts values using three functions and returns an Assert on the resulting list of triples.
@@ -346,6 +347,4 @@ fun <E, R1, R2, R3> Assert<Sequence<E>>.extracting(
     f1: (E) -> R1,
     f2: (E) -> R2,
     f3: (E) -> R3,
-): Assert<List<Triple<R1, R2, R3>>> {
-    return Assert(actual.map { Triple(f1(it), f2(it), f3(it)) }.toList())
-}
+): Assert<List<Triple<R1, R2, R3>>> = Assert(actual.map { Triple(f1(it), f2(it), f3(it)) }.toList())

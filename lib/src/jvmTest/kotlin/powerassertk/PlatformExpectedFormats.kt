@@ -13,15 +13,14 @@ actual fun numberString(value: Number): String {
     return value.toString() // JVM preserves decimal point for 0.0, 0.0f
 }
 
-actual fun resultString(result: Result<*>): String {
-    return when {
+actual fun resultString(result: Result<*>): String =
+    when {
         result.isSuccess -> "Success(${result.getOrNull()})"
         else -> {
             val exception = result.exceptionOrNull()!!
             "Failure(${throwableString(exception)})"
         }
     }
-}
 
 actual fun sequenceTypeCheck(): String {
     return "Sequence" // JVM shows proper type names

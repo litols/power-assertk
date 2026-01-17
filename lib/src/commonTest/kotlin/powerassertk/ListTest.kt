@@ -28,7 +28,9 @@ class ListTest {
 
     @Test
     fun index_allows_chaining() {
-        data class Person(val name: String)
+        data class Person(
+            val name: String,
+        )
         val people = listOf(Person("Alice"), Person("Bob"))
         assertThat(people).index(0).isEqualTo(Person("Alice"))
     }

@@ -5,9 +5,7 @@ package powerassertk
  *
  * Note: This is a transformation method without a message parameter.
  */
-fun <T : Throwable> Assert<T>.message(): Assert<String?> {
-    return Assert(actual.message)
-}
+fun <T : Throwable> Assert<T>.message(): Assert<String?> = Assert(actual.message)
 
 /**
  * Asserts the Throwable has the expected message.
@@ -43,9 +41,7 @@ fun <T : Throwable> Assert<T>.messageContains(
  *
  * Note: This is a transformation method without a message parameter.
  */
-fun <T : Throwable> Assert<T>.cause(): Assert<Throwable?> {
-    return Assert(actual.cause)
-}
+fun <T : Throwable> Assert<T>.cause(): Assert<Throwable?> = Assert(actual.cause)
 
 /**
  * Asserts the Throwable has a cause with the same type and message.

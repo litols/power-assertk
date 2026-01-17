@@ -8,9 +8,7 @@ import kotlin.jvm.JvmName
  * Note: This is a transformation method without a message parameter and
  * should NOT be added to the Power Assert functions list.
  */
-fun <T : Collection<*>> Assert<T>.size(): Assert<Int> {
-    return Assert(actual.size)
-}
+fun <T : Collection<*>> Assert<T>.size(): Assert<Int> = Assert(actual.size)
 
 /**
  * Asserts the Collection is empty.

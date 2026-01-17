@@ -407,7 +407,9 @@ class MapTest {
     // Power Assert diagram verification tests
     @Test
     fun contains_shows_power_assert_with_property_chain() {
-        data class Config(val settings: Map<String, Int>)
+        data class Config(
+            val settings: Map<String, Int>,
+        )
         val config = Config(mapOf("a" to 1, "b" to 2))
         val error =
             assertFailsWith<AssertionError> {
@@ -455,7 +457,9 @@ class MapTest {
 
     @Test
     fun doesNotContainKey_shows_power_assert_with_expression() {
-        data class Store(val items: Map<String, String>)
+        data class Store(
+            val items: Map<String, String>,
+        )
         val store = Store(mapOf("apple" to "red", "banana" to "yellow"))
         val error =
             assertFailsWith<AssertionError> {

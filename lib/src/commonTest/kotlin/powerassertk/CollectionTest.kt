@@ -178,7 +178,9 @@ class CollectionTest {
     // Power Assert diagram verification tests
     @Test
     fun isEmpty_shows_power_assert_with_property_chain() {
-        data class Container(val items: List<Int>)
+        data class Container(
+            val items: List<Int>,
+        )
         val container = Container(listOf(1, 2, 3))
         val error =
             assertFailsWith<AssertionError> {
@@ -226,7 +228,9 @@ class CollectionTest {
 
     @Test
     fun hasSameSizeAs_shows_power_assert_with_chained_call() {
-        data class Data(val values: List<String>)
+        data class Data(
+            val values: List<String>,
+        )
         val data = Data(listOf("a", "b", "c"))
         val error =
             assertFailsWith<AssertionError> {

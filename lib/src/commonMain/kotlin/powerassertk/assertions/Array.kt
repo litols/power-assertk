@@ -8,9 +8,7 @@ import kotlin.jvm.JvmName
  * Note: This is a transformation method without a message parameter and
  * should NOT be added to the Power Assert functions list.
  */
-fun <T> Assert<Array<T>>.size(): Assert<Int> {
-    return Assert(actual.size)
-}
+fun <T> Assert<Array<T>>.size(): Assert<Int> = Assert(actual.size)
 
 /**
  * Asserts the Array is empty.
@@ -69,7 +67,8 @@ fun <T> Assert<Array<T>>.hasSameSizeAs(
 ) {
     if (actual.size != other.size) {
         throw AssertionError(
-            message?.invoke() ?: "expected to have same size as:<${other.contentToString()}> (${other.size}) but was:<${actual.size}>",
+            message?.invoke()
+                ?: "expected to have same size as:<${other.contentToString()}> (${other.size}) but was:<${actual.size}>",
         )
     }
 }
@@ -141,7 +140,8 @@ fun <T> Assert<Array<T>>.containsOnly(
 ) {
     if (actual.toSet() != elements.toSet() || actual.size != elements.size) {
         throw AssertionError(
-            message?.invoke() ?: "expected to contain only:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
+            message?.invoke()
+                ?: "expected to contain only:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
         )
     }
 }
@@ -155,7 +155,8 @@ fun <T> Assert<Array<T>>.containsExactly(
 ) {
     if (!actual.contentEquals(elements)) {
         throw AssertionError(
-            message?.invoke() ?: "expected to contain exactly:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
+            message?.invoke()
+                ?: "expected to contain exactly:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
         )
     }
 }
@@ -170,7 +171,8 @@ fun <T> Assert<Array<T>>.containsExactlyInAnyOrder(
     // Check sizes match
     if (actual.size != elements.size) {
         throw AssertionError(
-            message?.invoke() ?: "expected to contain exactly in any order:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
+            message?.invoke()
+                ?: "expected to contain exactly in any order:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
         )
     }
 
@@ -179,7 +181,8 @@ fun <T> Assert<Array<T>>.containsExactlyInAnyOrder(
     for (element in elements) {
         if (!actualMutable.remove(element)) {
             throw AssertionError(
-                message?.invoke() ?: "expected to contain exactly in any order:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
+                message?.invoke()
+                    ?: "expected to contain exactly in any order:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
             )
         }
     }
@@ -225,14 +228,15 @@ fun <T> Assert<Array<T>>.any(
     message: (() -> String)? = null,
     f: (Assert<T>) -> Unit,
 ) {
-    val passed = actual.any { element ->
-        try {
-            f(Assert(element))
-            true
-        } catch (e: AssertionError) {
-            false
+    val passed =
+        actual.any { element ->
+            try {
+                f(Assert(element))
+                true
+            } catch (e: AssertionError) {
+                false
+            }
         }
-    }
     if (!passed) {
         throw AssertionError(
             message?.invoke() ?: "expected at least one element to satisfy the assertion",
@@ -267,14 +271,15 @@ fun <T> Assert<Array<T>>.atLeast(
     message: (() -> String)? = null,
     f: (Assert<T>) -> Unit,
 ) {
-    val count = actual.count { element ->
-        try {
-            f(Assert(element))
-            true
-        } catch (e: AssertionError) {
-            false
+    val count =
+        actual.count { element ->
+            try {
+                f(Assert(element))
+                true
+            } catch (e: AssertionError) {
+                false
+            }
         }
-    }
     if (count < times) {
         throw AssertionError(
             message?.invoke() ?: "expected at least $times elements to satisfy the assertion but $count did",
@@ -290,14 +295,15 @@ fun <T> Assert<Array<T>>.atMost(
     message: (() -> String)? = null,
     f: (Assert<T>) -> Unit,
 ) {
-    val count = actual.count { element ->
-        try {
-            f(Assert(element))
-            true
-        } catch (e: AssertionError) {
-            false
+    val count =
+        actual.count { element ->
+            try {
+                f(Assert(element))
+                true
+            } catch (e: AssertionError) {
+                false
+            }
         }
-    }
     if (count > times) {
         throw AssertionError(
             message?.invoke() ?: "expected at most $times elements to satisfy the assertion but $count did",
@@ -313,14 +319,15 @@ fun <T> Assert<Array<T>>.exactly(
     message: (() -> String)? = null,
     f: (Assert<T>) -> Unit,
 ) {
-    val count = actual.count { element ->
-        try {
-            f(Assert(element))
-            true
-        } catch (e: AssertionError) {
-            false
+    val count =
+        actual.count { element ->
+            try {
+                f(Assert(element))
+                true
+            } catch (e: AssertionError) {
+                false
+            }
         }
-    }
     if (count != times) {
         throw AssertionError(
             message?.invoke() ?: "expected exactly $times elements to satisfy the assertion but $count did",
@@ -334,8 +341,9 @@ fun <T> Assert<Array<T>>.exactly(
  * Note: This is a transformation method without a message parameter.
  */
 fun <T> Assert<Array<T>>.first(): Assert<T> {
-    val element = actual.firstOrNull()
-        ?: throw AssertionError("expected to have at least one element but was empty")
+    val element =
+        actual.firstOrNull()
+            ?: throw AssertionError("expected to have at least one element but was empty")
     return Assert(element)
 }
 
@@ -368,9 +376,7 @@ fun <T> Assert<Array<T>>.index(index: Int): Assert<T> {
  *
  * Note: This is a transformation method without a message parameter.
  */
-fun <T, R> Assert<Array<T>>.extracting(f: (T) -> R): Assert<List<R>> {
-    return Assert(actual.map(f))
-}
+fun <T, R> Assert<Array<T>>.extracting(f: (T) -> R): Assert<List<R>> = Assert(actual.map(f))
 
 /**
  * Extracts values using two functions and returns an Assert on the resulting list of pairs.
@@ -380,9 +386,7 @@ fun <T, R> Assert<Array<T>>.extracting(f: (T) -> R): Assert<List<R>> {
 fun <T, R1, R2> Assert<Array<T>>.extracting(
     f1: (T) -> R1,
     f2: (T) -> R2,
-): Assert<List<Pair<R1, R2>>> {
-    return Assert(actual.map { f1(it) to f2(it) })
-}
+): Assert<List<Pair<R1, R2>>> = Assert(actual.map { f1(it) to f2(it) })
 
 /**
  * Extracts values using three functions and returns an Assert on the resulting list of triples.
@@ -393,6 +397,4 @@ fun <T, R1, R2, R3> Assert<Array<T>>.extracting(
     f1: (T) -> R1,
     f2: (T) -> R2,
     f3: (T) -> R3,
-): Assert<List<Triple<R1, R2, R3>>> {
-    return Assert(actual.map { Triple(f1(it), f2(it), f3(it)) })
-}
+): Assert<List<Triple<R1, R2, R3>>> = Assert(actual.map { Triple(f1(it), f2(it), f3(it)) })

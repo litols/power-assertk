@@ -1,7 +1,6 @@
 package powerassertk
 
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
@@ -92,7 +91,7 @@ class AnyTest {
     fun isNull_supports_custom_message() {
         val error =
             assertFailsWith<AssertionError> {
-                assertThat(42).isNull() { "Custom: expected null" }
+                assertThat(42).isNull { "Custom: expected null" }
             }
         val message = error.message!!
 
@@ -143,7 +142,7 @@ class AnyTest {
     fun isNotNull_supports_custom_message() {
         val error =
             assertFailsWith<AssertionError> {
-                assertThat<Int?>(null).isNotNull() { "Custom: must be non-null" }
+                assertThat<Int?>(null).isNotNull { "Custom: must be non-null" }
             }
         val message = error.message!!
 
@@ -512,11 +511,11 @@ class AnyTest {
         // toStringFun()は中間値としてAssertオブジェクトを返すため、そのtoStringも表示される
         assertTrue(
             message.contains("assertThat(person).toStringFun().isEqualTo(\"wrong\")"),
-            "Should show assertion expression"
+            "Should show assertion expression",
         )
         assertTrue(
             message.contains("Person(name=Alice, age=30)"),
-            "Should show person object value"
+            "Should show person object value",
         )
     }
 
@@ -598,11 +597,11 @@ class AnyTest {
         // hashCodeFun()は中間値としてAssertオブジェクトを返すため、そのtoStringも表示される
         assertTrue(
             message.contains("assertThat(value).hashCodeFun().isEqualTo(12345)"),
-            "Should show assertion expression"
+            "Should show assertion expression",
         )
         assertTrue(
             message.contains("test"),
-            "Should show value"
+            "Should show value",
         )
     }
 
@@ -640,7 +639,7 @@ class AnyTest {
     fun isInstanceOf_supports_custom_message() {
         val error =
             assertFailsWith<AssertionError> {
-                assertThat<Any>(42).isInstanceOf<String>() { "Custom: type mismatch" }
+                assertThat<Any>(42).isInstanceOf<String> { "Custom: type mismatch" }
             }
         val message = error.message!!
 
@@ -690,7 +689,7 @@ class AnyTest {
     fun isNotInstanceOf_supports_custom_message() {
         val error =
             assertFailsWith<AssertionError> {
-                assertThat<Any>("hello").isNotInstanceOf<String>() { "Custom: should not be String" }
+                assertThat<Any>("hello").isNotInstanceOf<String> { "Custom: should not be String" }
             }
         val message = error.message!!
 

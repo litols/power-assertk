@@ -188,11 +188,11 @@ class CharSequenceTest {
 
         assertTrue(
             message.contains("assertThat(actual).hasLineCount(3)"),
-            "Should show assertion expression"
+            "Should show assertion expression",
         )
         assertTrue(
             message.contains("line1"),
-            "Should show actual value"
+            "Should show actual value",
         )
     }
 
@@ -466,11 +466,11 @@ class CharSequenceTest {
 
         assertTrue(
             message.contains("assertThat(actual).matches(pattern)"),
-            "Should show assertion expression"
+            "Should show assertion expression",
         )
         assertTrue(
             message.contains("hello"),
-            "Should show actual value"
+            "Should show actual value",
         )
     }
 
@@ -493,11 +493,11 @@ class CharSequenceTest {
 
         assertTrue(
             message.contains("assertThat(actual).containsMatch(pattern)"),
-            "Should show assertion expression"
+            "Should show assertion expression",
         )
         assertTrue(
             message.contains("hello"),
-            "Should show actual value"
+            "Should show actual value",
         )
     }
 
@@ -514,7 +514,9 @@ class CharSequenceTest {
     // Power Assert diagram verification tests
     @Test
     fun contains_shows_power_assert_with_property_chain() {
-        data class Message(val text: String)
+        data class Message(
+            val text: String,
+        )
         val msg = Message("hello world")
         val error =
             assertFailsWith<AssertionError> {
@@ -564,7 +566,9 @@ class CharSequenceTest {
 
     @Test
     fun hasLength_shows_power_assert_with_chained_call() {
-        data class User(val name: String)
+        data class User(
+            val name: String,
+        )
         val user = User("Alice")
         val error =
             assertFailsWith<AssertionError> {

@@ -31,7 +31,10 @@ class PredicateTest {
 
     @Test
     fun matchesPredicate_works_with_complex_objects() {
-        data class Person(val name: String, val age: Int)
+        data class Person(
+            val name: String,
+            val age: Int,
+        )
         val person = Person("Alice", 30)
         assertThat(person).matchesPredicate { it.age >= 18 && it.name.startsWith("A") }
     }

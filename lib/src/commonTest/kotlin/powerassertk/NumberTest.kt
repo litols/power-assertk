@@ -385,7 +385,9 @@ class NumberTest {
     // Power Assert diagram verification tests with property chains
     @Test
     fun isZero_shows_power_assert_with_property_chain() {
-        data class Counter(val value: Int)
+        data class Counter(
+            val value: Int,
+        )
         val counter = Counter(5)
 
         val error =
@@ -410,7 +412,9 @@ class NumberTest {
 
     @Test
     fun isPositive_shows_power_assert_with_property_chain() {
-        data class Temperature(val celsius: Double)
+        data class Temperature(
+            val celsius: Double,
+        )
         val temp = Temperature(-10.0)
 
         val error =
@@ -435,7 +439,9 @@ class NumberTest {
 
     @Test
     fun isNegative_shows_power_assert_with_property_chain() {
-        data class Score(val points: Int)
+        data class Score(
+            val points: Int,
+        )
         val score = Score(100)
 
         val error =

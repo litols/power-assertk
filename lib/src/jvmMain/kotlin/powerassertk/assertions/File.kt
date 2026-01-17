@@ -75,9 +75,7 @@ fun Assert<File>.hasName(
 /**
  * Returns an assertion on the file's name.
  */
-fun Assert<File>.name(): Assert<String> {
-    return Assert(actual.name)
-}
+fun Assert<File>.name(): Assert<String> = Assert(actual.name)
 
 /**
  * Asserts the file has the expected path.
@@ -96,9 +94,7 @@ fun Assert<File>.hasPath(
 /**
  * Returns an assertion on the file's path.
  */
-fun Assert<File>.path(): Assert<String> {
-    return Assert(actual.path)
-}
+fun Assert<File>.path(): Assert<String> = Assert(actual.path)
 
 /**
  * Asserts the file has the expected parent path.
@@ -118,9 +114,7 @@ fun Assert<File>.hasParent(
 /**
  * Returns an assertion on the file's parent path.
  */
-fun Assert<File>.parent(): Assert<String?> {
-    return Assert(actual.parent)
-}
+fun Assert<File>.parent(): Assert<String?> = Assert(actual.parent)
 
 /**
  * Asserts the file has the expected extension.
@@ -139,9 +133,7 @@ fun Assert<File>.hasExtension(
 /**
  * Returns an assertion on the file's extension.
  */
-fun Assert<File>.extension(): Assert<String> {
-    return Assert(actual.extension)
-}
+fun Assert<File>.extension(): Assert<String> = Assert(actual.extension)
 
 /**
  * Asserts the directory has the expected direct child.
@@ -158,7 +150,7 @@ fun Assert<File>.hasDirectChild(
     val children = actual.listFiles()?.toList() ?: emptyList()
     if (!children.contains(expected)) {
         throw AssertionError(
-            message?.invoke() ?: "expected to have direct child:<$expected> but was:<${children}>",
+            message?.invoke() ?: "expected to have direct child:<$expected> but was:<$children>",
         )
     }
 }

@@ -9,9 +9,9 @@ import kotlin.io.path.isExecutable
 import kotlin.io.path.isHidden
 import kotlin.io.path.isReadable
 import kotlin.io.path.isRegularFile
+import kotlin.io.path.isSameFileAs
 import kotlin.io.path.isSymbolicLink
 import kotlin.io.path.isWritable
-import kotlin.io.path.isSameFileAs
 import kotlin.io.path.readBytes
 import kotlin.io.path.readLines
 

@@ -43,7 +43,9 @@ class ResultTest {
 
     @Test
     fun isSuccess_shows_power_assert_with_property_chain() {
-        data class Response(val result: Result<Int>)
+        data class Response(
+            val result: Result<Int>,
+        )
         val response = Response(Result.failure(RuntimeException("error")))
 
         val error =
@@ -107,7 +109,10 @@ class ResultTest {
     // Complex chaining tests
     @Test
     fun can_chain_through_success_value() {
-        data class Person(val name: String, val age: Int)
+        data class Person(
+            val name: String,
+            val age: Int,
+        )
         val result: Result<Person> = Result.success(Person("Alice", 30))
         assertThat(result).isSuccess().isEqualTo(Person("Alice", 30))
     }

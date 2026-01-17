@@ -1,11 +1,6 @@
 package powerassertk
 
 /**
- * Platform-specific expected format strings for Power Assert diagram tests.
- * This allows JVM and JS tests to have different expected outputs while sharing test code.
- */
-
-/**
  * Returns the platform-specific string representation of a Throwable.
  * JVM: "java.lang.RuntimeException: message"
  * JS: "RuntimeException: message"

@@ -147,7 +147,9 @@ class ArrayTest {
     // Power Assert diagram verification tests
     @Test
     fun isEmpty_shows_power_assert_with_property_chain() {
-        data class Container(val items: Array<Int>) {
+        data class Container(
+            val items: Array<Int>,
+        ) {
             override fun equals(other: Any?): Boolean {
                 if (this === other) return true
                 if (other !is Container) return false
@@ -192,7 +194,9 @@ class ArrayTest {
 
     @Test
     fun hasSameSizeAs_shows_power_assert_with_chained_call() {
-        data class Data(val values: Array<String>) {
+        data class Data(
+            val values: Array<String>,
+        ) {
             override fun equals(other: Any?): Boolean {
                 if (this === other) return true
                 if (other !is Data) return false
@@ -366,7 +370,10 @@ class ArrayTest {
     // extracting tests
     @Test
     fun extracting_single_property() {
-        data class Person(val name: String, val age: Int)
+        data class Person(
+            val name: String,
+            val age: Int,
+        )
         val people = arrayOf(Person("Alice", 30), Person("Bob", 25))
         val names: Iterable<String> = assertThat(people).extracting { p -> p.name }.actual
         assertThat(names).containsExactlyInAnyOrder("Alice", "Bob")
@@ -374,7 +381,10 @@ class ArrayTest {
 
     @Test
     fun extracting_two_properties() {
-        data class Person(val name: String, val age: Int)
+        data class Person(
+            val name: String,
+            val age: Int,
+        )
         val people = arrayOf(Person("Alice", 30))
         val result = assertThat(people).extracting({ p -> p.name }, { p -> p.age })
         val list = result.actual
@@ -384,7 +394,11 @@ class ArrayTest {
 
     @Test
     fun extracting_three_properties() {
-        data class Person(val name: String, val age: Int, val city: String)
+        data class Person(
+            val name: String,
+            val age: Int,
+            val city: String,
+        )
         val people = arrayOf(Person("Alice", 30, "NYC"))
         val result = assertThat(people).extracting({ p -> p.name }, { p -> p.age }, { p -> p.city })
         val list = result.actual
