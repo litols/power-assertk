@@ -1,5 +1,7 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
+import powerassertk.throwableString
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -354,6 +356,7 @@ class ThrowableTest {
         data class ErrorInfo(
             val exception: Throwable,
         )
+
         val info = ErrorInfo(RuntimeException("actual"))
         val expected = "expected"
 
@@ -383,6 +386,7 @@ class ThrowableTest {
         data class ErrorInfo(
             val exception: Throwable,
         )
+
         val cause = IllegalArgumentException("cause")
         val info = ErrorInfo(RuntimeException("wrapper", cause))
         val expected = IllegalStateException("expected")

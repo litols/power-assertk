@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
@@ -39,6 +40,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val container = FileContainer(File("/nonexistent/path/file.txt"))
 
         val error =
@@ -84,6 +86,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val file = createTempFile()
         val container = FileContainer(file)
 
@@ -130,6 +133,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val dir = createTempDirectory()
         val container = FileContainer(dir)
 
@@ -182,6 +186,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val file = createTempFile()
         val container = FileContainer(file)
 
@@ -222,6 +227,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val dir = createTempDirectory()
         val hiddenFile = File(dir, ".hidden")
         hiddenFile.createNewFile()
@@ -263,6 +269,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val file = createTempFile()
         val container = FileContainer(file)
 
@@ -317,6 +324,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val file = createTempFile()
         val container = FileContainer(file)
 
@@ -374,6 +382,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val file = createTempFile()
         val container = FileContainer(file)
 
@@ -428,6 +437,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val file = createTempFile(suffix = ".txt")
         val container = FileContainer(file)
 
@@ -485,6 +495,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val dir = createTempDirectory()
         val nonExistentChild = File(dir, "nonexistent.txt")
         val container = FileContainer(dir)
@@ -585,6 +596,7 @@ class FileTest {
         data class FileContainer(
             val file: File,
         )
+
         val file = createTempFile(content = "Hello World")
         val container = FileContainer(file)
 

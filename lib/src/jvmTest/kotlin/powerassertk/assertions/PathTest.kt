@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.createTempDirectory
@@ -36,6 +37,7 @@ class PathTest {
         data class PathContainer(
             val path: Path,
         )
+
         val container = PathContainer(Path.of("/nonexistent/path/file.txt"))
 
         val error =
@@ -81,6 +83,7 @@ class PathTest {
         data class PathContainer(
             val path: Path,
         )
+
         val file = createTempFilePath()
         val container = PathContainer(file)
 
@@ -122,6 +125,7 @@ class PathTest {
         data class PathContainer(
             val path: Path,
         )
+
         val dir = createTempDirectoryPath()
         val container = PathContainer(dir)
 
@@ -170,6 +174,7 @@ class PathTest {
         data class PathContainer(
             val path: Path,
         )
+
         val file = createTempFilePath()
         val container = PathContainer(file)
 
@@ -207,6 +212,7 @@ class PathTest {
         data class PathContainer(
             val path: Path,
         )
+
         val file = createTempFilePath()
         val container = PathContainer(file)
 
@@ -240,6 +246,7 @@ class PathTest {
         data class PathContainer(
             val path: Path,
         )
+
         val file = createTempFilePath()
         val container = PathContainer(file)
 
@@ -275,6 +282,7 @@ class PathTest {
         data class PathContainer(
             val path: Path,
         )
+
         val file = createTempFilePath()
         val container = PathContainer(file)
 
@@ -313,6 +321,7 @@ class PathTest {
         data class PathContainer(
             val path: Path,
         )
+
         val file = createTempFilePath()
         val container = PathContainer(file)
 
@@ -347,6 +356,7 @@ class PathTest {
         data class PathContainer(
             val path: Path,
         )
+
         val file1 = createTempFilePath()
         val file2 = createTempFilePath()
         val container = PathContainer(file1)

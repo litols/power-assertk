@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import kotlin.test.Test
 import kotlin.test.assertTrue
 

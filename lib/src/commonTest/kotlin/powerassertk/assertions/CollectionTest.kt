@@ -1,7 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
-import powerassertk.assertions.isEqualTo
-import powerassertk.assertions.size
+import powerassertk.assertThat
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue

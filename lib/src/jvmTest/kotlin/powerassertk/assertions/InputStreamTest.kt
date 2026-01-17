@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 import kotlin.test.Test
@@ -21,6 +22,7 @@ class InputStreamTest {
         data class StreamContainer(
             val stream: InputStream,
         )
+
         val stream1: InputStream = ByteArrayInputStream("Hello".toByteArray())
         val stream2: InputStream = ByteArrayInputStream("World".toByteArray())
         val container = StreamContainer(stream1)
@@ -73,6 +75,7 @@ class InputStreamTest {
         data class StreamContainer(
             val stream: InputStream,
         )
+
         val content = "Hello World"
         val stream1: InputStream = ByteArrayInputStream(content.toByteArray())
         val stream2: InputStream = ByteArrayInputStream(content.toByteArray())

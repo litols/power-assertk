@@ -1,6 +1,7 @@
-package powerassertk
+package powerassertk.assertions
 
-import powerassertk.assertions.containsExactlyInAnyOrder
+import powerassertk.assertThat
+import powerassertk.sequenceTypeCheck
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue

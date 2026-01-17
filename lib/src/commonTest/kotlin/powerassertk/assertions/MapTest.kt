@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -410,6 +411,7 @@ class MapTest {
         data class Config(
             val settings: Map<String, Int>,
         )
+
         val config = Config(mapOf("a" to 1, "b" to 2))
         val error =
             assertFailsWith<AssertionError> {
@@ -460,6 +462,7 @@ class MapTest {
         data class Store(
             val items: Map<String, String>,
         )
+
         val store = Store(mapOf("apple" to "red", "banana" to "yellow"))
         val error =
             assertFailsWith<AssertionError> {

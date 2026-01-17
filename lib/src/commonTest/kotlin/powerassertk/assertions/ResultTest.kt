@@ -1,5 +1,7 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
+import powerassertk.resultString
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -46,6 +48,7 @@ class ResultTest {
         data class Response(
             val result: Result<Int>,
         )
+
         val response = Response(Result.failure(RuntimeException("error")))
 
         val error =
@@ -113,6 +116,7 @@ class ResultTest {
             val name: String,
             val age: Int,
         )
+
         val result: Result<Person> = Result.success(Person("Alice", 30))
         assertThat(result).isSuccess().isEqualTo(Person("Alice", 30))
     }

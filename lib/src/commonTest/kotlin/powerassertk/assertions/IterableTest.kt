@@ -1,21 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
-import powerassertk.assertions.any
-import powerassertk.assertions.atLeast
-import powerassertk.assertions.atMost
-import powerassertk.assertions.containsAll
-import powerassertk.assertions.containsAtLeast
-import powerassertk.assertions.containsExactlyInAnyOrder
-import powerassertk.assertions.containsNone
-import powerassertk.assertions.containsOnly
-import powerassertk.assertions.each
-import powerassertk.assertions.exactly
-import powerassertk.assertions.extracting
-import powerassertk.assertions.first
-import powerassertk.assertions.isEmpty
-import powerassertk.assertions.isNotEmpty
-import powerassertk.assertions.none
-import powerassertk.assertions.single
+import powerassertk.assertThat
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue

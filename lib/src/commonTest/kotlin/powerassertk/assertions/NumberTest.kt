@@ -1,5 +1,7 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
+import powerassertk.numberString
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -388,6 +390,7 @@ class NumberTest {
         data class Counter(
             val value: Int,
         )
+
         val counter = Counter(5)
 
         val error =
@@ -415,6 +418,7 @@ class NumberTest {
         data class Temperature(
             val celsius: Double,
         )
+
         val temp = Temperature(-10.0)
 
         val error =
@@ -442,6 +446,7 @@ class NumberTest {
         data class Score(
             val points: Int,
         )
+
         val score = Score(100)
 
         val error =

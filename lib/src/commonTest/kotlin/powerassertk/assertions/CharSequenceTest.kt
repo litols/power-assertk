@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -517,6 +518,7 @@ class CharSequenceTest {
         data class Message(
             val text: String,
         )
+
         val msg = Message("hello world")
         val error =
             assertFailsWith<AssertionError> {
@@ -569,6 +571,7 @@ class CharSequenceTest {
         data class User(
             val name: String,
         )
+
         val user = User("Alice")
         val error =
             assertFailsWith<AssertionError> {

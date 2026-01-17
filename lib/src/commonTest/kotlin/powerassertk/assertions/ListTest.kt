@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -31,6 +32,7 @@ class ListTest {
         data class Person(
             val name: String,
         )
+
         val people = listOf(Person("Alice"), Person("Bob"))
         assertThat(people).index(0).isEqualTo(Person("Alice"))
     }

@@ -1,5 +1,7 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
+import powerassertk.numberString
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -327,6 +329,7 @@ class ComparableTest {
         data class Score(
             val points: Int,
         )
+
         val score = Score(5)
         val threshold = 10
 
@@ -356,6 +359,7 @@ class ComparableTest {
         data class Version(
             val major: Int,
         )
+
         val version = Version(10)
         val minVersion = 5
 
@@ -385,6 +389,7 @@ class ComparableTest {
         data class Priority(
             val level: Int,
         )
+
         val priority = Priority(15)
         val min = 1
         val max = 10

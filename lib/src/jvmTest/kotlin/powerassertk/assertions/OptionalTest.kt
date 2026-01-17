@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import java.util.Optional
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
@@ -36,6 +37,7 @@ class OptionalTest {
         data class OptionalContainer(
             val optional: Optional<String>,
         )
+
         val container = OptionalContainer(Optional.of("test"))
 
         val error =
@@ -80,6 +82,7 @@ class OptionalTest {
         data class OptionalContainer(
             val optional: Optional<String>,
         )
+
         val container = OptionalContainer(Optional.of("test"))
 
         val error =
@@ -107,6 +110,7 @@ class OptionalTest {
         data class OptionalContainer(
             val optional: Optional<String>,
         )
+
         val container = OptionalContainer(Optional.empty())
 
         val error =

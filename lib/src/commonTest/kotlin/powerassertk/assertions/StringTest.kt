@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -179,6 +180,7 @@ class StringTest {
         data class User(
             val name: String,
         )
+
         val user = User("Alice")
         val error =
             assertFailsWith<AssertionError> {
@@ -231,6 +233,7 @@ class StringTest {
         data class Config(
             val value: String,
         )
+
         val config = Config("test")
         val error =
             assertFailsWith<AssertionError> {

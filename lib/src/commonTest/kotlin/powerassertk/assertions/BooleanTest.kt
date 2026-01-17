@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -39,6 +40,7 @@ class BooleanTest {
         data class State(
             val isActive: Boolean,
         )
+
         val state = State(false)
 
         val error =
@@ -118,6 +120,7 @@ class BooleanTest {
         data class State(
             val isActive: Boolean,
         )
+
         val state = State(true)
 
         val error =

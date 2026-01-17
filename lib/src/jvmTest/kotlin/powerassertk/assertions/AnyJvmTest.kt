@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.assertThat
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -39,6 +40,7 @@ class AnyJvmTest {
         data class Team(
             val leader: Person,
         )
+
         val team = Team(Person("Alice", 30, "NYC"))
         val expected = Person("Bob", 25, "LA")
 
