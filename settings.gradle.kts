@@ -6,9 +6,11 @@
  * This project uses @Incubating APIs which are subject to change.
  */
 
-// Include build-logic for convention plugins
 pluginManagement {
-    includeBuild("build-logic")
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
 }
 
 plugins {

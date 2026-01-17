@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.2.20"
 detekt = "1.23.7"
-ktlint-gradle = "12.1.2"
+ktlint-gradle = "12.2.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
