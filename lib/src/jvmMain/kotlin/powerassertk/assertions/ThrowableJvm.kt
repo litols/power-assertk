@@ -1,4 +1,6 @@
-package powerassertk
+package powerassertk.assertions
+
+import powerassertk.Assert
 
 /**
  * Returns an assertion on the throwable's stack trace as a list of strings.

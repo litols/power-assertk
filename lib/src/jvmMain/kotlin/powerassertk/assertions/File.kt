@@ -1,5 +1,8 @@
-package powerassertk
+@file:Suppress("TooManyFunctions")
 
+package powerassertk.assertions
+
+import powerassertk.Assert
 import java.io.File
 import java.nio.charset.Charset
 

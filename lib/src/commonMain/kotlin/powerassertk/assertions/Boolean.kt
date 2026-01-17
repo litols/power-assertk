@@ -1,4 +1,6 @@
-package powerassertk
+package powerassertk.assertions
+
+import powerassertk.Assert
 
 /**
  * Asserts the value is true.

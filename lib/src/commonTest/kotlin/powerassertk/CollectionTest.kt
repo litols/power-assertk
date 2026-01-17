@@ -1,5 +1,7 @@
 package powerassertk
 
+import powerassertk.assertions.isEqualTo
+import powerassertk.assertions.size
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -181,6 +183,7 @@ class CollectionTest {
         data class Container(
             val items: List<Int>,
         )
+
         val container = Container(listOf(1, 2, 3))
         val error =
             assertFailsWith<AssertionError> {
@@ -231,6 +234,7 @@ class CollectionTest {
         data class Data(
             val values: List<String>,
         )
+
         val data = Data(listOf("a", "b", "c"))
         val error =
             assertFailsWith<AssertionError> {

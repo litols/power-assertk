@@ -1,4 +1,6 @@
-package powerassertk
+package powerassertk.assertions
+
+import powerassertk.Assert
 
 /**
  * Returns an Assert on the element at the given index for chaining.

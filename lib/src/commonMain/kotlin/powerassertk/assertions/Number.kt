@@ -1,5 +1,8 @@
-package powerassertk
+@file:Suppress("TooManyFunctions")
 
+package powerassertk.assertions
+
+import powerassertk.Assert
 import kotlin.jvm.JvmName
 
 // Int extensions

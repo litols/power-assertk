@@ -1,5 +1,6 @@
 package powerassertk
 
+import powerassertk.assertions.containsExactlyInAnyOrder
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -350,6 +351,7 @@ class SequenceTest {
             val name: String,
             val age: Int,
         )
+
         val people: Sequence<Person> = sequenceOf(Person("Alice", 30), Person("Bob", 25))
         val names: Iterable<String> = assertThat(people).extracting { p -> p.name }.actual
         assertThat(names).containsExactlyInAnyOrder("Alice", "Bob")
@@ -361,6 +363,7 @@ class SequenceTest {
             val name: String,
             val age: Int,
         )
+
         val people: Sequence<Person> = sequenceOf(Person("Alice", 30))
         val result = assertThat(people).extracting({ p -> p.name }, { p -> p.age })
         // Verify result has expected pair
@@ -376,6 +379,7 @@ class SequenceTest {
             val age: Int,
             val city: String,
         )
+
         val people: Sequence<Person> = sequenceOf(Person("Alice", 30, "NYC"))
         val result = assertThat(people).extracting({ p -> p.name }, { p -> p.age }, { p -> p.city })
         // Verify result has expected triple

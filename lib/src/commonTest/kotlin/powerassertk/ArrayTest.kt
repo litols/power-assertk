@@ -1,5 +1,6 @@
 package powerassertk
 
+import powerassertk.assertions.containsExactlyInAnyOrder
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -158,6 +159,7 @@ class ArrayTest {
 
             override fun hashCode(): Int = items.contentHashCode()
         }
+
         val container = Container(arrayOf(1, 2, 3))
         val error =
             assertFailsWith<AssertionError> {
@@ -205,6 +207,7 @@ class ArrayTest {
 
             override fun hashCode(): Int = values.contentHashCode()
         }
+
         val data = Data(arrayOf("a", "b", "c"))
         val error =
             assertFailsWith<AssertionError> {
@@ -374,6 +377,7 @@ class ArrayTest {
             val name: String,
             val age: Int,
         )
+
         val people = arrayOf(Person("Alice", 30), Person("Bob", 25))
         val names: Iterable<String> = assertThat(people).extracting { p -> p.name }.actual
         assertThat(names).containsExactlyInAnyOrder("Alice", "Bob")
@@ -385,6 +389,7 @@ class ArrayTest {
             val name: String,
             val age: Int,
         )
+
         val people = arrayOf(Person("Alice", 30))
         val result = assertThat(people).extracting({ p -> p.name }, { p -> p.age })
         val list = result.actual
@@ -399,6 +404,7 @@ class ArrayTest {
             val age: Int,
             val city: String,
         )
+
         val people = arrayOf(Person("Alice", 30, "NYC"))
         val result = assertThat(people).extracting({ p -> p.name }, { p -> p.age }, { p -> p.city })
         val list = result.actual

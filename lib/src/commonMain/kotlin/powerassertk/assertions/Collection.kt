@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.Assert
 import kotlin.jvm.JvmName
 
 /**

@@ -1,5 +1,6 @@
-package powerassertk
+package powerassertk.assertions
 
+import powerassertk.Assert
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
@@ -62,7 +63,7 @@ fun <T : Any> Assert<T>.isEqualToIgnoringGivenProperties(
             if (actualValue != expectedValue) {
                 differences.add("${property.name}: expected:<$expectedValue> but was:<$actualValue>")
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             // Skip properties that can't be accessed
         }
     }

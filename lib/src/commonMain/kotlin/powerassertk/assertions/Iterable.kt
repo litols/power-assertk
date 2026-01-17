@@ -1,4 +1,8 @@
-package powerassertk
+@file:Suppress("TooManyFunctions")
+
+package powerassertk.assertions
+
+import powerassertk.Assert
 
 /**
  * Asserts the Iterable contains the expected element.

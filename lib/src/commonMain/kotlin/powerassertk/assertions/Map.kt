@@ -1,5 +1,8 @@
-package powerassertk
+@file:Suppress("TooManyFunctions")
 
+package powerassertk.assertions
+
+import powerassertk.Assert
 import kotlin.jvm.JvmName
 
 // Helper function to check if map contains key-value pair (not transformed by Power Assert)
@@ -121,9 +124,11 @@ fun <K, V> Assert<Map<K, V>>.containsAll(
     if (notFound.isNotEmpty()) {
         throw AssertionError(
             message?.invoke()
-                ?: "expected to contain all:<${notFound.joinToString {
-                    "${it.first}=${it.second}"
-                }}> but was:<$actual>",
+                ?: "expected to contain all:<${
+                    notFound.joinToString {
+                        "${it.first}=${it.second}"
+                    }
+                }> but was:<$actual>",
         )
     }
 }
@@ -139,9 +144,11 @@ fun <K, V> Assert<Map<K, V>>.containsAtLeast(
     if (notFound.isNotEmpty()) {
         throw AssertionError(
             message?.invoke()
-                ?: "expected to contain at least:<${notFound.joinToString {
-                    "${it.first}=${it.second}"
-                }}> but was:<$actual>",
+                ?: "expected to contain at least:<${
+                    notFound.joinToString {
+                        "${it.first}=${it.second}"
+                    }
+                }> but was:<$actual>",
         )
     }
 }
@@ -172,9 +179,11 @@ fun <K, V> Assert<Map<K, V>>.containsNone(
     if (found.isNotEmpty()) {
         throw AssertionError(
             message?.invoke()
-                ?: "expected to contain none of:<${found.joinToString {
-                    "${it.first}=${it.second}"
-                }}> but was:<$actual>",
+                ?: "expected to contain none of:<${
+                    found.joinToString {
+                        "${it.first}=${it.second}"
+                    }
+                }> but was:<$actual>",
         )
     }
 }

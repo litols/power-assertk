@@ -1,4 +1,6 @@
-package powerassertk
+package powerassertk.assertions
+
+import powerassertk.Assert
 
 /**
  * Asserts the Result is a success and returns an Assert on the value.
