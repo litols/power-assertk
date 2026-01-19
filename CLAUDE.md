@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**power-assertk** is a Kotlin Multiplatform assertion library that combines assertk's fluent API syntax with Kotlin Power Assert's rich failure message display. The library provides assertk-compatible APIs with message parameters that enable the Kotlin Power Assert compiler plugin (configured by the user) to show intermediate expression values in failure messages.
+**power-assertk** is a Kotlin Multiplatform assertion library that combines assertk's fluent API syntax with Kotlin Power Assert's rich
+failure message display. The library provides assertk-compatible APIs with message parameters that enable the Kotlin Power Assert compiler
+plugin (configured by the user) to show intermediate expression values in failure messages.
 
 ## Build Commands
 
@@ -26,7 +28,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ./gradlew macosX64Test     # Intel Mac
 
 # Run a single test class (JVM)
-./gradlew jvmTest --tests "powerassertk.AssertTest"
+./gradlew jvmTest --tests "com.litols.power.assertk.AssertTest"
 
 # Run detekt static analysis
 ./gradlew detekt
@@ -69,31 +71,33 @@ power-assertk/
 
 ### Power Assert Integration Design
 
-The Kotlin Power Assert compiler plugin requires target functions to have **the last parameter be `String` or `() -> String`**. This library provides assertion methods with an optional message parameter to enable Power Assert integration.
+The Kotlin Power Assert compiler plugin requires target functions to have **the last parameter be `String` or `() -> String`**. This library
+provides assertion methods with an optional message parameter to enable Power Assert integration.
 
-**Important**: The Power Assert compiler plugin must be configured by the **user of this library**, not by the library itself. The plugin performs compile-time transformation, so it only works when applied to the user's compilation.
+**Important**: The Power Assert compiler plugin must be configured by the **user of this library**, not by the library itself. The plugin
+performs compile-time transformation, so it only works when applied to the user's compilation.
 
 ### Library Implementation
 
 The library provides assertion methods with `message: (() -> String)? = null` as the last parameter:
 
 ```kotlin
-// commonMain/kotlin/powerassertk/Assert.kt
-package powerassertk
+// commonMain/kotlin/com.litols.power.assertk/Assert.kt
+package com.litols.power.assertk
 
 class Assert<T>(val actual: T) {
-    fun isEqualTo(expected: T, message: (() -> String)? = null) {
-        if (actual != expected) {
-            throw AssertionError(message?.invoke() ?: "expected:<$expected> but was:<$actual>")
-        }
+  fun isEqualTo(expected: T, message: (() -> String)? = null) {
+    if (actual != expected) {
+      throw AssertionError(message?.invoke() ?: "expected:<$expected> but was:<$actual>")
     }
+  }
 
-    fun startsWith(prefix: String, message: (() -> String)? = null) {
-        val str = actual as? String ?: throw AssertionError("Expected String")
-        if (!str.startsWith(prefix)) {
-            throw AssertionError(message?.invoke() ?: "expected to start with:<\"$prefix\"> but was:<\"$str\">")
-        }
+  fun startsWith(prefix: String, message: (() -> String)? = null) {
+    val str = actual as? String ?: throw AssertionError("Expected String")
+    if (!str.startsWith(prefix)) {
+      throw AssertionError(message?.invoke() ?: "expected to start with:<\"$prefix\"> but was:<\"$str\">")
     }
+  }
 }
 
 fun <T> assertThat(actual: T): Assert<T> = Assert(actual)
@@ -108,24 +112,24 @@ Users of this library need to configure the Power Assert plugin in their project
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    kotlin("multiplatform") version "2.3.0"  // or kotlin("jvm")
-    kotlin("plugin.power-assert") version "2.3.0"
+  kotlin("multiplatform") version "2.3.0"  // or kotlin("jvm")
+  kotlin("plugin.power-assert") version "2.3.0"
 }
 
 dependencies {
-    // Add power-assertk library
-    commonTestImplementation("io.github.xxx:power-assertk:1.0.0")
+  // Add power-assertk library
+  commonTestImplementation("io.github.xxx:power-assertk:1.0.0")
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
 powerAssert {
-    functions = listOf(
-        "powerassertk.Assert.isEqualTo",
-        "powerassertk.Assert.startsWith",
-        "powerassertk.Assert.isNotNull",
-        // ... other assertion methods
-    )
-    includedSourceSets = listOf("commonTest", "jvmTest", "jsTest")
+  functions = listOf(
+    "com.litols.power.assertk.Assert.isEqualTo",
+    "com.litols.power.assertk.Assert.startsWith",
+    "com.litols.power.assertk.Assert.isNotNull",
+    // ... other assertion methods
+  )
+  includedSourceSets = listOf("commonTest", "jvmTest", "jsTest")
 }
 ```
 
@@ -137,12 +141,12 @@ For testing the library itself, the Power Assert plugin is configured in this pr
 // This project's build.gradle.kts
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
 powerAssert {
-    functions = listOf(
-        "powerassertk.Assert.isEqualTo",
-        "powerassertk.Assert.startsWith",
-        // ...
-    )
-    includedSourceSets = listOf("commonTest", "jvmTest", "jsTest", "nativeTest")
+  functions = listOf(
+    "com.litols.power.assertk.Assert.isEqualTo",
+    "com.litols.power.assertk.Assert.startsWith",
+    // ...
+  )
+  includedSourceSets = listOf("commonTest", "jvmTest", "jsTest", "nativeTest")
 }
 ```
 
@@ -165,37 +169,40 @@ assertThat(person.name).startsWith("B")
 
 ### Power Assert Diagram Verification
 
-Tests should verify the complete Power Assert diagram format, including the position of lines and intermediate values. This ensures that the Power Assert plugin is working correctly and displaying helpful debug information.
+Tests should verify the complete Power Assert diagram format, including the position of lines and intermediate values. This ensures that the
+Power Assert plugin is working correctly and displaying helpful debug information.
 
 **Recommended Test Pattern:**
 
 ```kotlin
 @Test
 fun assertion_shows_power_assert_diagram() {
-    data class Person(val name: String, val age: Int)
-    val person = Person("Alice", 30)
+  data class Person(val name: String, val age: Int)
 
-    val error = assertFailsWith<AssertionError> {
-        assertThat(person.name).isEqualTo("Bob")
-    }
-    val message = error.message!!
+  val person = Person("Alice", 30)
 
-    // Verify the complete Power Assert diagram format
-    val expectedFormat = """
+  val error = assertFailsWith<AssertionError> {
+    assertThat(person.name).isEqualTo("Bob")
+  }
+  val message = error.message!!
+
+  // Verify the complete Power Assert diagram format
+  val expectedFormat = """
         assertThat(person.name).isEqualTo("Bob")
         |          |      |
         |          |      Alice
         |          Person(name=Alice, age=30)
         """.trimIndent()
 
-    assertTrue(
-        message.contains(expectedFormat),
-        "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
-    )
+  assertTrue(
+    message.contains(expectedFormat),
+    "Should show proper Power Assert diagram:\nExpected:\n$expectedFormat\nActual:\n$message"
+  )
 }
 ```
 
 **What to verify:**
+
 1. The assertion expression (e.g., `assertThat(person.name).isEqualTo("Bob")`)
 2. The vertical lines (`|`) showing the evaluation tree
 3. Intermediate values (e.g., `Alice`, `Person(name=Alice, age=30)`)
@@ -229,7 +236,8 @@ val expectedFormat = """
     """.trimIndent()
 ```
 
-**Note:** The exact spacing and line positions depend on the expression structure. Always run the test first to see the actual output, then update the expected format accordingly.
+**Note:** The exact spacing and line positions depend on the expression structure. Always run the test first to see the actual output, then
+update the expected format accordingly.
 
 ### Test Structure
 
@@ -243,37 +251,38 @@ Each assertion method should have at least three types of tests:
 // 1. Success case
 @Test
 fun isEmpty_succeeds_when_empty() {
-    assertThat("").isEmpty()
+  assertThat("").isEmpty()
 }
 
 // 2. Power Assert diagram verification
 @Test
 fun isEmpty_shows_power_assert_diagram() {
-    val text = "hello"
-    val error = assertFailsWith<AssertionError> {
-        assertThat(text).isEmpty()
-    }
-    val expectedFormat = """
+  val text = "hello"
+  val error = assertFailsWith<AssertionError> {
+    assertThat(text).isEmpty()
+  }
+  val expectedFormat = """
         assertThat(text).isEmpty()
         |          |
         |          hello
         """.trimIndent()
-    assertTrue(error.message!!.contains(expectedFormat))
+  assertTrue(error.message!!.contains(expectedFormat))
 }
 
 // 3. Custom message support
 @Test
 fun isEmpty_supports_custom_message() {
-    val error = assertFailsWith<AssertionError> {
-        assertThat("hello").isEmpty { "Custom: should be empty" }
-    }
-    assertTrue(error.message!!.contains("Custom: should be empty"))
+  val error = assertFailsWith<AssertionError> {
+    assertThat("hello").isEmpty { "Custom: should be empty" }
+  }
+  assertTrue(error.message!!.contains("Custom: should be empty"))
 }
 ```
 
 ## Current State
 
-This is an early-stage project with initial Gradle setup. The `lib` module contains placeholder code. Development should follow the phases outlined in `docs/CONCEPT.md`.
+This is an early-stage project with initial Gradle setup. The `lib` module contains placeholder code. Development should follow the phases
+outlined in `docs/CONCEPT.md`.
 
 ## Key Dependencies
 
