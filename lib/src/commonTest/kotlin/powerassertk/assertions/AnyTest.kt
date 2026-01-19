@@ -100,7 +100,7 @@ class AnyTest {
         val expectedFormat =
             """
             Custom: expected null
-            assertThat(42).isNull() { "Custom: expected null" }
+            assertThat(42).isNull { "Custom: expected null" }
             |
             """.trimIndent()
 
@@ -151,7 +151,7 @@ class AnyTest {
         val expectedFormat =
             """
             Custom: must be non-null
-            assertThat<Int?>(null).isNotNull() { "Custom: must be non-null" }
+            assertThat<Int?>(null).isNotNull { "Custom: must be non-null" }
             |
             """.trimIndent()
 
@@ -648,7 +648,7 @@ class AnyTest {
         val expectedFormat =
             """
             Custom: type mismatch
-            assertThat<Any>(42).isInstanceOf<String>() { "Custom: type mismatch" }
+            assertThat<Any>(42).isInstanceOf<String> { "Custom: type mismatch" }
             |
             """.trimIndent()
 
@@ -698,7 +698,7 @@ class AnyTest {
         val expectedFormat =
             """
             Custom: should not be String
-            assertThat<Any>("hello").isNotInstanceOf<String>() { "Custom: should not be String" }
+            assertThat<Any>("hello").isNotInstanceOf<String> { "Custom: should not be String" }
             |
             """.trimIndent()
 

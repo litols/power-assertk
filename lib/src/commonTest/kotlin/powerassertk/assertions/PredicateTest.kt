@@ -38,7 +38,7 @@ class PredicateTest {
         )
 
         val person = Person("Alice", 30)
-        assertThat(person).matchesPredicate { it.age == 18 && it.name.startsWith("A") }
+        assertThat(person).matchesPredicate { it.age == 30 && it.name.startsWith("A") }
     }
 
     @Test
