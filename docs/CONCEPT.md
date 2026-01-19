@@ -2,7 +2,8 @@
 
 ## 概要
 
-**power-assertk**は、[assertk](https://github.com/assertk-org/assertk)の流暢なAPI構文と、[Kotlin Power Assert](https://kotlinlang.org/docs/power-assert.html)のリッチな失敗メッセージ表示を組み合わせたKotlin用アサーションライブラリです。
+**power-assertk**は、[assertk](https://github.com/assertk-org/assertk)
+の流暢なAPI構文と、[Kotlin Power Assert](https://kotlinlang.org/docs/power-assert.html)のリッチな失敗メッセージ表示を組み合わせたKotlin用アサーションライブラリです。
 
 ## 実現イメージ
 
@@ -36,8 +37,8 @@ assertThat(person.name).startsWith("B")
 val person = Person("Alice", 10)
 
 assertThat(person).all {
-    prop(Person::name).hasLength(10)
-    prop(Person::age).isGreaterThan(20)
+  prop(Person::name).hasLength(10)
+  prop(Person::age).isGreaterThan(20)
 }
 // 出力:
 // assertThat(person).all { ... }
@@ -56,7 +57,7 @@ assertThat(person).all {
 
 ### 1. assertk互換のAPI
 
-- **パッケージの置き換えで移行可能**: `import assertk.assertThat` → `import powerassertk.assertThat`
+- **パッケージの置き換えで移行可能**: `import assertk.assertThat` → `import com.litols.power.assertk.assertThat`
 - **同じシグネチャ**: `assertThat()`, `assertAll()`, `assertFailure`などの主要関数を同一シグネチャで提供
 - **同じアサーションメソッド**: `isEqualTo()`, `isNotNull()`, `startsWith()`, `contains()`などを完全互換で提供
 
@@ -111,79 +112,93 @@ assertThat(hello.length == world.substring(1, 4).length)
 ### Phase 1: 基盤構築
 
 1. **プロジェクト構造のセットアップ**
-   - マルチモジュールGradleプロジェクト構成
-   - Kotlin Multiplatform対応の検討（JVM優先）
+
+- マルチモジュールGradleプロジェクト構成
+- Kotlin Multiplatform対応の検討（JVM優先）
 
 2. **Power Assertプラグイン統合調査**
-   - Kotlin Power Assertプラグインのカスタム関数登録方法の調査
-   - `powerAssert { functions = listOf("powerassertk.assertThat", ...) }` の実現可能性確認
+
+- Kotlin Power Assertプラグインのカスタム関数登録方法の調査
+- `powerAssert { functions = listOf("com.litols.power.assertk.assertThat", ...) }` の実現可能性確認
 
 3. **コアAPI設計**
-   - `Assert<T>`クラスの実装
-   - `assertThat()`エントリーポイントの実装
-   - Power Assertが解釈可能な形式でのアサーション定義
+
+- `Assert<T>`クラスの実装
+- `assertThat()`エントリーポイントの実装
+- Power Assertが解釈可能な形式でのアサーション定義
 
 ### Phase 2: 基本アサーション実装
 
 4. **共通アサーションメソッド**
-   - `isEqualTo()`, `isNotEqualTo()`
-   - `isNull()`, `isNotNull()`
-   - `isTrue()`, `isFalse()`
-   - `isSameInstanceAs()`, `isNotSameInstanceAs()`
+
+- `isEqualTo()`, `isNotEqualTo()`
+- `isNull()`, `isNotNull()`
+- `isTrue()`, `isFalse()`
+- `isSameInstanceAs()`, `isNotSameInstanceAs()`
 
 5. **文字列アサーション**
-   - `startsWith()`, `endsWith()`, `contains()`
-   - `matches()`, `hasLength()`
-   - `isEmpty()`, `isNotEmpty()`, `isBlank()`, `isNotBlank()`
+
+- `startsWith()`, `endsWith()`, `contains()`
+- `matches()`, `hasLength()`
+- `isEmpty()`, `isNotEmpty()`, `isBlank()`, `isNotBlank()`
 
 6. **数値アサーション**
-   - `isGreaterThan()`, `isLessThan()`
-   - `isGreaterThanOrEqualTo()`, `isLessThanOrEqualTo()`
-   - `isBetween()`, `isCloseTo()`
+
+- `isGreaterThan()`, `isLessThan()`
+- `isGreaterThanOrEqualTo()`, `isLessThanOrEqualTo()`
+- `isBetween()`, `isCloseTo()`
 
 ### Phase 3: コレクション・高度な機能
 
 7. **コレクションアサーション**
-   - `contains()`, `containsExactly()`, `containsOnly()`
-   - `containsAtLeast()`, `containsNone()`
-   - `hasSize()`, `isEmpty()`, `isNotEmpty()`
+
+- `contains()`, `containsExactly()`, `containsOnly()`
+- `containsAtLeast()`, `containsNone()`
+- `hasSize()`, `isEmpty()`, `isNotEmpty()`
 
 8. **プロパティ抽出**
-   - `prop()` - プロパティ参照によるアサーション
-   - `transform()` - 値変換によるアサーション
-   - `index()`, `key()` - コレクション/マップ要素アクセス
-   - `extracting()` - コレクションからのプロパティ抽出
+
+- `prop()` - プロパティ参照によるアサーション
+- `transform()` - 値変換によるアサーション
+- `index()`, `key()` - コレクション/マップ要素アクセス
+- `extracting()` - コレクションからのプロパティ抽出
 
 9. **例外アサーション**
-   - `assertFailure {}` - 例外発生の検証
-   - `hasMessage()`, `hasCause()`
+
+- `assertFailure {}` - 例外発生の検証
+- `hasMessage()`, `hasCause()`
 
 10. **複合アサーション**
-    - `all {}` - 全アサーション実行（ソフトアサーション）
-    - `assertAll()` - 複数独立アサーションの同時実行
+
+- `all {}` - 全アサーション実行（ソフトアサーション）
+- `assertAll()` - 複数独立アサーションの同時実行
 
 ### Phase 4: メッセージフォーマット
 
 11. **Power Assert形式の出力生成**
-    - 式ツリーの視覚化ロジック
-    - 中間値の位置合わせアルゴリズム
-    - assertkスタイルのエラーメッセージとの統合
+
+- 式ツリーの視覚化ロジック
+- 中間値の位置合わせアルゴリズム
+- assertkスタイルのエラーメッセージとの統合
 
 12. **カスタムメッセージ対応**
-    - `assertThat(value, name = "customName")`
-    - ラムダによるカスタムメッセージ
+
+- `assertThat(value, name = "customName")`
+- ラムダによるカスタムメッセージ
 
 ### Phase 5: 品質・互換性
 
 13. **テスト整備**
-    - 各アサーションメソッドの単体テスト
-    - Power Assert出力形式の検証テスト
-    - assertkからの移行テスト
+
+- 各アサーションメソッドの単体テスト
+- Power Assert出力形式の検証テスト
+- assertkからの移行テスト
 
 14. **ドキュメント**
-    - API リファレンス（KDoc）
-    - 移行ガイド（assertk → power-assertk）
-    - 利用例・サンプルコード
+
+- API リファレンス（KDoc）
+- 移行ガイド（assertk → power-assertk）
+- 利用例・サンプルコード
 
 ## 提供する体験
 
@@ -219,7 +234,7 @@ assertThat(hello.length == world.substring(1, 4).length)
    }
 
    powerAssert {
-       functions = listOf("powerassertk.assertThat")
+       functions = listOf("com.litols.power.assertk.assertThat")
    }
    ```
 
@@ -231,8 +246,8 @@ import assertk.assertThat
 import assertk.assertions.*
 
 // After（パッケージ置換のみ）
-import powerassertk.assertThat
-import powerassertk.assertions.*
+import com.litols.power.assertk.assertThat
+import com.litols.power.assertk.assertions.*
 ```
 
 IDE の一括置換で即座に移行可能。
@@ -245,31 +260,35 @@ Kotlin Power Assertプラグインは `kotlin.assert`、`kotlin.require` など�
 カスタムアサーション関数（`assertThat`など）を対象にできるか要調査。
 
 **オプションA**: プラグイン設定でカスタム関数を追加
+
 ```kotlin
 powerAssert {
-    functions = listOf(
-        "powerassertk.assertThat",
-        "powerassertk.assertions.isEqualTo"
-    )
+  functions = listOf(
+    "com.litols.power.assertk.assertThat",
+    "com.litols.power.assertk.assertions.isEqualTo"
+  )
 }
 ```
 
 **オプションB**: 内部で`assert()`を呼び出す形式に変換
+
 ```kotlin
 fun <T> assertThat(actual: T): Assert<T> {
-    // Power Assertがキャプチャできる形式で内部処理
+  // Power Assertがキャプチャできる形式で内部処理
 }
 ```
 
 ### 2. 式ツリー情報の取得
 
 Power Assertはコンパイル時に式を解析するが、その情報をランタイムでどう取得するか。
+
 - コンパイラプラグインが生成するコードの構造調査が必要
 - カスタムのメッセージフォーマッタを差し込めるか確認
 
 ### 3. マルチプラットフォーム対応
 
 assertkはKotlin Multiplatformをサポート。power-assertkも同様に対応すべきか。
+
 - JVMを最優先とし、段階的に対応範囲を拡大
 
 ---
@@ -315,6 +334,7 @@ assertThat(value).isEqualTo(expected)
 ```
 
 この形式では：
+
 1. `assertThat()` は `Assert<T>` を返すだけで、アサーション自体は行わない
 2. `isEqualTo()` などのアサーションメソッドにはメッセージパラメータがない
 3. Power Assertプラグインが要求する「最後のパラメータがString」の条件を満たせない
@@ -335,7 +355,7 @@ assertThat(person.name).isEqualTo("Bob")
 
 // 内部で展開されるコード（コンパイラプラグイン or KSP）
 powerAssert(person.name == "Bob") {
-    "expected:<\"Bob\"> but was:<\"${person.name}\">"
+  "expected:<\"Bob\"> but was:<\"${person.name}\">"
 }
 ```
 
@@ -344,21 +364,21 @@ powerAssert(person.name == "Bob") {
 ```kotlin
 // Power Assert対応のベース関数
 fun powerAssert(condition: Boolean, lazyMessage: () -> String = { "" }) {
-    if (!condition) {
-        throw AssertionError(lazyMessage())
-    }
+  if (!condition) {
+    throw AssertionError(lazyMessage())
+  }
 }
 
 // assertkスタイルのラッパー（内部でpowerAssertを呼ぶ）
 inline fun <T> assertThat(actual: T): PowerAssert<T> = PowerAssert(actual)
 
 class PowerAssert<T>(val actual: T) {
-    // 各メソッドが内部でpowerAssertを呼び出す
-    inline fun isEqualTo(expected: T) {
-        powerAssert(actual == expected) {
-            "expected:<$expected> but was:<$actual>"
-        }
+  // 各メソッドが内部でpowerAssertを呼び出す
+  inline fun isEqualTo(expected: T) {
+    powerAssert(actual == expected) {
+      "expected:<$expected> but was:<$actual>"
     }
+  }
 }
 ```
 
@@ -366,15 +386,17 @@ class PowerAssert<T>(val actual: T) {
 
 ```kotlin
 powerAssert {
-    functions = listOf("powerassertk.powerAssert")
+  functions = listOf("com.litols.power.assertk.powerAssert")
 }
 ```
 
 **メリット:**
+
 - assertkに近いAPIを維持できる
 - Power Assertの恩恵を受けられる
 
 **デメリット:**
+
 - Power Assertのダイアグラム表示は `powerAssert()` の引数部分のみ
 - チェイン部分（`.isEqualTo("Bob")`）は表示されない
 
@@ -397,14 +419,14 @@ expected:<"Bob"> but was:<"Alice">
 ```kotlin
 // ユーザーが書くコード
 assertThat(person) {
-    assert(name == "Bob")
-    assert(age > 20)
+  assert(name == "Bob")
+  assert(age > 20)
 }
 
 // または
 assertScope {
-    assert(person.name == "Bob")
-    assert(person.age > 20)
+  assert(person.name == "Bob")
+  assert(person.age > 20)
 }
 ```
 
@@ -412,29 +434,29 @@ assertScope {
 
 ```kotlin
 interface AssertScope {
-    fun assert(condition: Boolean, lazyMessage: (() -> String)? = null)
+  fun assert(condition: Boolean, lazyMessage: (() -> String)? = null)
 }
 
 class PowerAssertScope : AssertScope {
-    private val failures = mutableListOf<Throwable>()
+  private val failures = mutableListOf<Throwable>()
 
-    override fun assert(condition: Boolean, lazyMessage: (() -> String)?) {
-        if (!condition) {
-            failures.add(AssertionError(lazyMessage?.invoke() ?: "Assertion failed"))
-        }
+  override fun assert(condition: Boolean, lazyMessage: (() -> String)?) {
+    if (!condition) {
+      failures.add(AssertionError(lazyMessage?.invoke() ?: "Assertion failed"))
     }
+  }
 
-    fun throwIfFailed() {
-        if (failures.isNotEmpty()) {
-            throw MultipleFailuresError(failures)
-        }
+  fun throwIfFailed() {
+    if (failures.isNotEmpty()) {
+      throw MultipleFailuresError(failures)
     }
+  }
 }
 
 inline fun <T> assertThat(actual: T, block: AssertScope.(T) -> Unit) {
-    val scope = PowerAssertScope()
-    scope.block(actual)
-    scope.throwIfFailed()
+  val scope = PowerAssertScope()
+  scope.block(actual)
+  scope.throwIfFailed()
 }
 ```
 
@@ -442,15 +464,17 @@ inline fun <T> assertThat(actual: T, block: AssertScope.(T) -> Unit) {
 
 ```kotlin
 powerAssert {
-    functions = listOf("powerassertk.AssertScope.assert")
+  functions = listOf("com.litols.power.assertk.AssertScope.assert")
 }
 ```
 
 **メリット:**
+
 - Power Assertのダイアグラムが完全に動作
 - 複数アサーションをまとめて実行可能（Soft Assertions）
 
 **デメリット:**
+
 - assertkのFluent APIとは大きく異なる構文
 - 移行コストが高い
 
@@ -485,10 +509,12 @@ Multiple assertion failures (2 failures)
 ```
 
 **メリット:**
+
 - assertkと完全互換のAPIを維持
 - 最もリッチなPower Assert体験を提供可能
 
 **デメリット:**
+
 - 実装コストが非常に高い
 - Kotlinコンパイラのバージョンアップへの追従が必要
 - メンテナンス負荷が大きい
@@ -505,29 +531,31 @@ Multiple assertion failures (2 failures)
 // ユーザーが書くコード
 @PowerAssertEnabled
 fun myTest() {
-    assertThat(person.name).isEqualTo("Bob")
+  assertThat(person.name).isEqualTo("Bob")
 }
 
 // KSPが生成するコード
 fun myTest() {
-    val __pa_actual = person.name
-    powerAssert(__pa_actual == "Bob") {
-        buildDiagram(
-            "assertThat(person.name).isEqualTo(\"Bob\")",
-            mapOf(
-                "person" to person,
-                "person.name" to __pa_actual
-            )
-        )
-    }
+  val __pa_actual = person.name
+  powerAssert(__pa_actual == "Bob") {
+    buildDiagram(
+      "assertThat(person.name).isEqualTo(\"Bob\")",
+      mapOf(
+        "person" to person,
+        "person.name" to __pa_actual
+      )
+    )
+  }
 }
 ```
 
 **メリット:**
+
 - コンパイラプラグインより実装が容易
 - assertkに近いAPIを維持
 
 **デメリット:**
+
 - アノテーションが必要（または全テストファイルを処理）
 - 生成コードのデバッグが困難
 - 複雑な式の変換が難しい
@@ -548,9 +576,9 @@ assertThat(person.name).isEqualTo("Bob")
 
 // 内部実装
 inline fun <T> Assert<T>.isEqualTo(expected: T) {
-    powerAssert(actual == expected) {
-        "expected:<${show(expected)}> but was:<${show(actual)}>"
-    }
+  powerAssert(actual == expected) {
+    "expected:<${show(expected)}> but was:<${show(actual)}>"
+  }
 }
 ```
 
@@ -561,14 +589,14 @@ Soft Assertions対応として、AssertScope方式も並行して提供する。
 ```kotlin
 // 追加API
 assertScope {
-    assert(person.name == "Bob")
-    assert(person.age > 20)
+  assert(person.name == "Bob")
+  assert(person.age > 20)
 }
 
 // all {} ブロック内でも使用可能
 assertThat(person).all {
-    assert(name.length > 3)
-    assert(age >= 18)
+  assert(name.length > 3)
+  assert(age >= 18)
 }
 ```
 
@@ -587,24 +615,24 @@ assertThat(person).all {
 ```kotlin
 @AssertkDsl
 sealed class Assert<out T>(
-    val name: String?,
-    internal val context: AssertingContext
+  val name: String?,
+  internal val context: AssertingContext
 ) {
-    abstract fun <R> assertThat(actual: R, name: String? = this.name): Assert<R>
+  abstract fun <R> assertThat(actual: R, name: String? = this.name): Assert<R>
 }
 
 // 成功状態
 internal class ValueAssert<T>(
-    val value: T,
-    name: String?,
-    context: AssertingContext
+  val value: T,
+  name: String?,
+  context: AssertingContext
 ) : Assert<T>(name, context)
 
 // 失敗状態
 internal class FailingAssert<T>(
-    val error: Throwable,
-    name: String?,
-    context: AssertingContext
+  val error: Throwable,
+  name: String?,
+  context: AssertingContext
 ) : Assert<T>(name, context)
 ```
 
@@ -613,12 +641,12 @@ internal class FailingAssert<T>(
 ```kotlin
 // given()ブロックを使用した実装
 fun <T> Assert<T>.isEqualTo(expected: T) = given { actual ->
-    if (actual == expected) return
-    expected(show(expected), actual)
+  if (actual == expected) return
+  expected(show(expected), actual)
 }
 
 fun <T> Assert<T?>.isNotNull(): Assert<T> = transform { actual ->
-    actual ?: expected("to not be null")
+  actual ?: expected("to not be null")
 }
 ```
 
@@ -630,16 +658,16 @@ fun <T> Assert<T>.expected(message: String, expected: Any? = NONE, actual: Any? 
 
 // show()関数 - 値の視覚的強調
 fun show(value: Any?, wrap: String = "<>"): String {
-    return wrap[0] + display(value) + wrap[1]
+  return wrap[0] + display(value) + wrap[1]
 }
 
 // display()関数 - 型に応じたフォーマット
 fun display(value: Any?): String = when (value) {
-    null -> "null"
-    is String -> "\"$value\""
-    is Char -> "'$value'"
-    is Array<*> -> "[${value.joinToString(", ") { display(it) }}]"
-    // ...
+  null -> "null"
+  is String -> "\"$value\""
+  is Char -> "'$value'"
+  is Array<*> -> "[${value.joinToString(", ") { display(it) }}]"
+  // ...
 }
 ```
 
@@ -647,16 +675,16 @@ fun display(value: Any?): String = when (value) {
 
 ```kotlin
 object FailureContext {
-    private val failureHandler = ThreadLocalRef { Stack<Failure>() }
+  private val failureHandler = ThreadLocalRef { Stack<Failure>() }
 
-    fun currentFailure(): Failure
-    fun push(failure: Failure)
-    fun pop(): Failure
+  fun currentFailure(): Failure
+  fun push(failure: Failure)
+  fun pop(): Failure
 }
 
 interface Failure {
-    fun fail(message: String, cause: Throwable? = null): Nothing
-    fun invoke(error: Throwable): Nothing
+  fun fail(message: String, cause: Throwable? = null): Nothing
+  fun invoke(error: Throwable): Nothing
 }
 
 // 即座にスロー
@@ -679,32 +707,32 @@ power-assertk/
 │   ├── assertions/              # 各種アサーションメソッド
 │   └── failure/                 # 失敗処理
 ├── power-assertk-plugin/        # Gradle Plugin
-│   └── PowerAssertKPlugin.kt    # プラグイン設定
+│   └── com.litols.power.assertkPlugin.kt    # プラグイン設定
 └── power-assertk-test/          # テスト用ユーティリティ
 ```
 
 ### コアAPI実装
 
 ```kotlin
-// power-assertk-core/src/main/kotlin/powerassertk/assert.kt
+// power-assertk-core/src/main/kotlin/com.litols.power.assertk/assert.kt
 
-package powerassertk
+package com.litols.power.assertk
 
 /**
  * Power Assert対応のベース関数
  * Kotlin Power Assertプラグインの変換対象
  */
 fun powerAssert(condition: Boolean, lazyMessage: () -> String = { "Assertion failed" }) {
-    if (!condition) {
-        throw AssertionError(lazyMessage())
-    }
+  if (!condition) {
+    throw AssertionError(lazyMessage())
+  }
 }
 
 /**
  * assertk互換のエントリーポイント
  */
 inline fun <T> assertThat(actual: T, name: String? = null): Assert<T> {
-    return ValueAssert(actual, name, AssertingContext.default())
+  return ValueAssert(actual, name, AssertingContext.default())
 }
 ```
 
@@ -713,21 +741,21 @@ inline fun <T> assertThat(actual: T, name: String? = null): Assert<T> {
 ```kotlin
 // ユーザーのbuild.gradle.kts
 plugins {
-    kotlin("jvm") version "2.2.0"
-    kotlin("plugin.power-assert") version "2.2.0"
+  kotlin("jvm") version "2.2.0"
+  kotlin("plugin.power-assert") version "2.2.0"
 }
 
 dependencies {
-    testImplementation("io.github.xxx:power-assertk-core:1.0.0")
+  testImplementation("io.github.xxx:power-assertk-core:1.0.0")
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
 powerAssert {
-    functions = listOf(
-        "powerassertk.powerAssert",
-        "powerassertk.AssertScope.assert"
-    )
-    includedSourceSets = listOf("test")
+  functions = listOf(
+    "com.litols.power.assertk.powerAssert",
+    "com.litols.power.assertk.AssertScope.assert"
+  )
+  includedSourceSets = listOf("test")
 }
 ```
 
