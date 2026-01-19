@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package powerassertk.assertions
 
 import powerassertk.Assert
@@ -69,7 +71,10 @@ fun <T> Assert<Array<T>>.hasSameSizeAs(
     if (actual.size != other.size) {
         throw AssertionError(
             message?.invoke()
-                ?: "expected to have same size as:<${other.contentToString()}> (${other.size}) but was:<${actual.size}>",
+                ?: (
+                    "expected to have same size as:<${other.contentToString()}> (${other.size}) " +
+                        "but was:<${actual.size}>"
+                ),
         )
     }
 }

@@ -10,10 +10,9 @@ output-reports:
 exceptions:
   SwallowedException:
     active: false
-  ThrowsCount:
-    active: true
-    max: 3
 
 style:
   ForbiddenComment:
     active: false
+  ThrowsCount:
+    max: 4
