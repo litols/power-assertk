@@ -20,16 +20,7 @@ inline fun <T> Assert<T>.given(assertion: (T) -> Unit) {
 /**
  * Formats a value for display in error messages.
  */
-fun show(value: Any?): String =
-    when (value) {
-        null -> "null"
-        is String -> "\"$value\""
-        is Char -> "'$value'"
-        is Long -> "${value}L"
-        is Float -> "${value}f"
-        is Double -> "${value}d"
-        else -> value.toString()
-    }
+expect fun show(value: Any?): String
 
 /**
  * Throws an AssertionError with the formatted message.
