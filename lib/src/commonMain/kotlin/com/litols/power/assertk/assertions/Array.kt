@@ -3,6 +3,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 import kotlin.jvm.JvmName
 
 /**
@@ -18,8 +19,10 @@ fun <T> Assert<Array<T>>.size(): Assert<Int> = Assert(actual.size)
  */
 fun <T> Assert<Array<T>>.isEmpty(message: (() -> String)? = null) {
     if (actual.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be empty but was:<${actual.contentToString()}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be empty but was:<${actual.contentToString()}>",
+            ),
         )
     }
 }
@@ -29,8 +32,10 @@ fun <T> Assert<Array<T>>.isEmpty(message: (() -> String)? = null) {
  */
 fun <T> Assert<Array<T>>.isNotEmpty(message: (() -> String)? = null) {
     if (actual.isEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be empty",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be empty",
+            ),
         )
     }
 }
@@ -41,8 +46,10 @@ fun <T> Assert<Array<T>>.isNotEmpty(message: (() -> String)? = null) {
 @JvmName("isNullOrEmptyArrayNullable")
 fun <T> Assert<Array<T>?>.isNullOrEmpty(message: (() -> String)? = null) {
     if (actual != null && actual.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be null or empty but was:<${actual.contentToString()}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be null or empty but was:<${actual.contentToString()}>",
+            ),
         )
     }
 }
@@ -55,8 +62,10 @@ fun <T> Assert<Array<T>>.hasSize(
     message: (() -> String)? = null,
 ) {
     if (actual.size != size) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to have size:<$size> but was:<${actual.size}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to have size:<$size> but was:<${actual.size}>",
+            ),
         )
     }
 }
@@ -69,12 +78,14 @@ fun <T> Assert<Array<T>>.hasSameSizeAs(
     message: (() -> String)? = null,
 ) {
     if (actual.size != other.size) {
-        throw AssertionError(
-            message?.invoke()
-                ?: (
-                    "expected to have same size as:<${other.contentToString()}> (${other.size}) " +
-                        "but was:<${actual.size}>"
-                ),
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: (
+                        "expected to have same size as:<${other.contentToString()}> (${other.size}) " +
+                            "but was:<${actual.size}>"
+                    ),
+            ),
         )
     }
 }
@@ -87,8 +98,10 @@ fun <T> Assert<Array<T>>.contains(
     message: (() -> String)? = null,
 ) {
     if (element !in actual) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain:<$element> but was:<${actual.contentToString()}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain:<$element> but was:<${actual.contentToString()}>",
+            ),
         )
     }
 }
@@ -101,8 +114,10 @@ fun <T> Assert<Array<T>>.doesNotContain(
     message: (() -> String)? = null,
 ) {
     if (element in actual) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to contain:<$element> but was:<${actual.contentToString()}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to contain:<$element> but was:<${actual.contentToString()}>",
+            ),
         )
     }
 }
@@ -116,8 +131,10 @@ fun <T> Assert<Array<T>>.containsAll(
 ) {
     val notFound = elements.filter { it !in actual }
     if (notFound.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain all:<$notFound> but was:<${actual.contentToString()}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain all:<$notFound> but was:<${actual.contentToString()}>",
+            ),
         )
     }
 }
@@ -131,8 +148,10 @@ fun <T> Assert<Array<T>>.containsAtLeast(
 ) {
     val notFound = elements.filter { it !in actual }
     if (notFound.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain at least:<$notFound> but was:<${actual.contentToString()}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain at least:<$notFound> but was:<${actual.contentToString()}>",
+            ),
         )
     }
 }
@@ -145,9 +164,11 @@ fun <T> Assert<Array<T>>.containsOnly(
     message: (() -> String)? = null,
 ) {
     if (actual.toSet() != elements.toSet() || actual.size != elements.size) {
-        throw AssertionError(
-            message?.invoke()
-                ?: "expected to contain only:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: "expected to contain only:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
+            ),
         )
     }
 }
@@ -160,9 +181,11 @@ fun <T> Assert<Array<T>>.containsExactly(
     message: (() -> String)? = null,
 ) {
     if (!actual.contentEquals(elements)) {
-        throw AssertionError(
-            message?.invoke()
-                ?: "expected to contain exactly:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: "expected to contain exactly:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
+            ),
         )
     }
 }
@@ -176,12 +199,14 @@ fun <T> Assert<Array<T>>.containsExactlyInAnyOrder(
 ) {
     // Check sizes match
     if (actual.size != elements.size) {
-        throw AssertionError(
-            message?.invoke()
-                ?: (
-                    "expected to contain exactly in any order:<${elements.contentToString()}>" +
-                        " but was:<${actual.contentToString()}>"
-                ),
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: (
+                        "expected to contain exactly in any order:<${elements.contentToString()}>" +
+                            " but was:<${actual.contentToString()}>"
+                    ),
+            ),
         )
     }
 
@@ -189,12 +214,14 @@ fun <T> Assert<Array<T>>.containsExactlyInAnyOrder(
     val actualMutable = actual.toMutableList()
     for (element in elements) {
         if (!actualMutable.remove(element)) {
-            throw AssertionError(
-                message?.invoke()
-                    ?: (
-                        "expected to contain exactly in any order:<${elements.contentToString()}>" +
-                            " but was:<${actual.contentToString()}>"
-                    ),
+            notifyFailure(
+                AssertionError(
+                    message?.invoke()
+                        ?: (
+                            "expected to contain exactly in any order:<${elements.contentToString()}>" +
+                                " but was:<${actual.contentToString()}>"
+                        ),
+                ),
             )
         }
     }
@@ -209,8 +236,10 @@ fun <T> Assert<Array<T>>.containsNone(
 ) {
     val found = elements.filter { it in actual }
     if (found.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain none of:<$found> but was:<${actual.contentToString()}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain none of:<$found> but was:<${actual.contentToString()}>",
+            ),
         )
     }
 }
@@ -228,8 +257,10 @@ fun <T> Assert<Array<T>>.each(
                 Assert(element),
             )
         } catch (e: AssertionError) {
-            throw AssertionError(
-                message?.invoke() ?: "element at index $index failed assertion: ${e.message}",
+            notifyFailure(
+                AssertionError(
+                    message?.invoke() ?: "element at index $index failed assertion: ${e.message}",
+                ),
             )
         }
     }
@@ -254,8 +285,10 @@ fun <T> Assert<Array<T>>.any(
             }
         }
     if (!passed) {
-        throw AssertionError(
-            message?.invoke() ?: "expected at least one element to satisfy the assertion",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected at least one element to satisfy the assertion",
+            ),
         )
     }
 }
@@ -272,8 +305,10 @@ fun <T> Assert<Array<T>>.none(
             f(
                 Assert(element),
             )
-            throw AssertionError(
-                message?.invoke() ?: "element at index $index unexpectedly satisfied the assertion",
+            notifyFailure(
+                AssertionError(
+                    message?.invoke() ?: "element at index $index unexpectedly satisfied the assertion",
+                ),
             )
         } catch (e: AssertionError) {
             // Expected to fail
@@ -301,8 +336,10 @@ fun <T> Assert<Array<T>>.atLeast(
             }
         }
     if (count < times) {
-        throw AssertionError(
-            message?.invoke() ?: "expected at least $times elements to satisfy the assertion but $count did",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected at least $times elements to satisfy the assertion but $count did",
+            ),
         )
     }
 }
@@ -327,8 +364,10 @@ fun <T> Assert<Array<T>>.atMost(
             }
         }
     if (count > times) {
-        throw AssertionError(
-            message?.invoke() ?: "expected at most $times elements to satisfy the assertion but $count did",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected at most $times elements to satisfy the assertion but $count did",
+            ),
         )
     }
 }
@@ -353,8 +392,10 @@ fun <T> Assert<Array<T>>.exactly(
             }
         }
     if (count != times) {
-        throw AssertionError(
-            message?.invoke() ?: "expected exactly $times elements to satisfy the assertion but $count did",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected exactly $times elements to satisfy the assertion but $count did",
+            ),
         )
     }
 }
@@ -378,7 +419,12 @@ fun <T> Assert<Array<T>>.first(): Assert<T> {
  */
 fun <T> Assert<Array<T>>.single(): Assert<T> {
     if (actual.size != 1) {
-        throw AssertionError("expected to have exactly one element but had ${actual.size}")
+        notifyFailure(
+            AssertionError("expected to have exactly one element but had ${actual.size}"),
+        )
+        // In soft failure mode, return a dummy value
+        @Suppress("UNCHECKED_CAST")
+        return Assert(null as T)
     }
     return Assert(actual.first())
 }
@@ -390,7 +436,12 @@ fun <T> Assert<Array<T>>.single(): Assert<T> {
  */
 fun <T> Assert<Array<T>>.index(index: Int): Assert<T> {
     if (index < 0 || index >= actual.size) {
-        throw AssertionError("expected to have element at index $index but size was ${actual.size}")
+        notifyFailure(
+            AssertionError("expected to have element at index $index but size was ${actual.size}"),
+        )
+        // In soft failure mode, return a dummy value
+        @Suppress("UNCHECKED_CAST")
+        return Assert(null as T)
     }
     return Assert(actual[index])
 }

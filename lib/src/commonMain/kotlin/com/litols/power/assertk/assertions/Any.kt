@@ -3,6 +3,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 
 /**
  * Asserts the value is equal to expected using `==`.
@@ -12,8 +13,10 @@ fun <T> Assert<T>.isEqualTo(
     message: (() -> String)? = null,
 ) {
     if (actual != expected) {
-        throw AssertionError(
-            message?.invoke() ?: "expected:<$expected> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected:<$expected> but was:<$actual>",
+            ),
         )
     }
 }
@@ -26,8 +29,10 @@ fun <T> Assert<T>.isNotEqualTo(
     message: (() -> String)? = null,
 ) {
     if (actual == expected) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to not be equal to:<$expected>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to not be equal to:<$expected>",
+            ),
         )
     }
 }
@@ -37,8 +42,10 @@ fun <T> Assert<T>.isNotEqualTo(
  */
 fun <T> Assert<T>.isNull(message: (() -> String)? = null) {
     if (actual != null) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be null but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be null but was:<$actual>",
+            ),
         )
     }
 }
@@ -48,9 +55,15 @@ fun <T> Assert<T>.isNull(message: (() -> String)? = null) {
  */
 fun <T : Any> Assert<T?>.isNotNull(message: (() -> String)? = null): Assert<T> {
     if (actual == null) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be not null",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be not null",
+            ),
         )
+        // In soft failure mode, we still need to return something
+        // Use a dummy non-null value (this will never be reached in normal mode)
+        @Suppress("UNCHECKED_CAST")
+        return Assert(null as T)
     }
     return Assert(actual)
 }
@@ -63,8 +76,10 @@ fun <T> Assert<T>.isSameInstanceAs(
     message: (() -> String)? = null,
 ) {
     if (actual !== expected) {
-        throw AssertionError(
-            message?.invoke() ?: "expected same instance:<$expected> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected same instance:<$expected> but was:<$actual>",
+            ),
         )
     }
 }
@@ -77,8 +92,10 @@ fun <T> Assert<T>.isNotSameInstanceAs(
     message: (() -> String)? = null,
 ) {
     if (actual === expected) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to not be same instance:<$expected>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to not be same instance:<$expected>",
+            ),
         )
     }
 }
@@ -113,8 +130,10 @@ fun <T> Assert<T>.isIn(
     message: (() -> String)? = null,
 ) {
     if (actual !in values) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be in:<${values.contentToString()}> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be in:<${values.contentToString()}> but was:<$actual>",
+            ),
         )
     }
 }
@@ -127,8 +146,10 @@ fun <T> Assert<T>.isNotIn(
     message: (() -> String)? = null,
 ) {
     if (actual in values) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to not be in:<${values.contentToString()}> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to not be in:<${values.contentToString()}> but was:<$actual>",
+            ),
         )
     }
 }
@@ -142,8 +163,10 @@ fun <T> Assert<T>.hasToString(
 ) {
     val actualString = actual.toString()
     if (actualString != string) {
-        throw AssertionError(
-            message?.invoke() ?: "expected toString:<\"$string\"> but was:<\"$actualString\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected toString:<\"$string\"> but was:<\"$actualString\">",
+            ),
         )
     }
 }
@@ -165,8 +188,10 @@ fun <T : Any> Assert<T>.hasHashCode(
 ) {
     val actualHashCode = actual.hashCode()
     if (actualHashCode != hashCode) {
-        throw AssertionError(
-            message?.invoke() ?: "expected hashCode:<$hashCode> but was:<$actualHashCode>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected hashCode:<$hashCode> but was:<$actualHashCode>",
+            ),
         )
     }
 }
@@ -184,9 +209,14 @@ fun <T : Any> Assert<T>.hashCodeFun(): Assert<Int> = Assert(actual.hashCode())
  */
 inline fun <reified T : Any> Assert<*>.isInstanceOf(noinline message: (() -> String)? = null): Assert<T> {
     if (actual !is T) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be instance of:<${T::class}> but was instance of:<${actual!!::class}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be instance of:<${T::class}> but was instance of:<${actual!!::class}>",
+            ),
         )
+        // In soft failure mode, return a dummy value
+        @Suppress("UNCHECKED_CAST")
+        return Assert(null as T)
     }
     return Assert(actual)
 }
@@ -196,8 +226,10 @@ inline fun <reified T : Any> Assert<*>.isInstanceOf(noinline message: (() -> Str
  */
 inline fun <reified T : Any> Assert<*>.isNotInstanceOf(noinline message: (() -> String)? = null) {
     if (actual is T) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to not be instance of:<${T::class}> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to not be instance of:<${T::class}> but was:<$actual>",
+            ),
         )
     }
 }

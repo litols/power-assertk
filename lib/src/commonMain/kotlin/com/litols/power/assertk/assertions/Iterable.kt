@@ -3,6 +3,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 
 /**
  * Asserts the Iterable contains the expected element.
@@ -12,8 +13,10 @@ fun <E> Assert<Iterable<E>>.contains(
     message: (() -> String)? = null,
 ) {
     if (element !in actual) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain:<$element> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain:<$element> but was:<$actual>",
+            ),
         )
     }
 }
@@ -26,8 +29,10 @@ fun <E> Assert<Iterable<E>>.doesNotContain(
     message: (() -> String)? = null,
 ) {
     if (element in actual) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to contain:<$element> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to contain:<$element> but was:<$actual>",
+            ),
         )
     }
 }
@@ -41,8 +46,10 @@ fun <E> Assert<Iterable<E>>.containsAll(
 ) {
     val notFound = elements.filter { it !in actual }
     if (notFound.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain all:<$notFound> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain all:<$notFound> but was:<$actual>",
+            ),
         )
     }
 }
@@ -56,8 +63,10 @@ fun <E> Assert<Iterable<E>>.containsAtLeast(
 ) {
     val notFound = elements.filter { it !in actual }
     if (notFound.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain at least:<$notFound> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain at least:<$notFound> but was:<$actual>",
+            ),
         )
     }
 }
@@ -72,8 +81,10 @@ fun <E> Assert<Iterable<E>>.containsOnly(
     val actualList = actual.toList()
     val expectedList = elements.toList()
     if (actualList.toSet() != expectedList.toSet() || actualList.size != expectedList.size) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain only:<$expectedList> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain only:<$expectedList> but was:<$actual>",
+            ),
         )
     }
 }
@@ -90,8 +101,10 @@ fun <E> Assert<Iterable<E>>.containsExactlyInAnyOrder(
 
     // Check sizes match
     if (actualList.size != expectedList.size) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain exactly in any order:<$expectedList> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain exactly in any order:<$expectedList> but was:<$actual>",
+            ),
         )
     }
 
@@ -99,8 +112,10 @@ fun <E> Assert<Iterable<E>>.containsExactlyInAnyOrder(
     val actualMutable = actualList.toMutableList()
     for (element in expectedList) {
         if (!actualMutable.remove(element)) {
-            throw AssertionError(
-                message?.invoke() ?: "expected to contain exactly in any order:<$expectedList> but was:<$actual>",
+            notifyFailure(
+                AssertionError(
+                    message?.invoke() ?: "expected to contain exactly in any order:<$expectedList> but was:<$actual>",
+                ),
             )
         }
     }
@@ -115,8 +130,10 @@ fun <E> Assert<Iterable<E>>.containsNone(
 ) {
     val found = elements.filter { it in actual }
     if (found.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain none of:<$found> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain none of:<$found> but was:<$actual>",
+            ),
         )
     }
 }
@@ -126,8 +143,10 @@ fun <E> Assert<Iterable<E>>.containsNone(
  */
 fun <E> Assert<Iterable<E>>.isEmpty(message: (() -> String)? = null) {
     if (actual.iterator().hasNext()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be empty but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be empty but was:<$actual>",
+            ),
         )
     }
 }
@@ -137,8 +156,10 @@ fun <E> Assert<Iterable<E>>.isEmpty(message: (() -> String)? = null) {
  */
 fun <E> Assert<Iterable<E>>.isNotEmpty(message: (() -> String)? = null) {
     if (!actual.iterator().hasNext()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be empty",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be empty",
+            ),
         )
     }
 }
@@ -156,8 +177,10 @@ fun <E> Assert<Iterable<E>>.each(
                 Assert(element),
             )
         } catch (e: AssertionError) {
-            throw AssertionError(
-                message?.invoke() ?: "element at index $index failed assertion: ${e.message}",
+            notifyFailure(
+                AssertionError(
+                    message?.invoke() ?: "element at index $index failed assertion: ${e.message}",
+                ),
             )
         }
     }
@@ -182,8 +205,10 @@ fun <E> Assert<Iterable<E>>.any(
             }
         }
     if (!passed) {
-        throw AssertionError(
-            message?.invoke() ?: "expected at least one element to satisfy the assertion",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected at least one element to satisfy the assertion",
+            ),
         )
     }
 }
@@ -200,8 +225,10 @@ fun <E> Assert<Iterable<E>>.none(
             f(
                 Assert(element),
             )
-            throw AssertionError(
-                message?.invoke() ?: "element at index $index unexpectedly satisfied the assertion",
+            notifyFailure(
+                AssertionError(
+                    message?.invoke() ?: "element at index $index unexpectedly satisfied the assertion",
+                ),
             )
         } catch (e: AssertionError) {
             // Expected to fail
@@ -229,8 +256,10 @@ fun <E> Assert<Iterable<E>>.atLeast(
             }
         }
     if (count < times) {
-        throw AssertionError(
-            message?.invoke() ?: "expected at least $times elements to satisfy the assertion but $count did",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected at least $times elements to satisfy the assertion but $count did",
+            ),
         )
     }
 }
@@ -255,8 +284,10 @@ fun <E> Assert<Iterable<E>>.atMost(
             }
         }
     if (count > times) {
-        throw AssertionError(
-            message?.invoke() ?: "expected at most $times elements to satisfy the assertion but $count did",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected at most $times elements to satisfy the assertion but $count did",
+            ),
         )
     }
 }
@@ -281,8 +312,10 @@ fun <E> Assert<Iterable<E>>.exactly(
             }
         }
     if (count != times) {
-        throw AssertionError(
-            message?.invoke() ?: "expected exactly $times elements to satisfy the assertion but $count did",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected exactly $times elements to satisfy the assertion but $count did",
+            ),
         )
     }
 }
@@ -307,7 +340,12 @@ fun <E> Assert<Iterable<E>>.first(): Assert<E> {
 fun <E> Assert<Iterable<E>>.single(): Assert<E> {
     val list = actual.toList()
     if (list.size != 1) {
-        throw AssertionError("expected to have exactly one element but had ${list.size}")
+        notifyFailure(
+            AssertionError("expected to have exactly one element but had ${list.size}"),
+        )
+        // In soft failure mode, return a dummy value
+        @Suppress("UNCHECKED_CAST")
+        return Assert(null as E)
     }
     return Assert(list.first())
 }

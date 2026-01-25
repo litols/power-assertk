@@ -3,6 +3,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 import kotlin.jvm.JvmName
 
 // Int extensions
@@ -13,8 +14,10 @@ import kotlin.jvm.JvmName
 @JvmName("intIsZero")
 fun Assert<Int>.isZero(message: (() -> String)? = null) {
     if (actual != 0) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be zero but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be zero but was:<$actual>",
+            ),
         )
     }
 }
@@ -25,8 +28,10 @@ fun Assert<Int>.isZero(message: (() -> String)? = null) {
 @JvmName("intIsNotZero")
 fun Assert<Int>.isNotZero(message: (() -> String)? = null) {
     if (actual == 0) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be zero",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be zero",
+            ),
         )
     }
 }
@@ -37,8 +42,10 @@ fun Assert<Int>.isNotZero(message: (() -> String)? = null) {
 @JvmName("intIsPositive")
 fun Assert<Int>.isPositive(message: (() -> String)? = null) {
     if (actual <= 0) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be positive but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be positive but was:<$actual>",
+            ),
         )
     }
 }
@@ -49,8 +56,10 @@ fun Assert<Int>.isPositive(message: (() -> String)? = null) {
 @JvmName("intIsNegative")
 fun Assert<Int>.isNegative(message: (() -> String)? = null) {
     if (actual >= 0) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be negative but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be negative but was:<$actual>",
+            ),
         )
     }
 }
@@ -63,8 +72,10 @@ fun Assert<Int>.isNegative(message: (() -> String)? = null) {
 @JvmName("longIsZero")
 fun Assert<Long>.isZero(message: (() -> String)? = null) {
     if (actual != 0L) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be zero but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be zero but was:<$actual>",
+            ),
         )
     }
 }
@@ -75,8 +86,10 @@ fun Assert<Long>.isZero(message: (() -> String)? = null) {
 @JvmName("longIsNotZero")
 fun Assert<Long>.isNotZero(message: (() -> String)? = null) {
     if (actual == 0L) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be zero",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be zero",
+            ),
         )
     }
 }
@@ -87,8 +100,10 @@ fun Assert<Long>.isNotZero(message: (() -> String)? = null) {
 @JvmName("longIsPositive")
 fun Assert<Long>.isPositive(message: (() -> String)? = null) {
     if (actual <= 0L) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be positive but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be positive but was:<$actual>",
+            ),
         )
     }
 }
@@ -99,8 +114,10 @@ fun Assert<Long>.isPositive(message: (() -> String)? = null) {
 @JvmName("longIsNegative")
 fun Assert<Long>.isNegative(message: (() -> String)? = null) {
     if (actual >= 0L) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be negative but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be negative but was:<$actual>",
+            ),
         )
     }
 }
@@ -113,8 +130,10 @@ fun Assert<Long>.isNegative(message: (() -> String)? = null) {
 @JvmName("doubleIsZero")
 fun Assert<Double>.isZero(message: (() -> String)? = null) {
     if (actual != 0.0) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be zero but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be zero but was:<$actual>",
+            ),
         )
     }
 }
@@ -125,8 +144,10 @@ fun Assert<Double>.isZero(message: (() -> String)? = null) {
 @JvmName("doubleIsNotZero")
 fun Assert<Double>.isNotZero(message: (() -> String)? = null) {
     if (actual == 0.0) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be zero",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be zero",
+            ),
         )
     }
 }
@@ -137,8 +158,10 @@ fun Assert<Double>.isNotZero(message: (() -> String)? = null) {
 @JvmName("doubleIsPositive")
 fun Assert<Double>.isPositive(message: (() -> String)? = null) {
     if (actual <= 0.0) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be positive but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be positive but was:<$actual>",
+            ),
         )
     }
 }
@@ -149,8 +172,10 @@ fun Assert<Double>.isPositive(message: (() -> String)? = null) {
 @JvmName("doubleIsNegative")
 fun Assert<Double>.isNegative(message: (() -> String)? = null) {
     if (actual >= 0.0) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be negative but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be negative but was:<$actual>",
+            ),
         )
     }
 }
@@ -163,8 +188,10 @@ fun Assert<Double>.isNegative(message: (() -> String)? = null) {
 @JvmName("floatIsZero")
 fun Assert<Float>.isZero(message: (() -> String)? = null) {
     if (actual != 0.0f) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be zero but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be zero but was:<$actual>",
+            ),
         )
     }
 }
@@ -175,8 +202,10 @@ fun Assert<Float>.isZero(message: (() -> String)? = null) {
 @JvmName("floatIsNotZero")
 fun Assert<Float>.isNotZero(message: (() -> String)? = null) {
     if (actual == 0.0f) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be zero",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be zero",
+            ),
         )
     }
 }
@@ -187,8 +216,10 @@ fun Assert<Float>.isNotZero(message: (() -> String)? = null) {
 @JvmName("floatIsPositive")
 fun Assert<Float>.isPositive(message: (() -> String)? = null) {
     if (actual <= 0.0f) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be positive but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be positive but was:<$actual>",
+            ),
         )
     }
 }
@@ -199,8 +230,10 @@ fun Assert<Float>.isPositive(message: (() -> String)? = null) {
 @JvmName("floatIsNegative")
 fun Assert<Float>.isNegative(message: (() -> String)? = null) {
     if (actual >= 0.0f) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be negative but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be negative but was:<$actual>",
+            ),
         )
     }
 }

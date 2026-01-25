@@ -1,6 +1,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 
 /**
  * Asserts the value matches the given predicate.
@@ -10,8 +11,10 @@ fun <T> Assert<T>.matchesPredicate(
     f: (T) -> Boolean,
 ) {
     if (!f(actual)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to match predicate but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to match predicate but was:<$actual>",
+            ),
         )
     }
 }

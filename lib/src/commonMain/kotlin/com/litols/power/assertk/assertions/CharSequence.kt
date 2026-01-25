@@ -3,6 +3,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 
 /**
  * Asserts the CharSequence contains all expected CharSequences.
@@ -14,9 +15,11 @@ fun <T : CharSequence> Assert<T>.contains(
 ) {
     val notFound = expected.filter { !actual.contains(it, ignoreCase) }
     if (notFound.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke()
-                ?: "expected to contain all:<${notFound.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: "expected to contain all:<${notFound.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -31,9 +34,11 @@ fun <T : CharSequence> Assert<T>.contains(
 ) {
     val notFound = expected.filter { !actual.contains(it, ignoreCase) }
     if (notFound.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke()
-                ?: "expected to contain all:<${notFound.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: "expected to contain all:<${notFound.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -47,8 +52,10 @@ fun <T : CharSequence> Assert<T>.doesNotContain(
     message: (() -> String)? = null,
 ) {
     if (actual.contains(expected, ignoreCase)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to contain:<\"$expected\"> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to contain:<\"$expected\"> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -63,9 +70,11 @@ fun <T : CharSequence> Assert<T>.doesNotContain(
 ) {
     val found = expected.filter { actual.contains(it, ignoreCase) }
     if (found.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke()
-                ?: "expected not to contain any of:<${found.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: "expected not to contain any of:<${found.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -80,9 +89,11 @@ fun <T : CharSequence> Assert<T>.doesNotContain(
 ) {
     val found = expected.filter { actual.contains(it, ignoreCase) }
     if (found.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke()
-                ?: "expected not to contain any of:<${found.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: "expected not to contain any of:<${found.joinToString { "\"$it\"" }}> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -96,8 +107,10 @@ fun <T : CharSequence> Assert<T>.startsWith(
     message: (() -> String)? = null,
 ) {
     if (!actual.startsWith(other, ignoreCase)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to start with:<\"$other\"> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to start with:<\"$other\"> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -111,8 +124,10 @@ fun <T : CharSequence> Assert<T>.endsWith(
     message: (() -> String)? = null,
 ) {
     if (!actual.endsWith(other, ignoreCase)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to end with:<\"$other\"> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to end with:<\"$other\"> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -125,8 +140,10 @@ fun <T : CharSequence> Assert<T>.matches(
     message: (() -> String)? = null,
 ) {
     if (!regex.matches(actual)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to match:<$regex> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to match:<$regex> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -139,8 +156,10 @@ fun <T : CharSequence> Assert<T>.containsMatch(
     message: (() -> String)? = null,
 ) {
     if (!regex.containsMatchIn(actual)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain match:<$regex> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain match:<$regex> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -158,8 +177,10 @@ fun <T : CharSequence> Assert<T>.length(): Assert<Int> = Assert(actual.length)
  */
 fun <T : CharSequence> Assert<T>.isEmpty(message: (() -> String)? = null) {
     if (actual.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be empty but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be empty but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -169,8 +190,10 @@ fun <T : CharSequence> Assert<T>.isEmpty(message: (() -> String)? = null) {
  */
 fun <T : CharSequence> Assert<T>.isNotEmpty(message: (() -> String)? = null) {
     if (actual.isEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be empty",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be empty",
+            ),
         )
     }
 }
@@ -180,8 +203,10 @@ fun <T : CharSequence> Assert<T>.isNotEmpty(message: (() -> String)? = null) {
  */
 fun <T : CharSequence?> Assert<T>.isNullOrEmpty(message: (() -> String)? = null) {
     if (actual != null && actual.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be null or empty but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be null or empty but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -194,8 +219,10 @@ fun <T : CharSequence> Assert<T>.hasLength(
     message: (() -> String)? = null,
 ) {
     if (actual.length != length) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to have length:<$length> but was:<${actual.length}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to have length:<$length> but was:<${actual.length}>",
+            ),
         )
     }
 }
@@ -208,9 +235,11 @@ fun <T : CharSequence> Assert<T>.hasSameLengthAs(
     message: (() -> String)? = null,
 ) {
     if (actual.length != other.length) {
-        throw AssertionError(
-            message?.invoke()
-                ?: "expected to have same length as:<\"$other\"> (${other.length}) but was:<${actual.length}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: "expected to have same length as:<\"$other\"> (${other.length}) but was:<${actual.length}>",
+            ),
         )
     }
 }
@@ -224,8 +253,10 @@ fun <T : CharSequence> Assert<T>.hasLineCount(
 ) {
     val actualLineCount = actual.lines().size
     if (actualLineCount != lineCount) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to have line count:<$lineCount> but was:<$actualLineCount>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to have line count:<$lineCount> but was:<$actualLineCount>",
+            ),
         )
     }
 }
@@ -239,8 +270,10 @@ fun <T : CharSequence> Assert<T>.contains(
     message: (() -> String)? = null,
 ) {
     if (!actual.contains(expected, ignoreCase)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain:<\"$expected\"> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain:<\"$expected\"> but was:<\"$actual\">",
+            ),
         )
     }
 }

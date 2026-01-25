@@ -1,6 +1,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 import kotlin.jvm.JvmName
 
 /**
@@ -16,8 +17,10 @@ fun <T : Collection<*>> Assert<T>.size(): Assert<Int> = Assert(actual.size)
  */
 fun <T : Collection<*>> Assert<T>.isEmpty(message: (() -> String)? = null) {
     if (actual.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be empty but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be empty but was:<$actual>",
+            ),
         )
     }
 }
@@ -27,8 +30,10 @@ fun <T : Collection<*>> Assert<T>.isEmpty(message: (() -> String)? = null) {
  */
 fun <T : Collection<*>> Assert<T>.isNotEmpty(message: (() -> String)? = null) {
     if (actual.isEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be empty",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be empty",
+            ),
         )
     }
 }
@@ -39,8 +44,10 @@ fun <T : Collection<*>> Assert<T>.isNotEmpty(message: (() -> String)? = null) {
 @JvmName("isNullOrEmptyNullable")
 fun <T : Collection<*>?> Assert<T>.isNullOrEmpty(message: (() -> String)? = null) {
     if (actual != null && actual.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be null or empty but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be null or empty but was:<$actual>",
+            ),
         )
     }
 }
@@ -53,8 +60,10 @@ fun <T : Collection<*>> Assert<T>.hasSize(
     message: (() -> String)? = null,
 ) {
     if (actual.size != size) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to have size:<$size> but was:<${actual.size}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to have size:<$size> but was:<${actual.size}>",
+            ),
         )
     }
 }
@@ -67,8 +76,10 @@ fun <T : Collection<*>> Assert<T>.hasSameSizeAs(
     message: (() -> String)? = null,
 ) {
     if (actual.size != other.size) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to have same size as:<$other> (${other.size}) but was:<${actual.size}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to have same size as:<$other> (${other.size}) but was:<${actual.size}>",
+            ),
         )
     }
 }

@@ -1,6 +1,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 
 /**
  * Returns an Assert on the message for chaining.
@@ -17,8 +18,10 @@ fun <T : Throwable> Assert<T>.hasMessage(
     messageParam: (() -> String)? = null,
 ) {
     if (actual.message != message) {
-        throw AssertionError(
-            messageParam?.invoke() ?: "expected message:<\"$message\"> but was:<\"${actual.message}\">",
+        notifyFailure(
+            AssertionError(
+                messageParam?.invoke() ?: "expected message:<\"$message\"> but was:<\"${actual.message}\">",
+            ),
         )
     }
 }
@@ -32,8 +35,10 @@ fun <T : Throwable> Assert<T>.messageContains(
 ) {
     val actualMessage = actual.message
     if (actualMessage == null || !actualMessage.contains(text)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected message to contain:<\"$text\"> but was:<\"$actualMessage\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected message to contain:<\"$text\"> but was:<\"$actualMessage\">",
+            ),
         )
     }
 }
@@ -54,18 +59,25 @@ fun <T : Throwable> Assert<T>.hasCause(
 ) {
     val actualCause = actual.cause
     if (actualCause == null) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to have cause:<$cause> but had no cause",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to have cause:<$cause> but had no cause",
+            ),
         )
+        return
     }
     if (actualCause::class != cause::class) {
-        throw AssertionError(
-            message?.invoke() ?: "expected cause type:<${cause::class}> but was:<${actualCause::class}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected cause type:<${cause::class}> but was:<${actualCause::class}>",
+            ),
         )
     }
     if (actualCause.message != cause.message) {
-        throw AssertionError(
-            message?.invoke() ?: "expected cause message:<\"${cause.message}\"> but was:<\"${actualCause.message}\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected cause message:<\"${cause.message}\"> but was:<\"${actualCause.message}\">",
+            ),
         )
     }
 }
@@ -75,8 +87,10 @@ fun <T : Throwable> Assert<T>.hasCause(
  */
 fun <T : Throwable> Assert<T>.hasNoCause(message: (() -> String)? = null) {
     if (actual.cause != null) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to have no cause but had:<${actual.cause}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to have no cause but had:<${actual.cause}>",
+            ),
         )
     }
 }
@@ -92,7 +106,11 @@ fun <T : Throwable> Assert<T>.rootCause(): Assert<Throwable> {
         current = current.cause!!
     }
     if (current === actual) {
-        throw AssertionError("expected to have a root cause but had no cause")
+        notifyFailure(
+            AssertionError("expected to have a root cause but had no cause"),
+        )
+        // In soft failure mode, return a dummy value
+        return Assert(actual)
     }
     return Assert(current)
 }
@@ -110,19 +128,25 @@ fun <T : Throwable> Assert<T>.hasRootCause(
     }
 
     if (current === actual) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to have a root cause but had no cause",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to have a root cause but had no cause",
+            ),
         )
     }
 
     if (current::class != cause::class) {
-        throw AssertionError(
-            message?.invoke() ?: "expected root cause type:<${cause::class}> but was:<${current::class}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected root cause type:<${cause::class}> but was:<${current::class}>",
+            ),
         )
     }
     if (current.message != cause.message) {
-        throw AssertionError(
-            message?.invoke() ?: "expected root cause message:<\"${cause.message}\"> but was:<\"${current.message}\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected root cause message:<\"${cause.message}\"> but was:<\"${current.message}\">",
+            ),
         )
     }
 }

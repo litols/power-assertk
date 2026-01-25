@@ -1,6 +1,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 
 /**
  * Returns an Assert on the element at the given index for chaining.
@@ -9,7 +10,12 @@ import com.litols.power.assertk.Assert
  */
 fun <T> Assert<List<T>>.index(index: Int): Assert<T> {
     if (index < 0 || index >= actual.size) {
-        throw AssertionError("expected to have element at index $index but size was ${actual.size}")
+        notifyFailure(
+            AssertionError("expected to have element at index $index but size was ${actual.size}"),
+        )
+        // In soft failure mode, return a dummy value
+        @Suppress("UNCHECKED_CAST")
+        return Assert(null as T)
     }
     return Assert(actual[index])
 }
@@ -22,14 +28,18 @@ fun <T> Assert<List<T>>.containsExactly(
     message: (() -> String)? = null,
 ) {
     if (actual.size != elements.size) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain exactly:<${elements.toList()}> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain exactly:<${elements.toList()}> but was:<$actual>",
+            ),
         )
     }
     actual.forEachIndexed { index, element ->
         if (element != elements[index]) {
-            throw AssertionError(
-                message?.invoke() ?: "expected to contain exactly:<${elements.toList()}> but was:<$actual>",
+            notifyFailure(
+                AssertionError(
+                    message?.invoke() ?: "expected to contain exactly:<${elements.toList()}> but was:<$actual>",
+                ),
             )
         }
     }
@@ -72,14 +82,18 @@ fun <T> Assert<List<T>>.startsWith(
     message: (() -> String)? = null,
 ) {
     if (actual.size < elements.size) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to start with:<${elements.toList()}> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to start with:<${elements.toList()}> but was:<$actual>",
+            ),
         )
     }
     elements.forEachIndexed { index, element ->
         if (actual[index] != element) {
-            throw AssertionError(
-                message?.invoke() ?: "expected to start with:<${elements.toList()}> but was:<$actual>",
+            notifyFailure(
+                AssertionError(
+                    message?.invoke() ?: "expected to start with:<${elements.toList()}> but was:<$actual>",
+                ),
             )
         }
     }
@@ -93,15 +107,19 @@ fun <T> Assert<List<T>>.endsWith(
     message: (() -> String)? = null,
 ) {
     if (actual.size < elements.size) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to end with:<${elements.toList()}> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to end with:<${elements.toList()}> but was:<$actual>",
+            ),
         )
     }
     elements.forEachIndexed { index, element ->
         val actualIndex = actual.size - elements.size + index
         if (actual[actualIndex] != element) {
-            throw AssertionError(
-                message?.invoke() ?: "expected to end with:<${elements.toList()}> but was:<$actual>",
+            notifyFailure(
+                AssertionError(
+                    message?.invoke() ?: "expected to end with:<${elements.toList()}> but was:<$actual>",
+                ),
             )
         }
     }

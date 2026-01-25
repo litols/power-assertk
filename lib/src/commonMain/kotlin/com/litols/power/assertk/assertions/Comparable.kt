@@ -1,6 +1,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 import kotlin.math.abs
 
 /**
@@ -11,8 +12,10 @@ fun <T : Comparable<T>> Assert<T>.isGreaterThan(
     message: (() -> String)? = null,
 ) {
     if (actual <= other) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be greater than:<$other> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be greater than:<$other> but was:<$actual>",
+            ),
         )
     }
 }
@@ -25,8 +28,10 @@ fun <T : Comparable<T>> Assert<T>.isLessThan(
     message: (() -> String)? = null,
 ) {
     if (actual >= other) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be less than:<$other> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be less than:<$other> but was:<$actual>",
+            ),
         )
     }
 }
@@ -39,8 +44,10 @@ fun <T : Comparable<T>> Assert<T>.isGreaterThanOrEqualTo(
     message: (() -> String)? = null,
 ) {
     if (actual < other) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be greater than or equal to:<$other> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be greater than or equal to:<$other> but was:<$actual>",
+            ),
         )
     }
 }
@@ -53,8 +60,10 @@ fun <T : Comparable<T>> Assert<T>.isLessThanOrEqualTo(
     message: (() -> String)? = null,
 ) {
     if (actual > other) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be less than or equal to:<$other> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be less than or equal to:<$other> but was:<$actual>",
+            ),
         )
     }
 }
@@ -68,8 +77,10 @@ fun <T : Comparable<T>> Assert<T>.isBetween(
     message: (() -> String)? = null,
 ) {
     if (actual < start || actual > end) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be between:<$start> and:<$end> (inclusive) but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be between:<$start> and:<$end> (inclusive) but was:<$actual>",
+            ),
         )
     }
 }
@@ -83,8 +94,10 @@ fun <T : Comparable<T>> Assert<T>.isStrictlyBetween(
     message: (() -> String)? = null,
 ) {
     if (actual <= start || actual >= end) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be strictly between:<$start> and:<$end> (exclusive) but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be strictly between:<$start> and:<$end> (exclusive) but was:<$actual>",
+            ),
         )
     }
 }
@@ -98,8 +111,10 @@ fun Assert<Double>.isCloseTo(
     message: (() -> String)? = null,
 ) {
     if (abs(actual - expected) > delta) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be close to:<$expected> (delta:<$delta>) but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be close to:<$expected> (delta:<$delta>) but was:<$actual>",
+            ),
         )
     }
 }
@@ -113,8 +128,10 @@ fun Assert<Float>.isCloseTo(
     message: (() -> String)? = null,
 ) {
     if (abs(actual - expected) > delta) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be close to:<$expected> (delta:<$delta>) but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be close to:<$expected> (delta:<$delta>) but was:<$actual>",
+            ),
         )
     }
 }
@@ -127,8 +144,10 @@ fun <T : Comparable<T>> Assert<T>.isEqualByComparingTo(
     message: (() -> String)? = null,
 ) {
     if (actual.compareTo(expected) != 0) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be equal by comparison to:<$expected> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be equal by comparison to:<$expected> but was:<$actual>",
+            ),
         )
     }
 }

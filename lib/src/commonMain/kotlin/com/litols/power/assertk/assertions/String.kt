@@ -1,6 +1,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 import kotlin.jvm.JvmName
 
 /**
@@ -12,8 +13,10 @@ fun Assert<String>.isEqualTo(
     message: (() -> String)? = null,
 ) {
     if (!actual.equals(other, ignoreCase)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected:<\"$other\"> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected:<\"$other\"> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -28,8 +31,10 @@ fun Assert<String?>.isEqualTo(
     message: (() -> String)? = null,
 ) {
     if (!actual.equals(other, ignoreCase)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected:<\"$other\"> but was:<\"$actual\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected:<\"$other\"> but was:<\"$actual\">",
+            ),
         )
     }
 }
@@ -43,8 +48,10 @@ fun Assert<String>.isNotEqualTo(
     message: (() -> String)? = null,
 ) {
     if (actual.equals(other, ignoreCase)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be equal to:<\"$other\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be equal to:<\"$other\">",
+            ),
         )
     }
 }
@@ -59,8 +66,10 @@ fun Assert<String?>.isNotEqualTo(
     message: (() -> String)? = null,
 ) {
     if (actual.equals(other, ignoreCase)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be equal to:<\"$other\">",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be equal to:<\"$other\">",
+            ),
         )
     }
 }

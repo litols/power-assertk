@@ -3,6 +3,7 @@
 package com.litols.power.assertk.assertions
 
 import com.litols.power.assertk.Assert
+import com.litols.power.assertk.notifyFailure
 import kotlin.jvm.JvmName
 
 // Helper function to check if map contains key-value pair (not transformed by Power Assert)
@@ -27,8 +28,10 @@ fun <K, V> Assert<Map<K, V>>.size(): Assert<Int> = Assert(actual.size)
  */
 fun <K, V> Assert<Map<K, V>>.isEmpty(message: (() -> String)? = null) {
     if (actual.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be empty but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be empty but was:<$actual>",
+            ),
         )
     }
 }
@@ -38,8 +41,10 @@ fun <K, V> Assert<Map<K, V>>.isEmpty(message: (() -> String)? = null) {
  */
 fun <K, V> Assert<Map<K, V>>.isNotEmpty(message: (() -> String)? = null) {
     if (actual.isEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to be empty",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to be empty",
+            ),
         )
     }
 }
@@ -50,8 +55,10 @@ fun <K, V> Assert<Map<K, V>>.isNotEmpty(message: (() -> String)? = null) {
 @JvmName("isNullOrEmptyMapNullable")
 fun <K, V> Assert<Map<K, V>?>.isNullOrEmpty(message: (() -> String)? = null) {
     if (actual != null && actual.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to be null or empty but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to be null or empty but was:<$actual>",
+            ),
         )
     }
 }
@@ -64,8 +71,10 @@ fun <K, V> Assert<Map<K, V>>.hasSize(
     message: (() -> String)? = null,
 ) {
     if (actual.size != size) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to have size:<$size> but was:<${actual.size}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to have size:<$size> but was:<${actual.size}>",
+            ),
         )
     }
 }
@@ -78,8 +87,10 @@ fun <K, V> Assert<Map<K, V>>.hasSameSizeAs(
     message: (() -> String)? = null,
 ) {
     if (actual.size != other.size) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to have same size as:<$other> (${other.size}) but was:<${actual.size}>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to have same size as:<$other> (${other.size}) but was:<${actual.size}>",
+            ),
         )
     }
 }
@@ -93,8 +104,10 @@ fun <K, V> Assert<Map<K, V>>.contains(
     message: (() -> String)? = null,
 ) {
     if (!actual.containsEntry(key, value)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain:<$key=$value> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain:<$key=$value> but was:<$actual>",
+            ),
         )
     }
 }
@@ -107,8 +120,10 @@ fun <K, V> Assert<Map<K, V>>.contains(
     message: (() -> String)? = null,
 ) {
     if (!actual.containsEntry(element.first, element.second)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain:<${element.first}=${element.second}> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain:<${element.first}=${element.second}> but was:<$actual>",
+            ),
         )
     }
 }
@@ -122,13 +137,15 @@ fun <K, V> Assert<Map<K, V>>.containsAll(
 ) {
     val notFound = elements.filter { actual[it.first] != it.second }
     if (notFound.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke()
-                ?: "expected to contain all:<${
-                    notFound.joinToString {
-                        "${it.first}=${it.second}"
-                    }
-                }> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: "expected to contain all:<${
+                        notFound.joinToString {
+                            "${it.first}=${it.second}"
+                        }
+                    }> but was:<$actual>",
+            ),
         )
     }
 }
@@ -142,13 +159,15 @@ fun <K, V> Assert<Map<K, V>>.containsAtLeast(
 ) {
     val notFound = elements.filter { actual[it.first] != it.second }
     if (notFound.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke()
-                ?: "expected to contain at least:<${
-                    notFound.joinToString {
-                        "${it.first}=${it.second}"
-                    }
-                }> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: "expected to contain at least:<${
+                        notFound.joinToString {
+                            "${it.first}=${it.second}"
+                        }
+                    }> but was:<$actual>",
+            ),
         )
     }
 }
@@ -162,8 +181,10 @@ fun <K, V> Assert<Map<K, V>>.containsOnly(
 ) {
     val expected = elements.toMap()
     if (actual != expected) {
-        throw AssertionError(
-            message?.invoke() ?: "expected to contain only:<$expected> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected to contain only:<$expected> but was:<$actual>",
+            ),
         )
     }
 }
@@ -177,13 +198,15 @@ fun <K, V> Assert<Map<K, V>>.containsNone(
 ) {
     val found = elements.filter { actual[it.first] == it.second }
     if (found.isNotEmpty()) {
-        throw AssertionError(
-            message?.invoke()
-                ?: "expected to contain none of:<${
-                    found.joinToString {
-                        "${it.first}=${it.second}"
-                    }
-                }> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke()
+                    ?: "expected to contain none of:<${
+                        found.joinToString {
+                            "${it.first}=${it.second}"
+                        }
+                    }> but was:<$actual>",
+            ),
         )
     }
 }
@@ -197,8 +220,10 @@ fun <K, V> Assert<Map<K, V>>.doesNotContain(
     message: (() -> String)? = null,
 ) {
     if (actual.containsEntry(key, value)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to contain:<$key=$value> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to contain:<$key=$value> but was:<$actual>",
+            ),
         )
     }
 }
@@ -211,8 +236,10 @@ fun <K, V> Assert<Map<K, V>>.doesNotContain(
     message: (() -> String)? = null,
 ) {
     if (actual.containsEntry(element.first, element.second)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to contain:<${element.first}=${element.second}> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to contain:<${element.first}=${element.second}> but was:<$actual>",
+            ),
         )
     }
 }
@@ -225,8 +252,10 @@ fun <K, V> Assert<Map<K, V>>.doesNotContainKey(
     message: (() -> String)? = null,
 ) {
     if (actual.containsKey(key)) {
-        throw AssertionError(
-            message?.invoke() ?: "expected not to contain key:<$key> but was:<$actual>",
+        notifyFailure(
+            AssertionError(
+                message?.invoke() ?: "expected not to contain key:<$key> but was:<$actual>",
+            ),
         )
     }
 }
