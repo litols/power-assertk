@@ -76,7 +76,8 @@ fun <T : Throwable> Assert<T>.hasCause(
     if (actualCause.message != cause.message) {
         notifyFailure(
             AssertionError(
-                message?.invoke() ?: "expected cause message:<\"${cause.message}\"> but was:<\"${actualCause.message}\">",
+                message?.invoke()
+                    ?: "expected cause message:<\"${cause.message}\"> but was:<\"${actualCause.message}\">",
             ),
         )
     }
@@ -145,7 +146,8 @@ fun <T : Throwable> Assert<T>.hasRootCause(
     if (current.message != cause.message) {
         notifyFailure(
             AssertionError(
-                message?.invoke() ?: "expected root cause message:<\"${cause.message}\"> but was:<\"${current.message}\">",
+                message?.invoke()
+                    ?: "expected root cause message:<\"${cause.message}\"> but was:<\"${current.message}\">",
             ),
         )
     }

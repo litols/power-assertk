@@ -38,6 +38,9 @@ internal class SoftFailure(
             return result
         } finally {
             FailureContext.popFailure()
+            // Intentionally throwing in finally block to report collected soft failures
+            // This is the designed behavior: execute all assertions, then report all failures
+            @Suppress("ThrowingExceptionFromFinally")
             if (failures.isNotEmpty()) {
                 val count = failures.size
                 val errorMessages = failures.joinToString("\n") { "  - ${it.message}" }

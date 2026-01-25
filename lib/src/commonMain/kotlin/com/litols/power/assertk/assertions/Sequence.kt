@@ -142,7 +142,8 @@ fun <E> Assert<Sequence<E>>.containsExactlyInAnyOrder(
         if (!actualMutable.remove(element)) {
             notifyFailure(
                 AssertionError(
-                    message?.invoke() ?: "expected to contain exactly in any order:<$expectedList> but was:<$actualList>",
+                    message?.invoke()
+                        ?: "expected to contain exactly in any order:<$expectedList> but was:<$actualList>",
                 ),
             )
         }

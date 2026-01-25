@@ -211,7 +211,8 @@ inline fun <reified T : Any> Assert<*>.isInstanceOf(noinline message: (() -> Str
     if (actual !is T) {
         notifyFailure(
             AssertionError(
-                message?.invoke() ?: "expected to be instance of:<${T::class}> but was instance of:<${actual!!::class}>",
+                message?.invoke()
+                    ?: "expected to be instance of:<${T::class}> but was instance of:<${actual!!::class}>",
             ),
         )
         // In soft failure mode, return a dummy value

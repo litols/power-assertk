@@ -184,7 +184,10 @@ fun <T> Assert<Array<T>>.containsExactly(
         notifyFailure(
             AssertionError(
                 message?.invoke()
-                    ?: "expected to contain exactly:<${elements.contentToString()}> but was:<${actual.contentToString()}>",
+                    ?: (
+                        "expected to contain exactly:<${elements.contentToString()}> " +
+                            "but was:<${actual.contentToString()}>"
+                    ),
             ),
         )
     }

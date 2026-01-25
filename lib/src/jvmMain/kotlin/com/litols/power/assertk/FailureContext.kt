@@ -1,5 +1,3 @@
-@file:Suppress("MatchingDeclarationName", "Filename")
-
 package com.litols.power.assertk
 
 internal actual object FailureContext {

@@ -96,7 +96,8 @@ fun <T : Comparable<T>> Assert<T>.isStrictlyBetween(
     if (actual <= start || actual >= end) {
         notifyFailure(
             AssertionError(
-                message?.invoke() ?: "expected to be strictly between:<$start> and:<$end> (exclusive) but was:<$actual>",
+                message?.invoke()
+                    ?: "expected to be strictly between:<$start> and:<$end> (exclusive) but was:<$actual>",
             ),
         )
     }
